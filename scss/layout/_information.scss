@@ -1,0 +1,33 @@
+.information{
+  background-color:$text-color-primary;
+  padding: 80px;
+  display: flex;
+  justify-content: space-between;
+  &__detail:first-child{
+    margin-right: 110px;
+  }
+  &__detail{
+    padding-left: 34px;
+    border-left: 2px solid $text-color-secondary;
+    &--icon{
+      color: $white-color;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      border: 3px solid;
+      border-radius: 50%;
+      i{
+        margin: auto;
+      }
+    }
+    &--title{
+      color: $white-color;
+      margin: 24px 0 16px 0;
+      font-size: 18px;
+    }
+    &--des{
+      color:#ccc;
+      line-height: 1.4;
+    }
+  }
+}

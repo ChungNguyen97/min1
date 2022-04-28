@@ -1,0 +1,17 @@
+#toTopBtn{
+  position: fixed;
+  bottom: 50px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border: none;
+  background-color: $text-gray;
+  color: $text-color-primary;
+  border-radius: 100rem;
+  font-size: 20px;
+  font-weight: 700;
+  &:hover{
+    background-color: $color-primary;
+    color: $white-color;
+  }
+}

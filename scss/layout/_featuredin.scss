@@ -1,0 +1,27 @@
+.featuredin {
+  margin-top: 120px;
+  margin-bottom: 120px;
+  display: flex;
+  justify-content: space-between;
+  color: $gray-color2;
+
+  &__item {
+    display: flex;
+    align-items: center;
+
+    &--img {
+      width: 42px;
+      height: 42px;
+      margin-right: 16px;
+    }
+    &--name{
+      font-size: 32px;
+    }
+    &:nth-child(2),&:nth-child(3){
+      span{
+        font-size: 40px;
+      }
+    }
+  }
+
+}
