@@ -46,6 +46,10 @@
           background-color: $color-primary;
           margin-right: 32px;
           border: none;
+
+          i {
+            padding-left: 6px;
+          }
         }
       }
     }
@@ -70,29 +74,33 @@
 .hero_detail {
   display: flex;
   justify-content: flex-start;
+  gap: 0 32px;
 
   .detail__content {
     max-width: 192px;
     border-top: 2px solid;
 
     img {
-      margin: 22px auto;
+      margin: 20px auto;
     }
 
-    h2 {
+    .detail-title,
+    .detail-year {
       font-size: 18px;
       font-weight: 500;
+    }
+
+    .detail-title {
       line-height: 22px;
     }
 
     p.detail-year {
-      font-size: 18px;
       margin: 20px 0;
     }
 
     p.detail-des {
       color: $text-color-secondary;
-      line-height: 22px;
+      line-height: 24px;
     }
   }
 }
