@@ -1,15 +1,23 @@
 .header {
+  padding: 4px 32px !important;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 48px;
-  padding-bottom: 160px;
-  i.iconbar{
-    display: none;
-  }
-  &__logo {
-  }
+  padding: 3px 0;
+  margin-bottom: 160px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  width: 100%;
 
+  left: 0;
+  right: 0;
+
+  // hide on PC and Table
+  i.iconbar{
+    display: none; 
+  }
   &__navigate {
     a {
       margin-left: 32px;
@@ -23,13 +31,14 @@
     }
     a:last-child{
       color: $color-primary;
-      padding: 12px;
+      padding: 10px;
       border: 1px solid;
       border-radius: 12px;
     }
   }
 }
 
+// Only show on PC
 .control{
   margin-top: 16px;
   margin-left: 16px;
@@ -42,6 +51,7 @@
   }
 }
 
+// On PC => Hide
 .header__mobile{
   display: none;
 }

@@ -1,4 +1,5 @@
-@media only screen and (max-width:640px) {
+// Screen with display max: 428px
+@media only screen and  (max-width:768px) {
   .wrapper {
     padding: 0;
   }
@@ -108,14 +109,11 @@
 
     &__item {
       padding-bottom: 36px;
-
       &--img {
         width: 32px;
         height: 32px;
       }
-
       width: 50%;
-
       &:nth-child(5) {
         display: none;
       }
@@ -141,67 +139,7 @@
     flex-wrap: wrap;
   }
 
-  // gallery
-  .gallery {
-    margin: 48px auto;
-
-    .left {
-      gap: 24px;
-      width: 100%;
-
-      .gallery__first {
-        gap: 24px;
-
-        &>img {
-          width: 50%;
-        }
-
-        &--item2 {
-          width: 50%;
-          gap: 24px;
-
-          img {
-            max-height: 172px;
-            height: 100%;
-          }
-        }
-      }
-
-      .gallery__second {
-        justify-content: space-around;
-
-        .text {
-          padding-top: 32px;
-
-          p {
-            padding-left: 24px;
-            max-width: 130px;
-          }
-        }
-
-        .person--pc {
-          display: none;
-        }
-
-        img.person--mobile {
-          display: block;
-        }
-      }
-    }
-
-    .right {
-      display: none;
-    }
-
-    &__list {
-      .gallery__second {
-        .text {
-          padding: 0;
-        }
-
-      }
-    }
-  }
+  
 
   // upsell 
   .upsell {
@@ -251,7 +189,9 @@
 
     &__text {
       padding: 0;
-
+      .text__top{
+        padding: 0 12px;
+      }
       .text__bottom {
         display: none;
       }
@@ -268,9 +208,9 @@
       .text__bottom--mobile {
         width: 50%;
         max-height: 214px;
-        padding-left: 32px;
+        padding-left: 16px;
         border-left: 2px solid;
-        margin-top: 72px;
+        margin: 72px 0 0 16px;
 
         h3 {
           font-weight: 500;
@@ -299,7 +239,7 @@
       p.author {
         position: absolute;
         bottom: 0;
-        right: 0;
+        right: 24px;
         width: 60px;
         text-align: right;
         font-size: 14px;
@@ -363,3 +303,120 @@
     display: none !important;
   }
 }
+
+
+
+// on both mobile and tablet
+
+@media screen and (max-width:992px) {
+    .header{
+      margin-bottom: 0px;
+    }
+    .featuredin{
+      flex-wrap: wrap;
+      margin-top: 48px;
+      margin-bottom: 12px;
+      &__item {
+        padding-bottom: 36px;
+        justify-content: center;
+        &--img {
+          width: 32px;
+          height: 32px;
+        }
+      
+        width: 50%;
+      
+        &:nth-child(5) {
+          display: none;
+        }
+      
+        &:nth-child(1),
+        &:nth-child(4) {
+          span {
+            font-size: 25px;
+          }
+        }
+      
+        &:nth-child(2),
+        &:nth-child(3) {
+          span {
+            font-size: 30px;
+          }
+        }
+      }
+    }
+
+    // Press
+  .press{
+    padding: 0 12px;
+    .detail__content{
+      width: 48%;
+      max-width: unset !important;
+      margin-right: unset;
+      margin-bottom: 42px;
+    }
+  }    
+
+  // gallery
+  .gallery {
+    margin: 48px auto;
+  
+    .left {
+      gap: 24px;
+      width: 100%;
+  
+      .gallery__first {
+        gap: 24px;
+  
+        &>img {
+          width: 50%;
+        }
+  
+        &--item2 {
+          width: 50%;
+          gap: 24px;
+  
+          img {
+            max-height: 172px;
+            height: 100%;
+          }
+        }
+      }
+  
+      .gallery__second {
+        justify-content: space-around;
+  
+        .text {
+          padding-top: 32px;
+  
+          p {
+            padding-left: 24px;
+            max-width: 130px;
+          }
+        }
+  
+        .person--pc {
+          display: none;
+        }
+  
+        img.person--mobile {
+          display: block;
+        }
+      }
+    }
+  
+    .right {
+      display: none;
+    }
+  
+    &__list {
+      .gallery__second {
+        .text {
+          padding: 0;
+        }
+  
+      }
+    }
+  }
+}
+
