@@ -10,7 +10,7 @@ window.onscroll = function () { scrollFunction() };
 function scrollFunction() {
   if ((headerEl.offsetTop) >= 100) {
     headerEl.style.backgroundColor = '#fd79a8'
-    headerEl.style.height ='54px'
+    headerEl.style.height = '54px'
     headerEl.style.boxShadow = "0px 2px 4px #b2bec3"
   } else {
     headerEl.style.backgroundColor = '#eee'
