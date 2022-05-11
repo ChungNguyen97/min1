@@ -5,11 +5,16 @@ console.dir(headerEl.offsetTop);
 window.onscroll = () => {
 }
 
+
+headerEl.classList.add('something')
+
+
 window.onscroll = function () { scrollFunction() };
 
 function scrollFunction() {
   if ((headerEl.offsetTop) >= 100) {
-    headerEl.style.backgroundColor = '#fd79a8'
+    headerEl.style.backgroundColor = '#bbb'
+
     headerEl.style.height = '54px'
     headerEl.style.boxShadow = "0px 2px 4px #b2bec3"
   } else {
