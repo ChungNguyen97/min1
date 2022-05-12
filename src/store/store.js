@@ -1,29 +1,18 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-
+import getters from './getters'
+import mutations from './mutations'
+import actions from './actions'
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
     title: '',
   },
+  getters,
+  mutations,
+  actions
 
-  getters: {
-    getTitle: state => {
-      return state.title
-    },
-  },
-  mutations: {
-    updateTitleOption(state) {
-      return state.result ++
-    },
-    
-  },
-  actions: {
-    updateResultOption: ({ commit }) => {
-      commit("updateResultOption")
-    }
-  
-  },
+
 });
 
