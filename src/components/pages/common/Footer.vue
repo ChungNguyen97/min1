@@ -22,8 +22,7 @@ export default {
   background-color: #333;
   color: #fff;
   text-align: center;
-  position: static;
-  margin-top: 100px;
+  position: fixed;
   bottom: 0;
   width: 100%;
   h3 {
