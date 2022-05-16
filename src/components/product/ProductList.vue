@@ -3,10 +3,7 @@
     <SkeletonLoading :isLoad="isLoad" />
 
     <div class="searchFeature" v-if="!isLoad">
-      <SearchFeature
-        
-        v-on:changeSearch="handleResearch($event)"
-      />
+      <SearchFeature v-on:changeSearch="handleResearch($event)" />
     </div>
 
     <TableProductVue :list="list" :isLoad="isLoad" />

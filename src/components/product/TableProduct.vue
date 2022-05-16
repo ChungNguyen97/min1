@@ -14,6 +14,9 @@
           </tr>
         </thead>
 
+        <p class="nothing-result" v-if="list.length === 0">
+          Không có kết quả phù hợp
+        </p>
         <tbody>
           <tr
             v-for="(
@@ -33,7 +36,7 @@
               />
             </td>
             <td>{{ title }}</td>
-            <td>{{ variants[0].price }}</td>
+            <td>{{ handlFormatPrice(variants[0].price) }}</td>
             <td>{{ product_type }}</td>
             <td>{{ vendor }}</td>
           </tr>
@@ -55,24 +58,28 @@ export default {
   props: {
     list: {
       type: Array,
+      default: null,
     },
     isLoad: {
       type: Boolean,
       default: false,
     },
   },
-  computed: {
+  methods: {
     // Định dạng lại Price theo chuẩn tiền tệ
-    // handlFormatPrice(value) {
-    //   return new Intl.NumberFormat("de-DE", {
-    //     style: "currency",
-    //     currency: "USD",
-    //   }).format(value);
-    // },
+    handlFormatPrice(value) {
+      return new Intl.NumberFormat("de-DE", {
+        style: "currency",
+        currency: "USD",
+      }).format(value);
+    },
   },
+
+  computed: {},
 };
 </script>
 
+<!-- === SCSS ===-->
 <style lang="scss" scope>
 .img {
   max-width: 100px;
@@ -91,5 +98,13 @@ export default {
       background-color: #dfe6e9;
     }
   }
+}
+.nothing-result {
+  border-top: unset !important;
+  margin: 16px 16px;
+  color: red;
+  border-top: unset;
+  font-size: 18px;
+  font-weight: 600;
 }
 </style>
