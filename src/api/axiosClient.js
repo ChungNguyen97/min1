@@ -28,7 +28,7 @@ axiosClient.interceptors.response.use(function (response) {
 }, function (error) {
   // Any status codes that falls outside the range of 2xx cause this function to trigger
   // Do something with response error
-  // console.log(error.response.status, 'có lỗi');
+  console.log(error.response.status, 'có lỗi');
   return Promise.reject(error);
 });
 
