@@ -6,7 +6,11 @@ Vue.use(Vuex)
 const productModule  = new Vuex.Store({
   state: {
   },
-
+  getters: {
+    getTitle(state) {
+      return state.title
+    }
+  },
   mutations: {
     updateTitleOption(state) {
       return state.result++

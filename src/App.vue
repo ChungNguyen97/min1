@@ -1,42 +1,30 @@
 <template>
   <div id="app">
-    <HeaderVue />
-    <main class="main container">
-      <router-view />
-    </main>
-    <FooterVue />
+    <HomePageVue msg="Welcome to Your Vue.js App"/>
+    <CollectionCom />
   </div>
 </template>
 
 <script>
-import HeaderVue from './components/pages/common/Header.vue'
-import FooterVue from './components/pages/common/Footer.vue'
+import HomePageVue from './components/pages/HomePage.vue'
+import CollectionCom from './components/collection/CollectionCom'
+
 export default {
   name: 'App',
   components: {
-    HeaderVue,
-    FooterVue
+    HomePageVue,
+    CollectionCom
   }
 }
 </script>
 
-<style lang="scss">
-@import '../src/assets/reset';
+<style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  max-width: 100%;
-  background-color: #ecf0f1;
-}
-*{
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-.container{
-  max-width: 1200px;
-  margin:0 auto;
-
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 </style>

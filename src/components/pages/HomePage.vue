@@ -1,27 +1,15 @@
 <template>
   <div class="hello">
-    <h1>{{ title }}</h1>
-    <h3>Xem Product tại: 
-      <router-link to="/product">Product page</router-link>
-    </h3>
+    <h1>{{ msg }}</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HomePage',
-  data(){
-    return {
-      title: 'Đây là Trang chủ Mini Project Vue 2 js'
-    }
-  },
+  name: 'HelloWorld',
   props: {
-    msg: {
-      type:String,
-      default:'This is messager'
-    }
-  },
-
+    msg: String
+  }
 }
 </script>
 
