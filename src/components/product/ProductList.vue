@@ -1,13 +1,26 @@
 <template>
   <div class="product">
-    <SkeletonProduct :isLoad="isLoad" />
-    <div class="content" v-if="!isLoad">
+    <div class="loading" v-if="isLoad">
+      <h3>Loading ....</h3>
+
+      <div class="card-text placeholder-glow mt-4">
+        <p class="placeholder bg-primary placeholder-lg col-12 my-3 p-5"></p>
+      </div>
+      <div class="card-text placeholder-wave">
+        <p class="placeholder bg-danger placeholder-lg col-12 my-3 p-5"></p>
+      </div>
+      <div class="card-text placeholder-glow">
+        <p class="placeholder bg-warning placeholder-lg col-12 my-3 p-5"></p>
+      </div>
+      <div class="card-text placeholder-wave">
+        <p class="placeholder bg-info placeholder-lg col-12 my-3 p-5"></p>
+      </div>
+    </div>
+
+    <div class="content" v-else>
       <h1>PRODUCT LIST</h1>
 
-      <div class="control"
-        
-      >
-        <ControlResult />
+      <div class="control">
         <div class="control__numberProduct">
           <label for="selectNumber">Chọn số lượng sản phẩm muốn xem: </label>
           <input
@@ -149,8 +162,6 @@
 
 <script>
 import productApi from "@/api/productApi";
-import SkeletonProduct from "./SkeletonProduct.vue";
-import ControlResult from "./ControlResult.vue";
 
 export default {
   name: "ProductList",
@@ -165,14 +176,10 @@ export default {
       isSearch: false,
       isShowOptionVendor: true,
       params: {
-        limit: 7,
+        limit: 3,
         tags: 0,
       },
     };
-  },
-  components: {
-    SkeletonProduct,
-    ControlResult,
   },
 
   methods: {
@@ -230,9 +237,6 @@ export default {
   },
 };
 </script>
-
-
-
 
 <style lang="scss">
 .product {
