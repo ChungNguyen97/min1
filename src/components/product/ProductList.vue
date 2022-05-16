@@ -23,16 +23,15 @@
         </div>
 
         <div class="control__search">
-          <div class="search">
+          <div class="action">
+            <label for="search">Tìm</label>
             <input
               type="search"
               name="search"
               id="search"
-              v-model="params.search"
+              v-model="searchText"
             />
-            <button v-on:click="handleSearch">Tìm -</button>
           </div>
-
           <div class="suggest">
             <button v-on:click="searchText = 'women\'s dresses'">
               Women's dresses
@@ -43,18 +42,31 @@
         </div>
 
         <div class="select">
+          <!-- Select Product Type -->
           <select
-            name="selectCollection"
-            id="selectCollection"
-            v-on:click="handleSelectCollection($event)"
+            name="selectProductType"
+            id="selectProductType"
+            v-on:click="handleSelectProductType($event)"
           >
-            <option value="">--- Select Collection ---</option>
+            <option value="">--- Select Product type ---</option>
             <option
-              v-for="(item, index) in listCollection"
-              :key="index"
-              :value="item.title"
+              v-for="{ id, product_type } in list"
+              :key="id"
+              :value="product_type"
             >
-              {{ item.title }}
+              {{ product_type }}
+            </option>
+          </select>
+
+          <!-- Select vendor -->
+          <select
+            name="selectVendor"
+            id="selectVendor"
+            v-on:click="handleSelectVendor($event)"
+          >
+            <option value="">--- Select Vendor ---</option>
+            <option v-for="{ id, vendor } in list" :key="id" :value="vendor">
+              {{ vendor }}
             </option>
           </select>
         </div>
@@ -121,9 +133,7 @@
 
 <script>
 import productApi from "@/api/productApi";
-import collectionApi from "@/api/collectionApi";
 import SkeletonProduct from "./SkeletonProduct.vue";
-// import Search from "./Search.vue";
 // import ControlResult from "./ControlResult.vue";
 
 export default {
@@ -138,27 +148,23 @@ export default {
       searchText: "",
       isSearch: false,
       isShowOptionVendor: true,
-      listCollection: [],
       params: {
-        search: "",
         limit: 10,
         tags: 0,
-        next_page_cursor:
-          "eyJsYXN0X2lkIjo2ODA3MjczMjc1NDUxLCJsYXN0X3ZhbHVlIjoiM1wvNCBTbGVldmUgS2ltb25vIERyZXNzIn0=",
-        previous_page_cursor: null,
+        next_page_cursor: "eyJsYXN0X2lkIjo2ODA3MjczMjc1NDUxLCJsYXN0X3ZhbHVlIjoiM1wvNCBTbGVldmUgS2ltb25vIERyZXNzIn0=",
+        previous_page_cursor:null
       },
     };
   },
   components: {
     SkeletonProduct,
-    // Search,
     // ControlResult,
   },
 
   methods: {
     async handleNextPage() {
       this.params.next_page_cursor = "after";
-      this.params.limit = 3;
+      this.params.limit=3;
       const ProductList = await productApi.getAll(this.params);
       this.list = await ProductList.products;
       this.isLoad = false;
@@ -179,9 +185,8 @@ export default {
       }).format(value);
     },
 
-    async handleSelectCollection() {
-      const getCollection = await collectionApi.getAll();
-      this.listCollection = await getCollection.collections;
+    handleSelectProductType(e) {
+      return (this.searchText = e.target.value);
     },
     handleSelectVendor(e) {
       return (this.searchText = e.target.value);
@@ -201,9 +206,6 @@ export default {
           product.product_type.match(this.searchText) ||
           product.vendor.match(this.searchText)
       );
-    },
-    handleSearch() {
-      return  this.callData();
     },
   },
 };
