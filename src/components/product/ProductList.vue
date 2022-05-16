@@ -28,63 +28,17 @@
             name="selectNumber"
             id="selectNumber"
             v-model="params.limit"
-            @keyup.enter="callData() && (searchText = '')"
           />
-          <button
-            v-on:click="callData() && (searchText = '')"
-            class="btn btn-primary"
-          >
-            Xem
-          </button>
+          <button v-on:click="callData() && (searchText='') ">Xem</button>
         </div>
-
         <div class="control__search">
-          <div class="action">
-            <label for="search">Tìm</label>
-            <input
-              type="search"
-              name="search"
-              id="search"
-              v-model="searchText"
-            />
-          </div>
-          <div class="suggest">
-            <button v-on:click="searchText = 'women\'s dresses'">
-              Women's dresses
-            </button>
-            <button v-on:click="searchText = 'Apparel'">Apparel</button>
-            <button v-on:click="searchText = ''" class="bg-danger">X</button>
-          </div>
-        </div>
-
-        <div class="select">
-          <!-- Select Product Type -->
-          <select
-            name="selectProductType"
-            id="selectProductType"
-            v-on:click="handleSelectProductType($event)"
-          >
-            <option value="">--- Select Product type ---</option>
-            <option
-              v-for="{ id, product_type } in list"
-              :key="id"
-              :value="product_type"
-            >
-              {{ product_type }}
-            </option>
-          </select>
-
-          <!-- Select vendor -->
-          <select
-            name="selectVendor"
-            id="selectVendor"
-            v-on:click="handleSelectVendor($event)"
-          >
-            <option value="">--- Select Vendor ---</option>
-            <option v-for="{ id, vendor } in list" :key="id" :value="vendor">
-              {{ vendor }}
-            </option>
-          </select>
+          <label for="search">Tìm</label>
+          <input type="search" name="search" id="search" v-model="searchText" />
+          <button v-on:click="searchText = 'women\'s dresses'">
+            Women's dresses
+          </button>
+          <button v-on:click="searchText = 'Apparel'">Apparel</button>
+          <button v-on:click="searchText = ''">X</button>
         </div>
 
         <!-- <div class="control__sortPrice">
@@ -140,19 +94,16 @@
               class="page-link"
               @click.prevent="params.tags-- && callData()"
               href="#"
-              ><i class="fa-solid fa-angles-left"></i> Previous</a
+              >Previous</a
             >
           </li>
           <li class="page-item">
             <a
               class="page-link"
-              @click.prevent="
-                (params.tags === 0 ? (params.tags = 1) : params.tags++) &&
-                  callData()
-              "
+              @click.prevent="params.tags++ && callData()"
               href="#"
-              >Next <i class="fa-solid fa-angles-right"></i
-            ></a>
+              >Next</a
+            >
           </li>
         </ul>
       </nav>
@@ -174,10 +125,9 @@ export default {
       isError: false,
       searchText: "",
       isSearch: false,
-      isShowOptionVendor: true,
       params: {
-        limit: 3,
-        tags: 0,
+        limit: 10,
+        tags: 2,
       },
     };
   },
@@ -210,13 +160,6 @@ export default {
       // });
       // return this.list;
       // this.list = this.list.sort(Number(this.list[index]))
-    },
-
-    handleSelectProductType(e) {
-      return (this.searchText = e.target.value);
-    },
-    handleSelectVendor(e) {
-      return (this.searchText = e.target.value);
     },
   },
 
@@ -257,67 +200,52 @@ export default {
 
   .control {
     padding: 10px;
-    margin: 12px auto 0;
+    margin: 12px auto;
 
     &__numberProduct {
       display: flex;
-      gap: 0 10px;
+      gap: 0 36px;
       justify-content: flex-start;
       align-items: center;
-      input {
-        padding: 4px 12px;
+      input{
+        padding:4px 12px;
       }
-      button {
-        padding: 2px 12px;
+      @media screen and(max-width:768px){
+        flex-direction:column;
+        gap:12px 0;
       }
-      @media screen and(max-width:768px) {
-        flex-direction: column;
-        gap: 12px 0;
-      }
+    }
+
+    button {
+      padding: 4px 12px;
+      border: none;
+      border: 1px solid #fff;
+      background: #81ecec;
+      cursor: pointer;
     }
 
     &__search {
       margin-top: 12px;
-      .action {
-        label {
-          margin-right: 12px;
-        }
-        input {
-          padding: 2px 12px;
-          color: blue;
-          font-family: "Franklin Gothic Medium", "Arial Narrow", Arial,
-            sans-serif;
-          font-size: 18px;
-          outline: none;
-          border: 1px solid #82ccdd;
-          border-radius: 4px;
 
-          &:focus {
-            background-color: #7bed9f;
-          }
-        }
+      label {
+        margin-right: 12px;
       }
-      .suggest {
-        margin: 3px 0 0 39px;
-        button {
-          margin-right: 4px;
-          padding: 4px 12px;
-          border: 1px solid #fff;
-          background: #81ecec;
-          cursor: pointer;
-          border-radius: 4px;
+
+      input {
+        padding: 4px 12px;
+        color: blue;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        font-size: 18px;
+        border: 1px solid #fff;
+        outline: none;
+
+        &:focus {
+          outline: 1px solid orangered;
         }
       }
     }
   }
-  .select {
-    display: flex;
-    justify-content: right;
-    gap: 0 16px;
-    select {
-      padding: 4px;
-    }
-  }
+
   .img {
     max-width: 100px;
     height: auto;
@@ -339,16 +267,6 @@ export default {
 
   .mt-4 {
     margin-top: 52px !important;
-  }
-  .pagination {
-    justify-content: center;
-    .page-item {
-      margin-right: 4px;
-      i {
-        margin: 0 3px;
-        font-size: 13px;
-      }
-    }
   }
 }
 </style>
