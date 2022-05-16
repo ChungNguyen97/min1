@@ -72,3 +72,24 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scope>
+.img {
+  max-width: 100px;
+  height: auto;
+}
+
+.table {
+  background-color: #fff;
+
+  .tableHeader {
+    background-color: #0984e3;
+  }
+
+  tr.tr-detail {
+    &:hover {
+      background-color: #dfe6e9;
+    }
+  }
+}
+</style>
