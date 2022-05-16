@@ -3,11 +3,8 @@
     <SkeletonProduct :isLoad="isLoad" />
     <div class="content" v-if="!isLoad">
       <h1>PRODUCT LIST</h1>
-
-      <div class="control"
-        
-      >
-        <ControlResult />
+      <div class="control">
+        <!-- <ControlResult /> -->
         <div class="control__numberProduct">
           <label for="selectNumber">Chọn số lượng sản phẩm muốn xem: </label>
           <input
@@ -73,10 +70,6 @@
             </option>
           </select>
         </div>
-
-        <!-- <div class="control__sortPrice">
-          <button v-on:click="handleSortPrice()">Cao xuống thấp</button>
-        </div> -->
       </div>
 
       <div class="table-responsive">
@@ -123,21 +116,12 @@
       <nav aria-label="Page navigation">
         <ul class="pagination">
           <li class="page-item">
-            <a
-              class="page-link"
-              @click.prevent="params.tags-- && callData()"
-              href="#"
+            <a class="page-link" @click.prevent="callData()" href="#"
               ><i class="fa-solid fa-angles-left"></i> Previous</a
             >
           </li>
           <li class="page-item">
-            <a
-              class="page-link"
-              @click.prevent="
-                (params.tags === 0 ? (params.tags = 1) : params.tags++) &&
-                  callData()
-              "
-              href="#"
+            <a class="page-link" @click.prevent="handleNextPage()" href="#"
               >Next <i class="fa-solid fa-angles-right"></i
             ></a>
           </li>
@@ -150,7 +134,7 @@
 <script>
 import productApi from "@/api/productApi";
 import SkeletonProduct from "./SkeletonProduct.vue";
-import ControlResult from "./ControlResult.vue";
+// import ControlResult from "./ControlResult.vue";
 
 export default {
   name: "ProductList",
@@ -165,17 +149,27 @@ export default {
       isSearch: false,
       isShowOptionVendor: true,
       params: {
-        limit: 7,
+        limit: 10,
         tags: 0,
+        next_page_cursor: "eyJsYXN0X2lkIjo2ODA3MjczMjc1NDUxLCJsYXN0X3ZhbHVlIjoiM1wvNCBTbGVldmUgS2ltb25vIERyZXNzIn0=",
+        previous_page_cursor:null
       },
     };
   },
   components: {
     SkeletonProduct,
-    ControlResult,
+    // ControlResult,
   },
 
   methods: {
+    async handleNextPage() {
+      this.params.next_page_cursor = "after";
+      this.params.limit=3;
+      const ProductList = await productApi.getAll(this.params);
+      this.list = await ProductList.products;
+      this.isLoad = false;
+      console.log(ProductList.products);
+    },
     async callData() {
       const ProductList = await productApi.getAll(this.params);
       this.list = await ProductList.products;
@@ -189,20 +183,6 @@ export default {
         style: "currency",
         currency: "USD",
       }).format(value);
-    },
-
-    handleSortPrice() {
-      // this.list = this.list.filter((item, index) => {
-      //   return (
-      //     Number(this.list[index].variants[0].price) -
-      //     Number(
-      //       this.list[index >= this.list.length - 1 ? index : index + 1]
-      //         .variants[0].price
-      //     )
-      //   );
-      // });
-      // return this.list;
-      // this.list = this.list.sort(Number(this.list[index]))
     },
 
     handleSelectProductType(e) {
