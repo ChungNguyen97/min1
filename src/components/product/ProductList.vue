@@ -11,12 +11,11 @@
             type="number"
             name="selectNumber"
             id="selectNumber"
-            placeholder="Chọn từ 0 đến 50"
             v-model="params.limit"
-            @keyup.enter="callData() && (this.params.search = '')"
+            @keyup.enter="callData() && (searchText = '')"
           />
           <button
-            v-on:click="callData() && (this.params.search = '')"
+            v-on:click="callData() && (searchText = '')"
             class="btn btn-primary"
           >
             Xem
@@ -29,20 +28,17 @@
               type="search"
               name="search"
               id="search"
-              placeholder="Nhập nội dung tìm kiếm...."
               v-model="params.search"
             />
-            <button v-on:click="handleSearch" class="btn-search">Tìm</button>
+            <button v-on:click="handleSearch">Tìm -</button>
           </div>
 
           <div class="suggest">
-            <p v-on:click="params.search = 'A-Line Pocket Shift in Black'">
-              A-Line Pocket Shift in Black
-            </p>
-            <p v-on:click="params.search = 'Alex Twill Pant in Mariner'">
-              Alex Twill Pant in Mariner
-            </p>
-            <button v-on:click="params.search = ''" class="bg-danger">X</button>
+            <button v-on:click="searchText = 'women\'s dresses'">
+              Women's dresses
+            </button>
+            <button v-on:click="searchText = 'Apparel'">Apparel</button>
+            <button v-on:click="searchText = ''" class="bg-danger">X</button>
           </div>
         </div>
 
@@ -146,7 +142,7 @@ export default {
       params: {
         search: "",
         limit: 10,
-        tags: "",
+        tags: 0,
         next_page_cursor:
           "eyJsYXN0X2lkIjo2ODA3MjczMjc1NDUxLCJsYXN0X3ZhbHVlIjoiM1wvNCBTbGVldmUgS2ltb25vIERyZXNzIn0=",
         previous_page_cursor: null,
@@ -190,9 +186,6 @@ export default {
     handleSelectVendor(e) {
       return (this.searchText = e.target.value);
     },
-    handleSearch() {
-      return this.callData();
-    },
   },
 
   mounted() {
@@ -208,6 +201,9 @@ export default {
           product.product_type.match(this.searchText) ||
           product.vendor.match(this.searchText)
       );
+    },
+    handleSearch() {
+      return  this.callData();
     },
   },
 };
@@ -256,41 +252,34 @@ export default {
 
     &__search {
       margin-top: 12px;
-      input {
-        padding: 2px 12px;
-        &:focus{
-          outline:none;
+      .action {
+        label {
+          margin-right: 12px;
         }
-      }
-      .search {
-        button.btn-search {
-          border: 1px solid;
-          margin-left: 12px;
-          padding: 2px 8px;
+        input {
+          padding: 2px 12px;
+          color: blue;
+          font-family: "Franklin Gothic Medium", "Arial Narrow", Arial,
+            sans-serif;
+          font-size: 18px;
+          outline: none;
+          border: 1px solid #82ccdd;
           border-radius: 4px;
-          &:hover {
-            background-color: blue;
-            color: #fff;
+
+          &:focus {
+            background-color: #7bed9f;
           }
         }
       }
       .suggest {
         margin: 3px 0 0 39px;
-        p {
-          text-decoration: underline;
-          display: inline-block;
-          margin-right: 12px;
-          font-style: italic;
-          cursor: pointer;
-          color: #3498db;
-        }
         button {
           margin-right: 4px;
           padding: 4px 12px;
           border: 1px solid #fff;
+          background: #81ecec;
           cursor: pointer;
           border-radius: 4px;
-          color: #fff;
         }
       }
     }
