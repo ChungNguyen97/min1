@@ -1,22 +1,21 @@
 <template>
   <div class="product">
     <SkeletonLoading :isLoad="isLoad" />
-    <TableProductVue :list="list" :isLoad="isLoad"/>
-    
+    <TableProductVue :list="list" :isLoad="isLoad" />
   </div>
 </template>
 
 <script>
-import productApi from "@/api/productApi";
+import productApi from "@/core/productApi";
 import SkeletonLoading from "./SkeletonLoading.vue";
 import TableProductVue from "./TableProduct.vue";
 
 export default {
-  name: "ProductList",
+  name: "ProductPage",
   data() {
     return {
       list: [],
-      
+
       isLoad: true,
       isError: false,
       isSearch: false,
@@ -28,7 +27,7 @@ export default {
   },
   components: {
     SkeletonLoading,
-    TableProductVue
+    TableProductVue,
   },
 
   methods: {
@@ -39,8 +38,6 @@ export default {
       console.log(this.isLoad);
       console.log(ProductList.products);
     },
-
-  
   },
 
   mounted() {

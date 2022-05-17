@@ -1,24 +1,26 @@
 <template>
   <div id="app">
-    <HomePageVue msg="Welcome to Your Vue.js App"/>
-    <CollectionCom />
+    <CommonHeader />
+    <main class="main">
+      <router-view />
+    </main>
   </div>
 </template>
 
 <script>
-import HomePageVue from './components/pages/HomePage.vue'
-import CollectionCom from './components/collection/CollectionCom'
+import CommonHeader from "./components/common/CommonHeader.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HomePageVue,
-    CollectionCom
-  }
-}
+    CommonHeader,
+  },
+};
 </script>
 
-<style>
+<style lang="scss">
+@import './assets/reset';
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
