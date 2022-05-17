@@ -21,7 +21,6 @@ export default {
   data() {
     return {
       list: [],
-
       isLoad: true,
       isError: false,
       isSearch: false,
@@ -43,6 +42,7 @@ export default {
       const ProductList = await productApi.getAll(this.params);
       this.list = await ProductList.products;
       this.isLoad = false;
+      console.log(this.isLoad);
       console.log(ProductList.products);
     },
     handleResearch(e) {
