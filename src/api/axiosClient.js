@@ -6,7 +6,9 @@ Vue.use(VueAxios, axios)
 const axiosClient = axios.create({
   baseURL: 'https://shopify-dialga.herokuapp.com/api',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': 'Bearer 1iFGffX6pHc9dNmiPwpo2p3UnPh3OSbgIaLfSED2Ft93ntwlu1FPvKa4d5Ep'
   },
 
 })
