@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 ### Mini project
-=======
 # mini-project-1
 
 ### Vue 2 with:
@@ -37,4 +35,3 @@ npm run lint
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
->>>>>>> feature/collection_feature
