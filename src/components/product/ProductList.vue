@@ -2,7 +2,8 @@
   <div class="product">
     <SkeletonLoading :isLoad="isLoad" />
 
-    <div class="searchFeature" v-if="!isLoad">
+    <div class="main-content" v-if="!isLoad">
+      <ShowByQuantity v-on:changeLimit="handleChangeLimit($event)" />
       <SearchFeature v-on:changeSearch="handleResearch($event)" />
     </div>
 
@@ -15,6 +16,7 @@ import productApi from "@/api/productApi";
 import SkeletonLoading from "./SkeletonLoading.vue";
 import TableProductVue from "./TableProduct.vue";
 import SearchFeature from "./SearchFeature.vue";
+import ShowByQuantity from "./ShowByQuantity.vue";
 
 export default {
   name: "ProductList",
@@ -36,6 +38,7 @@ export default {
     SkeletonLoading,
     TableProductVue,
     SearchFeature,
+    ShowByQuantity,
   },
 
   methods: {
@@ -47,6 +50,11 @@ export default {
     },
     handleResearch(e) {
       this.params.search = e;
+      this.callData();
+    },
+    handleChangeLimit(e) {
+      console.log("Change limit");
+      this.params.limit = e;
       this.callData();
     },
   },
