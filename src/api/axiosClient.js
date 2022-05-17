@@ -6,23 +6,16 @@ Vue.use(VueAxios, axios)
 const axiosClient = axios.create({
   baseURL: 'https://shopify-dialga.herokuapp.com/api',
   headers: {
-<<<<<<< HEAD
-    'Content-Type': 'application/json'
-=======
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     'Authorization': 'Bearer sGCSOzJJwiKLOxHT5dqJSOEnhh7Cgtrr0aUYircuOm6pQDyoSlDdj7r9g3AD'
->>>>>>> feature/render-list-product
   },
 
 })
 // Add a request interceptor
 axiosClient.interceptors.request.use(function (config) {
   // Do something before request is sent
-<<<<<<< HEAD
-=======
   config.headers.Authorization = 'Bearer ' + 'sGCSOzJJwiKLOxHT5dqJSOEnhh7Cgtrr0aUYircuOm6pQDyoSlDdj7r9g3AD'
->>>>>>> feature/render-list-product
   return config;
 }, function (error) {
   // Do something with request error
