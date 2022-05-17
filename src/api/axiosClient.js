@@ -8,7 +8,7 @@ const axiosClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'Authorization': 'Bearer 1iFGffX6pHc9dNmiPwpo2p3UnPh3OSbgIaLfSED2Ft93ntwlu1FPvKa4d5Ep'
+    'Authorization': 'Bearer sGCSOzJJwiKLOxHT5dqJSOEnhh7Cgtrr0aUYircuOm6pQDyoSlDdj7r9g3AD'
   },
 
 })
