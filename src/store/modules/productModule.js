@@ -1,25 +1,25 @@
-import Vue from "vue";
-import Vuex from 'vuex'
+// import Vue from "vue";
+// import Vuex from 'vuex'
 
-Vue.use(Vuex)
+// Vue.use(Vuex)
 
-const productModule  = new Vuex.Store({
-  state: {
-  },
-  getters: {
-    getTitle(state) {
-      return state.title
-    }
-  },
-  mutations: {
-    updateTitleOption(state) {
-      return state.result++
-    },
-  },
-  actions: {
-    updateResultOption: ({ commit }) => {
-      commit("updateResultOption")
-    }
-  },
-})
-export default productModule
+// const productModule  = new Vuex.Store({
+//   state: {
+//   },
+//   getters: {
+//     getTitle(state) {
+//       return state.title
+//     }
+//   },
+//   mutations: {
+//     updateTitleOption(state) {
+//       return state.result++
+//     },
+//   },
+//   actions: {
+//     updateResultOption: ({ commit }) => {
+//       commit("updateResultOption")
+//     }
+//   },
+// })
+// export default productModule
