@@ -1,12 +1,14 @@
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
+Vue.use(Vuex);
 
 const collectionModule = new Vuex.Store({
   state: {
   },
   getters: {
-    getTitle(state) {
-      return state.title
-    }
+    // getTitle(state) {
+    //   return state.title
+    // }
   },
   mutations: {
     updateTitleOption(state) {
