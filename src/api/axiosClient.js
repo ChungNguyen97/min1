@@ -3,6 +3,7 @@ import Vue from 'vue'
 import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios)
+
 const axiosClient = axios.create({
   baseURL: 'https://shopify-dialga.herokuapp.com/api',
   headers: {
