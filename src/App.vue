@@ -19,11 +19,10 @@ export default {
 </script>
 
 <style>
-@import './assets/_reset.scss';
+@import './styles/_reset.scss';
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
 </style>

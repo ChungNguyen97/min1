@@ -32,8 +32,8 @@ header.header {
   }
 }
 
-.exact-active{
-  color:violet !important;
+.exact-active {
+  color: violet !important;
   background-color: #ccc;
 }
 </style>

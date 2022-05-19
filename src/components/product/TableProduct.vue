@@ -1,5 +1,5 @@
 <template>
-  <div class="content" v-if="!getIsLoad">
+  <div class="content">
     <h1>PRODUCT LIST</h1>
     <div class="list-table">
       <table class="table align-middle">
@@ -19,7 +19,7 @@
             v-for="(
               { id, title, images, variants, product_type, vendor, ...rest },
               index
-            ) in getList"
+            ) in productModule.productList"
             :key="id"
             class="tr-detail"
           >
@@ -27,7 +27,7 @@
             <td>
               <img
                 class="img"
-                :src="images.url || imageDefault"
+                :src="images.url || imageIconProduct"
                 :alt="title"
                 :title="title"
               />
@@ -44,13 +44,14 @@
 </template>
 
 <script>
-import { mapGetters,mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
+import imageIconProduct from '@/assets/image/icon-product.png'
+
 export default {
   name: "TableProduct",
   data() {
     return {
-      imageDefault:
-        "https://winaero.com/blog/wp-content/uploads/2019/11/Photos-new-icon.png",
+      imageIconProduct
     };
   },
 
@@ -61,14 +62,12 @@ export default {
         currency: "USD",
       }).format(value);
     },
+  },
+  computed: {
     ...mapActions(["getListProduct"]),
-    ...mapState(['isLoad'])
+    ...mapState(['productModule'])
   },
 
-  computed: {
-    ...mapGetters(['getList','getIsLoad']),
-  },
-  
 
   created() {
     this.getListProduct();

@@ -1,4 +1,4 @@
-import productApi from "@/core/productApi";
+import axiosClient from "@/core/api";
 
 
 const productModule = {
@@ -15,7 +15,7 @@ const productModule = {
   actions: {
     async getListProduct({commit}) {
       try {
-        const res = await productApi.getAll();
+        const res = await axiosClient.get('/graph');
         const productList = await res.products;
         commit('SET_PRODUCT', productList)
       }catch(error){
@@ -23,6 +23,8 @@ const productModule = {
       }
 
     }
+
+    
   },
   mutations: {
     SET_PRODUCT(state, productList) {

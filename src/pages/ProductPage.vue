@@ -6,18 +6,14 @@
 </template>
 
 <script>
-import TableProductVue from "./TableProduct.vue";
-import SkeletonLoadingVue from "./SkeletonLoading.vue";
-
+import TableProductVue from '@/components/product/TableProduct.vue';
+import SkeletonLoadingVue from '@/components/product/SkeletonLoading.vue';
 
 export default {
   name: "ProductPage",
-  data() {
-    return {};
-  },
   components: {
     TableProductVue,
-    SkeletonLoadingVue
+    SkeletonLoadingVue,
   },
 };
 </script>
@@ -44,10 +40,6 @@ export default {
         background-color: #dfe6e9;
       }
     }
-  }
-
-  .mt-4 {
-    margin-top: 32px !important;
   }
 }
 </style>
