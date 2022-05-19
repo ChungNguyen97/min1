@@ -14,6 +14,7 @@
     "sass-loader": "^12.6.0",
     "vue": "^2.6.14",
     "vue-axios": "^3.4.1",
+    "vue-cli": "^2.9.6",
     "vue-router": "^3.5.3",
     "vuex": "^3.6.2"
   },
@@ -23,6 +24,7 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "dotenv": "^16.0.1",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "vue-template-compiler": "^2.6.14"
@@ -45,5 +47,7 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "_id": "mini-project-1@0.1.0",
+  "readme": "ERROR: No README data found!"
 }

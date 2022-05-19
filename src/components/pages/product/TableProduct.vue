@@ -1,7 +1,7 @@
 <template>
   <div class="content" v-if="!isLoad">
     <h1>PRODUCT LIST</h1>
-    <div class="table-responsive">
+    <div class="list-table">
       <table class="table align-middle">
         <thead class="tableHeader text-light">
           <tr>
@@ -19,7 +19,7 @@
             v-for="(
               { id, title, images, variants, product_type, vendor, ...rest },
               index
-            ) in list"
+            ) in getList"
             :key="id"
             class="tr-detail"
           >
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { mapGetters,mapActions } from 'vuex';
 export default {
   name: "TableProduct",
   data() {
@@ -52,23 +53,37 @@ export default {
         "https://winaero.com/blog/wp-content/uploads/2019/11/Photos-new-icon.png",
     };
   },
-  props: {
-    list: {
-      type: Array,
-    },
-    isLoad: {
-      type: Boolean,
-      default: false,
+
+  computed: {
+    ...mapGetters(['getList']),
+    handlFormatPrice(value) {
+      return new Intl.NumberFormat("de-DE", {
+        style: "currency",
+        currency: "USD",
+      }).format(value);
     },
   },
-  computed: {
-    // Định dạng lại Price theo chuẩn tiền tệ
-    // handlFormatPrice(value) {
-    //   return new Intl.NumberFormat("de-DE", {
-    //     style: "currency",
-    //     currency: "USD",
-    //   }).format(value);
-    // },
+
+  created() {
+    this.getListProduct();
+  },
+
+  methods: {
+    ...mapActions(["getListProduct"]),
   },
 };
 </script>
+
+<style lang="scss">
+  table.table{
+    width: 100%;
+    .tableHeader{
+      th{
+        padding:8px 0;
+      }
+    }
+    td{
+      text-align:center
+    }
+  }
+</style>

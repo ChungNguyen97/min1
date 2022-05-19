@@ -342,3 +342,15 @@ template {
 [hidden] {
   display: none;
 }
+
+// Add custom reset
+*{
+  box-sizing: border-box;
+}
+body{
+  margin: 0;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}

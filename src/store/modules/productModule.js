@@ -1,25 +1,30 @@
-import Vue from "vue";
-import Vuex from 'vuex'
+import productApi from "@/core/productApi";
 
-Vue.use(Vuex)
-
-const productModule  = new Vuex.Store({
+const productModule = {
   state: {
+    productList: [],
   },
-  // getters: {
-  //   getTitle(state) {
-  //     return state.title
-  //   }
-  // },
-  mutations: {
-    updateTitleOption(state) {
-      return state.result++
-    },
+  getters: {
+    getList: state => state.productList
   },
+
+
   actions: {
-    updateResultOption: ({ commit }) => {
-      commit("updateResultOption")
+    async getListProduct({commit}) {
+      try {
+        const res = await productApi.getAll();
+        const productList = await res.products;
+        commit('SET_PRODUCT', productList)
+      }catch(error){
+        console.log(error)
+      }
+
     }
   },
-})
+  mutations: {
+    SET_PRODUCT(state, productList) {
+      state.productList = productList
+    }
+  },
+}
 export default productModule

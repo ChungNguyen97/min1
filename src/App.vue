@@ -1,32 +1,29 @@
 <template>
   <div id="app">
-    <CommonHeader />
-    <main class="main">
+    <CommonHeaderVue />
+    <main class="main container">
       <router-view />
     </main>
   </div>
 </template>
 
 <script>
-import CommonHeader from "./components/common/CommonHeader.vue";
+import CommonHeaderVue from './components/common/CommonHeader.vue'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    CommonHeader,
-  },
-};
+    CommonHeaderVue
+  }
+}
 </script>
 
-<style lang="scss">
-@import './assets/reset';
-
+<style>
+@import './assets/_reset.scss';
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
 }
 </style>

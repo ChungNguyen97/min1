@@ -19,5 +19,6 @@ export default new Router({
       name: 'ProductPage',
       component: ProductPage
     }
+
   ]
 })

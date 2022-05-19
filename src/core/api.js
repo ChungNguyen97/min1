@@ -1,11 +1,11 @@
 import axios from "axios";
-import Vue from 'vue'
-import VueAxios from 'vue-axios'
+import Vue from 'vue';
+import VueAxios from 'vue-axios';
 
 Vue.use(VueAxios, axios)
 
 const axiosClient = axios.create({
-  baseURL: 'https://shopify-dialga.herokuapp.com/api',
+  baseURL: process.env.VUE_APP_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

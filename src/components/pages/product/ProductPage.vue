@@ -1,49 +1,23 @@
 <template>
   <div class="product">
-    <SkeletonLoading :isLoad="isLoad" />
-    <TableProductVue :list="list" :isLoad="isLoad" />
+    <TableProductVue />
   </div>
 </template>
 
 <script>
-import productApi from "@/core/productApi";
-import SkeletonLoading from "./SkeletonLoading.vue";
+// import { mapActions, mapGetters, mapState } from "vuex";
 import TableProductVue from "./TableProduct.vue";
 
 export default {
   name: "ProductPage",
   data() {
-    return {
-      list: [],
-
-      isLoad: true,
-      isError: false,
-      isSearch: false,
-      params: {
-        limit: 5,
-        tags: 0,
-      },
-    };
+    return {};
   },
   components: {
-    SkeletonLoading,
-    TableProductVue,
+    TableProductVue
   },
 
-  methods: {
-    async callData() {
-      const ProductList = await productApi.getAll(this.params);
-      this.list = await ProductList.products;
-      this.isLoad = false;
-      console.log(this.isLoad);
-      console.log(ProductList.products);
-    },
-  },
 
-  mounted() {
-    this.callData();
-  },
-  computed: {},
 };
 </script>
 
