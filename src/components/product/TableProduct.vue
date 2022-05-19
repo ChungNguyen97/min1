@@ -44,48 +44,47 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import imageIconProduct from '@/assets/image/icon-product.png'
+import { mapActions, mapState } from "vuex";
+import imageIconProduct from "@/assets/image/icon-product.png";
 
 export default {
   name: "TableProduct",
   data() {
     return {
-      imageIconProduct
+      imageIconProduct,
     };
   },
 
   methods: {
-      handlFormatPrice(value) {
+    handlFormatPrice(value) {
       return new Intl.NumberFormat("de-DE", {
         style: "currency",
         currency: "USD",
       }).format(value);
     },
   },
-  computed: {
-    ...mapActions(["getListProduct"]),
-    ...mapState(['productModule'])
-  },
-
 
   created() {
-    this.getListProduct();
+    this.getListProduct;
   },
 
+  computed: {
+    ...mapActions(["getListProduct"]),
+    ...mapState(["productModule"]),
+  },
 };
 </script>
 
 <style lang="scss">
-  table.table{
-    width: 100%;
-    .tableHeader{
-      th{
-        padding:8px 0;
-      }
-    }
-    td{
-      text-align:center
+table.table {
+  width: 100%;
+  .tableHeader {
+    th {
+      padding: 8px 0;
     }
   }
+  td {
+    text-align: center;
+  }
+}
 </style>
