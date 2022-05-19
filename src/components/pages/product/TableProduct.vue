@@ -1,5 +1,5 @@
 <template>
-  <div class="content" v-if="!isLoad">
+  <div class="content" v-if="!getIsLoad">
     <h1>PRODUCT LIST</h1>
     <div class="list-table">
       <table class="table align-middle">
@@ -33,7 +33,7 @@
               />
             </td>
             <td>{{ title }}</td>
-            <td>{{ variants[0].price }}</td>
+            <td>{{ handlFormatPrice(variants[0].price) }}</td>
             <td>{{ product_type }}</td>
             <td>{{ vendor }}</td>
           </tr>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { mapGetters,mapActions } from 'vuex';
+import { mapGetters,mapActions, mapState } from 'vuex';
 export default {
   name: "TableProduct",
   data() {
@@ -54,23 +54,26 @@ export default {
     };
   },
 
-  computed: {
-    ...mapGetters(['getList']),
-    handlFormatPrice(value) {
+  methods: {
+      handlFormatPrice(value) {
       return new Intl.NumberFormat("de-DE", {
         style: "currency",
         currency: "USD",
       }).format(value);
     },
+    ...mapActions(["getListProduct"]),
+    ...mapState(['isLoad'])
   },
+
+  computed: {
+    ...mapGetters(['getList','getIsLoad']),
+  },
+  
 
   created() {
     this.getListProduct();
   },
 
-  methods: {
-    ...mapActions(["getListProduct"]),
-  },
 };
 </script>
 

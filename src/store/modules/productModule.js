@@ -1,11 +1,14 @@
 import productApi from "@/core/productApi";
 
+
 const productModule = {
   state: {
     productList: [],
+    isLoad:true,
   },
   getters: {
-    getList: state => state.productList
+    getList: state => state.productList,
+    getIsLoad: state => state.isLoad
   },
 
 
@@ -24,6 +27,7 @@ const productModule = {
   mutations: {
     SET_PRODUCT(state, productList) {
       state.productList = productList
+      state.isLoad = false
     }
   },
 }

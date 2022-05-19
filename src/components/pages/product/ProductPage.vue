@@ -1,11 +1,14 @@
 <template>
   <div class="product">
+    <SkeletonLoadingVue />
     <TableProductVue />
   </div>
 </template>
 
 <script>
 import TableProductVue from "./TableProduct.vue";
+import SkeletonLoadingVue from "./SkeletonLoading.vue";
+
 
 export default {
   name: "ProductPage",
@@ -14,6 +17,7 @@ export default {
   },
   components: {
     TableProductVue,
+    SkeletonLoadingVue
   },
 };
 </script>

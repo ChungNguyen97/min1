@@ -5,6 +5,8 @@ import productModule from './modules/productModule';
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
+  state: {
+  },
   modules: {
     collectionModule,
     productModule

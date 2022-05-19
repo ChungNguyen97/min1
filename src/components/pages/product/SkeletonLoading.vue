@@ -1,30 +1,14 @@
 <template>
-  <div class="loading" v-if="isLoad">
+  <div class="loading" v-if="getIsLoad">
     <h3>Loading ....</h3>
-
-    <div class="card-text placeholder-glow mt-4">
-      <p class="placeholder bg-primary placeholder-lg col-12 my-2 p-5"></p>
-    </div>
-    <div class="card-text placeholder-wave">
-      <p class="placeholder bg-danger placeholder-lg col-12 my-2 p-5"></p>
-    </div>
-    <div class="card-text placeholder-glow">
-      <p class="placeholder bg-warning placeholder-lg col-12 my-2 p-5"></p>
-    </div>
-    <div class="card-text placeholder-wave">
-      <p class="placeholder bg-info placeholder-lg col-12 my-2 p-5"></p>
-    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: "SkeletonLoading",
-  props: {
-    isLoad:{
-      type:Boolean
-    }
-  },
+  computed: mapGetters(['getIsLoad'])
 };
 </script>
 
