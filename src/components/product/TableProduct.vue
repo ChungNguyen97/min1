@@ -1,7 +1,7 @@
 <template>
-  <div class="content" v-if="!isLoad">
+  <div class="content">
     <h1>PRODUCT LIST</h1>
-    <div class="table-responsive">
+    <div class="list-table">
       <table class="table align-middle">
         <thead class="tableHeader text-light">
           <tr>
@@ -22,7 +22,7 @@
             v-for="(
               { id, title, images, variants, product_type, vendor, ...rest },
               index
-            ) in list"
+            ) in productModule.productList"
             :key="id"
             class="tr-detail"
           >
@@ -30,7 +30,7 @@
             <td>
               <img
                 class="img"
-                :src="images.url || imageDefault"
+                :src="images.url || imageIconProduct"
                 :alt="title"
                 :title="title"
               />
@@ -47,26 +47,18 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
+import imageIconProduct from "@/assets/image/icon-product.png";
+
 export default {
   name: "TableProduct",
   data() {
     return {
-      imageDefault:
-        "https://winaero.com/blog/wp-content/uploads/2019/11/Photos-new-icon.png",
+      imageIconProduct,
     };
   },
-  props: {
-    list: {
-      type: Array,
-      default: null,
-    },
-    isLoad: {
-      type: Boolean,
-      default: false,
-    },
-  },
+
   methods: {
-    // Định dạng lại Price theo chuẩn tiền tệ
     handlFormatPrice(value) {
       return new Intl.NumberFormat("de-DE", {
         style: "currency",
@@ -75,36 +67,29 @@ export default {
     },
   },
 
+  created() {
+    this.getListProduct;
+  },
+
+  computed: {
+    ...mapActions(["getListProduct"]),
+    ...mapState(["productModule"]),
+  },
+
   computed: {},
 };
 </script>
 
-<!-- === SCSS ===-->
-<style lang="scss" scope>
-.img {
-  max-width: 100px;
-  height: auto;
-}
-
-.table {
-  background-color: #fff;
-
+<style lang="scss">
+table.table {
+  width: 100%;
   .tableHeader {
-    background-color: #0984e3;
-  }
-
-  tr.tr-detail {
-    &:hover {
-      background-color: #dfe6e9;
+    th {
+      padding: 8px 0;
     }
   }
-}
-.nothing-result {
-  border-top: unset !important;
-  margin: 16px 16px;
-  color: red;
-  border-top: unset;
-  font-size: 18px;
-  font-weight: 600;
+  td {
+    text-align: center;
+  }
 }
 </style>
