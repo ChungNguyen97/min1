@@ -1,8 +1,8 @@
 <template>
   <header class="header">
     <nav class="container">
-      <router-link router-link-exact-active="active" to="/">Home</router-link>
-      <router-link router-link-exact-active="active" to="/product"
+      <router-link exact-active-class="exact-active" to="/">Home</router-link>
+      <router-link exact-active-class="exact-active" to="/product"
         >Product</router-link
       >
     </nav>
@@ -31,8 +31,9 @@ header.header {
     }
   }
 }
-.active {
-  background-color: red;
-  color: blue;
+
+.exact-active{
+  color:violet !important;
+  background-color: #ccc;
 }
 </style>

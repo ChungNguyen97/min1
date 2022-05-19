@@ -2,6 +2,9 @@ const collectionModule = {
   state: {
     
   },
+  getters: {
+
+  },
 
   mutations: {
   
