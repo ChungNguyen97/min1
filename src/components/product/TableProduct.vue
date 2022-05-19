@@ -14,7 +14,7 @@
           </tr>
         </thead>
 
-        <p class="nothing-result" v-if="list.length === 0">
+        <p class="nothing-result" v-if="productModule.productList.length === 0">
           Không có kết quả phù hợp
         </p>
         <tbody>
@@ -76,7 +76,6 @@ export default {
     ...mapState(["productModule"]),
   },
 
-  computed: {},
 };
 </script>
 
