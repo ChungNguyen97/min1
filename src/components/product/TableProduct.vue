@@ -2,7 +2,7 @@
   <div class="content">
     <h1>PRODUCT LIST</h1>
     <div class="list-table">
-      <table class="table align-middle">
+      <table class="table align-middle" v-if="getProductList.length !=0">
         <thead class="tableHeader text-light">
           <tr>
             <th scope="col">#</th>
@@ -14,15 +14,12 @@
           </tr>
         </thead>
 
-        <p class="nothing-result" v-if="productModule.productList.length === 0">
-          Không có kết quả phù hợp
-        </p>
         <tbody>
           <tr
             v-for="(
               { id, title, images, variants, product_type, vendor, ...rest },
               index
-            ) in productModule.productList"
+            ) in getProductList"
             :key="id"
             class="tr-detail"
           >
@@ -47,7 +44,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import imageIconProduct from "@/assets/image/icon-product.png";
 
 export default {
@@ -73,7 +70,7 @@ export default {
 
   computed: {
     ...mapActions(["getListProduct"]),
-    ...mapState(["productModule"]),
+    ...mapGetters(["getProductList"]),
   },
 
 };

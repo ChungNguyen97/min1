@@ -1,5 +1,5 @@
 <template>
-  <div class="loading" v-if="getIsLoad">
+  <div class="loading" v-if="getIsLoading">
     <h3>Loading ....</h3>
   </div>
 </template>
@@ -8,7 +8,7 @@
 import { mapGetters } from 'vuex';
 export default {
   name: "SkeletonLoading",
-  computed: mapGetters(['getIsLoad'])
+  computed: mapGetters(['getIsLoading'])
 };
 </script>
 

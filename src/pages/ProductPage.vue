@@ -1,13 +1,19 @@
 <template>
-  <div class="product">
-    <SkeletonLoadingVue />
-    <TableProductVue />
+  <div class="product container">
+    <skeleton-loading-vue />
+    
+    <table-product-vue v-if="getStatusLogin"/>
+
+    <p v-else class="warn-login">Bạn cần đăng nhập để xem danh sách sản phẩm.
+      <router-link class="redirect" to="/login">Đăng nhập ngay</router-link>
+    </p>
   </div>
 </template>
 
 <script>
 import TableProductVue from '@/components/product/TableProduct.vue';
 import SkeletonLoadingVue from '@/components/product/SkeletonLoading.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: "ProductPage",
@@ -15,6 +21,9 @@ export default {
     TableProductVue,
     SkeletonLoadingVue,
   },
+  computed: {
+    ...mapGetters(['getStatusLogin'])
+  }
 };
 </script>
 
@@ -23,6 +32,16 @@ export default {
   h1 {
     color: #d63031;
     text-align: center;
+  }
+  .warn-login{
+    text-align: center;
+    margin: 48px 0 0;
+    font-weight: 700;
+    font-size: 23px;
+    font-family: system-ui;
+    .redirect{
+      font-style: italic;
+    }
   }
 
   .table {

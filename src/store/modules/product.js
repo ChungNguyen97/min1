@@ -1,18 +1,18 @@
 import axiosClient from "@/core/api";
 
 
-const productModule = {
+const product = {
   state: {
     productList: [],
-    isLoad: true,
+    isLoading: true,
     params: {
       limit: 4,
       search: ''
     }
   },
   getters: {
-    getList: state => state.productList,
-    getIsLoad: state => state.isLoad
+    getProductList: state => state.productList,
+    getIsLoading: state => state.isLoading
   },
 
   actions: {
@@ -31,11 +31,11 @@ const productModule = {
   mutations: {
     SET_PRODUCT(state, productList) {
       state.productList = productList
-      state.isLoad = false
+      state.isLoading = false
     },
     SET_SEARCH(state){
       state.params.search=''
     }
   },
 }
-export default productModule
+export default product
