@@ -41,11 +41,11 @@
           <span v-if="!$v.password.required">Mật khẩu là bắt buộc</span>
           <span v-if="!$v.password.minLength"
             >Password phải có ít nhất là
-            {{ $v.password.$params.minLength.min }} letters</span
+            {{ $v.password.$params.minLength.min }} ký tự</span
           >
           <span v-if="!$v.password.maxLength"
             >Password có nhiều nhất là
-            {{ $v.password.$params.maxLength.max }} letters</span
+            {{ $v.password.$params.maxLength.max }} ký tự</span
           >
         </span>
       </div>
@@ -61,7 +61,6 @@
 </template>
 
 <script>
-import { store } from "@/store";
 import {
   required,
   email,
@@ -139,10 +138,6 @@ export default {
     },
     ...mapActions(["LoginAction"]),
   },
-  mounted() {
-    console.log(store);
-  },
-
   computed: {
     ...mapState(["login"]),
   },
@@ -152,7 +147,6 @@ export default {
 <style lang="scss" scoped>
 .login {
   margin: auto;
-
   width: 550px;
   border: 1px solid #ccc;
   border-radius: 10px;

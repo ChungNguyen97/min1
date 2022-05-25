@@ -23,8 +23,8 @@ const product = {
       } catch (error) {
         console.log(error)
       }
-
     }
+    
   },
   mutations: {
     SET_PRODUCT(state, productList) {
