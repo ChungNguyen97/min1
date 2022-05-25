@@ -1,12 +1,10 @@
 import axiosClient from "@/core/api";
-
-
 const product = {
   state: {
     productList: [],
     isLoading: true,
     params: {
-      limit: 4,
+      limit: 10,
       search: ''
     }
   },
