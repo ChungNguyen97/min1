@@ -1,5 +1,6 @@
 import axiosClient from "@/core/api";
 const product = {
+  namespaced: true,
   state: {
     productList: [],
     isLoading: true,
@@ -14,7 +15,7 @@ const product = {
   },
 
   actions: {
-    async getListProduct({ state,commit }) {
+    async getDataProduct({ state,commit }) {
       const params = state.params
       try {
         const res = await axiosClient.get('/graph', {params});

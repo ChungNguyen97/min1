@@ -2,7 +2,7 @@
   <div class="content">
     <h1>PRODUCT LIST</h1>
     <div class="list-table">
-      <table class="table align-middle" v-if="getProductList.length !=0">
+      <table class="table align-middle" v-if="this['product/getProductList'].length !=0">
         <thead class="tableHeader text-light">
           <tr>
             <th scope="col">#</th>
@@ -19,7 +19,7 @@
             v-for="(
               { id, title, images, variants, product_type, vendor, ...rest },
               index
-            ) in getProductList"
+            ) in this['product/getProductList']"
             :key="id"
             class="tr-detail"
           >
@@ -62,15 +62,16 @@ export default {
         currency: "USD",
       }).format(value);
     },
+    ...mapActions(["product/getDataProduct"]),
   },
 
   created() {
-    this.getListProduct;
+    this.$store.dispatch('product/getDataProduct');
+    // console.log(this['product/getProductList']);
   },
 
   computed: {
-    ...mapActions(["getListProduct"]),
-    ...mapGetters(["getProductList"]),
+    ...mapGetters(["product/getProductList"]),
   },
 
 };

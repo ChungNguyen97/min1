@@ -18,7 +18,7 @@ export default new Router({
       name: 'HomePage',
       component: HomePage,
       beforeEnter(to, from, next) {
-        if (store.getters.getStatusLogin) {
+        if (store.state.login.isLogin) {
           next()
         } else {
           alert('Bạn cần đăng nhập để vào trang chủ')
@@ -36,7 +36,7 @@ export default new Router({
       name: 'LoginPage',
       component: LoginPage,
       beforeEnter(to, from, next) {
-        if (store.getters.getStatusLogin) {
+        if (store.state.login.isLogin) {
           alert('Bạn đã đăng nhập rồi!')
           next({path:'/',query:{redirect:'/login'}})
         } else {

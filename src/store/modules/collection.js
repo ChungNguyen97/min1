@@ -1,4 +1,5 @@
 const collection = {
+  namespaced: true,
   state: {
     
   },

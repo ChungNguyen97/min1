@@ -1,10 +1,8 @@
 const account = {
+  namespaced: true,
   state: {
     accessToken: null,
-    user: {
-      email: '',
-      password: ''
-    }
+    user: {}
   },
   getters: {
     getAccessToken(state) {
@@ -13,9 +11,8 @@ const account = {
   },
 
   mutations: {
-    SET_TOKEN(state, { token, data }) {
-      state.accessToken = token,
-        state.user = data
+    SET_TOKEN(state, { token }) {
+      state.accessToken = token
     },
   }
 }

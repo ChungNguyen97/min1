@@ -13,18 +13,19 @@
             'is-valid': !$v.email.$invalid,
           }"
         />
-        <span class="invalid-feedback">
-          <span v-if="!$v.email.required">Email là bắt buộc</span>
-          <span v-if="!$v.email.isUnique">Email không hợp lệ</span>
-          <span v-if="!$v.email.minLength"
-            >Email phải có ít nhất là {{ $v.email.$params.minLength.min }} ký
-            tự</span
-          >
-          <span v-if="!$v.email.maxLength"
-            >Email có tối đa là {{ $v.email.$params.maxLength.max }} ký tự</span
-          >
-        </span>
       </div>
+      <span class="invalid-feedback">
+        <span v-if="!$v.email.required">Email is required</span>
+        <span v-if="!$v.email.minLength"
+          >Email must have at least
+          {{ $v.email.$params.minLength.min }} letters</span
+        >
+        <span v-if="!$v.email.maxLength"
+          >Emails have a maximum of
+          {{ $v.email.$params.maxLength.max }} letters</span
+        >
+      </span>
+
       <div class="form__group">
         <label for="password">Mật khẩu: </label>
         <input
@@ -37,18 +38,19 @@
             'is-valid': !$v.password.$invalid,
           }"
         />
-        <span class="invalid-feedback">
-          <span v-if="!$v.password.required">Mật khẩu là bắt buộc</span>
-          <span v-if="!$v.password.minLength"
-            >Password phải có ít nhất là
-            {{ $v.password.$params.minLength.min }} ký tự</span
-          >
-          <span v-if="!$v.password.maxLength"
-            >Password có nhiều nhất là
-            {{ $v.password.$params.maxLength.max }} ký tự</span
-          >
-        </span>
       </div>
+      <span class="invalid-feedback">
+        <span v-if="!$v.password.required">Password is required</span>
+        <span v-if="!$v.password.minLength"
+          >Password must have at least
+          {{ $v.password.$params.minLength.min }} letters</span
+        >
+        <span v-if="!$v.password.maxLength"
+          >Password have a maximum of
+          {{ $v.password.$params.maxLength.max }} letters</span
+        >
+      </span>
+
       <input
         type="submit"
         value="Đăng nhập"
@@ -84,16 +86,6 @@ export default {
       minLength: minLength(10),
       maxLength: maxLength(30),
       email,
-      isUnique(value) {
-        if (value === "") return true;
-        var email_regex =
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(email_regex.test(value));
-          }, 350 + Math.random() * 300);
-        });
-      },
     },
     password: {
       required,
@@ -113,7 +105,7 @@ export default {
           email: this.email,
           password: this.password,
         };
-        await this.LoginAction(data);
+        await this.$store.dispatch('login/LoginAction',data)
 
         if (this.login.isLogin) {
           this.$notify({
@@ -136,11 +128,11 @@ export default {
         }
       }
     },
-    ...mapActions(["LoginAction"]),
+    ...mapActions(["login/LoginAction"]),
   },
   computed: {
-    ...mapState(["login"]),
-  },
+    ...mapState(['login'])
+  }
 };
 </script>
 
@@ -153,23 +145,30 @@ export default {
   padding: 24px 32px;
   box-shadow: 0 1px 5px red;
   background-color: #ecf0f1;
+
   h2 {
     text-align: center;
     text-transform: uppercase;
   }
+
   .form {
     &__group {
       margin: 12px 0;
+      display: flex;
+      align-items: center;
+
       label {
-        width: 30%;
+        width: 22%;
         font-weight: 700;
         font-size: 18px;
       }
+
       input {
         flex: 1;
         border: 1px solid #be2edd;
         padding: 5px 12px;
         border-radius: 5px;
+
         &:focus {
           border: none;
           outline: 1px solid;
@@ -177,6 +176,7 @@ export default {
         }
       }
     }
+
     input.submit {
       margin: 12px auto;
       display: block;
@@ -187,16 +187,20 @@ export default {
       border-radius: 5px;
     }
   }
+
   .is-invalid {
     border: 1px solid red !important;
     color: red;
   }
+
   .is-valid {
     border: 1px solid blue !important;
     color: blue;
   }
+
   .invalid-feedback {
     text-align: center;
+
     span {
       display: block;
     }

@@ -1,7 +1,6 @@
 import axios from "axios";
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
-import localStorage from '@/plugins/localStorage.js'
 
 Vue.use(VueAxios, axios)
 
@@ -14,7 +13,7 @@ const axiosClient = axios.create({
 
 })
 axiosClient.interceptors.request.use(function (config) {
-  const { auth } = localStorage.get()
+  const { auth } = JSON.parse(localStorage.getItem('token')) || {auth:''}
   config.headers.Authorization = 'Bearer ' + auth.accessToken
   return config;
 }, function (error) {

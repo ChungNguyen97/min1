@@ -10,7 +10,6 @@
 <script>
 import { mapMutations } from "vuex";
 import CommonHeaderVue from "./components/common/CommonHeader.vue";
-import localStorage from "./plugins/localStorage";
 
 export default {
   name: "App",
@@ -18,14 +17,14 @@ export default {
     CommonHeaderVue,
   },
   methods: {
-    ...mapMutations(["CHECK_STATUS_BEGIN"]),
+    ...mapMutations(["login/CHECK_STATUS_BEGIN"]),
   },
   created() {
-    const { auth } =localStorage.get()
+    const {auth} = JSON.parse(localStorage.getItem('token')) || {auth:''}
     if (auth.accessToken) {
-      this.$store.commit("CHECK_STATUS_BEGIN", true);
+      this.$store.commit("login/CHECK_STATUS_BEGIN", true);
     } else {
-      this.$store.commit("CHECK_STATUS_BEGIN", false);
+      this.$store.commit("login/CHECK_STATUS_BEGIN", false);
     }
   },
 };

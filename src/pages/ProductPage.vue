@@ -2,7 +2,7 @@
   <div class="product container">
     <skeleton-loading-vue />
     
-    <table-product-vue v-if="getStatusLogin"/>
+    <table-product-vue v-if="this['login/getStatusLogin']"/>
 
     <p v-else class="warn-login">Bạn cần đăng nhập để xem danh sách sản phẩm.
       <router-link class="redirect" to="/login">Đăng nhập ngay</router-link>
@@ -22,7 +22,7 @@ export default {
     SkeletonLoadingVue,
   },
   computed: {
-    ...mapGetters(['getStatusLogin'])
+    ...mapGetters(['login/getStatusLogin'])
   }
 };
 </script>

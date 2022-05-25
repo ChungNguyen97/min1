@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
 import login from './modules/account/login.js';
-import auth from './modules/auth/auth';
+import auth from './modules/auth';
 import collection from './modules/collection';
 import product from './modules/product';
 
@@ -15,11 +15,12 @@ const vuexLocal = new VuexPersistence({
   path: ['accessToken']
 })
 export const store = new Vuex.Store({
+  
   modules: {
     collection,
     product,
     auth,
-    login
+    login,
   },
   plugins: [vuexLocal.plugin]
 });

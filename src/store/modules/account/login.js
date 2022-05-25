@@ -1,18 +1,19 @@
 import axiosClient from "@/core/api";
 const collection = {
+  namespaced: true,
   state: {
     isLogin: false,
   },
   getters: {
-    getStatusLogin(state){
-      return  state.isLogin
+    getStatusLogin(state) {
+      return state.isLogin
     }
   },
   actions: {
     async LoginAction({ commit }, data) {
       try {
         const res = await axiosClient.post('/login', data)
-        commit('SET_TOKEN', { token: res.token, data })
+        this.commit('SET_TOKEN', { token: res.token })
         commit('SET_LOGIN')
       } catch (error) {
         console.log(error);
@@ -21,10 +22,10 @@ const collection = {
   },
 
   mutations: {
-    SET_LOGIN(state){
+    SET_LOGIN(state) {
       return state.isLogin = !state.isLogin
     },
-    CHECK_STATUS_BEGIN(state,payload){
+    CHECK_STATUS_BEGIN(state, payload) {
       return state.isLogin = payload
     }
   },

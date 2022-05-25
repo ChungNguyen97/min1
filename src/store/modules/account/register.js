@@ -1,4 +1,5 @@
 const collection = {
+  namespaced: true,
   state: {
     name:'register'
   },
@@ -7,7 +8,7 @@ const collection = {
   },
 
   mutations: {
-
+    
   },
   actions: {
 
