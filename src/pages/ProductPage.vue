@@ -1,12 +1,14 @@
 <template>
   <div class="product container">
-    <skeleton-loading-vue />
-    <div class="showInformationAll" v-if="this['login/getStatusLogin']">
-      <product-search-vue v-on:updateSearch="handleUpdateSearch" />
-      <p class="subMessager" v-if="search">Có
-        <span>{{this['product/getProductList'].length}}</span> 
-         kết quả cho từ khóa tìm kiếm <span>{{search}}</span></p>
-      <table-product-vue />
+    <skeleton-loading/>
+    <div class="showInformationAll" v-if="'getStatusLogin'">
+      <product-search v-on:updateSearch="handleUpdateSearch" />
+
+      <p class="subMessager" v-if="search">
+        Có {{productList.length}}
+        kết quả cho từ khóa tìm kiếm <span>{{ search }}</span>
+      </p>
+      <table-product />
     </div>
 
     <p v-else class="warn-login">
@@ -17,10 +19,10 @@
 </template>
 
 <script>
-import TableProductVue from "@/components/product/ProductTable.vue";
-import SkeletonLoadingVue from "@/components/product/ProductSkeleton.vue";
-import ProductSearchVue from "@/components/product/ProductSearch.vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
+import SkeletonLoading from '@/components/product/ProductSkeleton.vue';
+import ProductSearch from '@/components/product/ProductSearch.vue';
+import TableProduct from '@/components/product/ProductTable.vue';
 
 export default {
   name: "ProductPage",
@@ -28,9 +30,9 @@ export default {
     search: "",
   }),
   components: {
-    TableProductVue,
-    SkeletonLoadingVue,
-    ProductSearchVue,
+    TableProduct,
+    ProductSearch,
+    SkeletonLoading,
   },
   methods: {
     handleUpdateSearch(searchText) {
@@ -39,7 +41,8 @@ export default {
     ...mapActions(["product/getDataProduct"]),
   },
   computed: {
-    ...mapGetters(["login/getStatusLogin",'product/getProductList']),
+    ...mapGetters("login",['getStatusLogin']),
+    ...mapState('product',['productList']),
   },
   watch: {
     search() {
@@ -66,13 +69,12 @@ export default {
     }
   }
 
-  .subMessager{
-    text-align:center;
-    font-style:italic;
-    span{
-      font-weight:700
+  .subMessager {
+    text-align: center;
+    font-style: italic;
+    span {
+      font-weight: 700;
     }
-  
   }
 
   .table {

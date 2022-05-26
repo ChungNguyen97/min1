@@ -67,7 +67,6 @@ export default {
 
   created() {
     this.$store.dispatch('product/getDataProduct');
-    // console.log(this['product/getProductList']);
   },
 
   computed: {

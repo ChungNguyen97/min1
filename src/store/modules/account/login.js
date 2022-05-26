@@ -10,7 +10,7 @@ const login = {
     }
   },
   actions: {
-    async LoginAction({ commit }, data) {
+    async loginAction({ commit }, data) {
       try {
         const res = await axiosClient.post('/login', data)
         this.commit('auth/SET_TOKEN', { token: res.token })

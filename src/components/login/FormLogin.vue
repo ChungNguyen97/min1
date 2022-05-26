@@ -105,7 +105,7 @@ export default {
           email: this.email,
           password: this.password,
         };
-        await this.$store.dispatch('login/LoginAction',data)
+        await this.$store.dispatch('login/loginAction',data)
 
         if (this.login.isLogin) {
           this.$notify({
@@ -115,7 +115,7 @@ export default {
             duration: 2000,
           });
           setTimeout(() => {
-            this.$router.push({ name: "home-page" });
+            this.$router.push({ name: "HomePage" });
           }, 2000);
         } else {
           this.$notify({
@@ -128,7 +128,7 @@ export default {
         }
       }
     },
-    ...mapActions(["login/LoginAction"]),
+    ...mapActions(["login/loginAction"]),
   },
   computed: {
     ...mapState(['login'])

@@ -15,7 +15,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home-page',
+      name: 'HomePage',
       component: HomePage,
       beforeEnter(to, from, next) {
         if (store.state.login.isLogin) {
@@ -28,12 +28,12 @@ export default new Router({
     },
     {
       path: '/product',
-      name: 'product-page',
+      name: 'ProductPage',
       component: ProductPage
     },
     {
       path: '/login',
-      name: 'login-page',
+      name: 'LoginPage',
       component: LoginPage,
       beforeEnter(to, from, next) {
         if (store.state.login.isLogin) {
