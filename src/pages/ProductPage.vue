@@ -3,9 +3,12 @@
     <skeleton-loading-vue />
     <div class="showInformationAll" v-if="this['login/getStatusLogin']">
       <product-search-vue v-on:updateSearch="handleUpdateSearch" />
-      <p class="subMessager" v-if="search">Có
-        <span>{{this['product/getProductList'].length}}</span> 
-         kết quả cho từ khóa tìm kiếm <span>{{search}}</span></p>
+      <p class="subMessager" v-if="search">
+        Có
+        <span>{{ this["product/getProductList"].length }}</span>
+        kết quả cho từ khóa tìm kiếm <span>{{ search }}</span>
+      </p>
+      <product-collection  />
       <table-product-vue />
     </div>
 
@@ -17,20 +20,24 @@
 </template>
 
 <script>
+
 import TableProductVue from "@/components/product/ProductTable.vue";
 import SkeletonLoadingVue from "@/components/product/ProductSkeleton.vue";
 import ProductSearchVue from "@/components/product/ProductSearch.vue";
+import ProductCollection from "@/components/product/ProductCollection";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "ProductPage",
   data: () => ({
     search: "",
+    collecion:""
   }),
   components: {
     TableProductVue,
     SkeletonLoadingVue,
     ProductSearchVue,
+    ProductCollection
   },
   methods: {
     handleUpdateSearch(searchText) {
@@ -39,7 +46,7 @@ export default {
     ...mapActions(["product/getDataProduct"]),
   },
   computed: {
-    ...mapGetters(["login/getStatusLogin",'product/getProductList']),
+    ...mapGetters(["login/getStatusLogin", "product/getProductList"]),
   },
   watch: {
     search() {
@@ -66,13 +73,12 @@ export default {
     }
   }
 
-  .subMessager{
-    text-align:center;
-    font-style:italic;
-    span{
-      font-weight:700
+  .subMessager {
+    text-align: center;
+    font-style: italic;
+    span {
+      font-weight: 700;
     }
-  
   }
 
   .table {
