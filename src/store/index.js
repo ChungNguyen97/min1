@@ -1,15 +1,28 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import collectionModule from './modules/collection';
-import productModule from './modules/product';
+import VuexPersistence from 'vuex-persist';
+import login from './modules/account/login.js';
+import auth from './modules/auth';
+import collection from './modules/collection';
+import product from './modules/product';
+
 Vue.use(Vuex);
 
+const vuexLocal = new VuexPersistence({
+  storage: localStorage,
+  key: 'token',
+  modules: ['auth'],
+  path: ['accessToken']
+})
 export const store = new Vuex.Store({
-  state: {
-  },
+  
   modules: {
-    collectionModule,
-    productModule
+    collection,
+    product,
+    auth,
+    login,
   },
+  plugins: [vuexLocal.plugin]
 });
+
 

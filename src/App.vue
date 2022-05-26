@@ -1,25 +1,37 @@
 <template>
   <div id="app">
-    <CommonHeaderVue />
-    <main class="main container">
+    <common-header-vue />
+    <main class="main">
       <router-view />
     </main>
   </div>
 </template>
 
 <script>
-import CommonHeaderVue from './components/common/CommonHeader.vue'
+import { mapMutations } from "vuex";
+import CommonHeaderVue from "./components/common/CommonHeader.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    CommonHeaderVue
-  }
-}
+    CommonHeaderVue,
+  },
+  methods: {
+    ...mapMutations(["login/CHECK_STATUS_BEGIN"]),
+  },
+  created() {
+    const {auth} = JSON.parse(localStorage.getItem('token')) || {auth:''}
+    if (auth.accessToken) {
+      this.$store.commit("login/CHECK_STATUS_BEGIN", true);
+    } else {
+      this.$store.commit("login/CHECK_STATUS_BEGIN", false);
+    }
+  },
+};
 </script>
 
 <style>
-@import './styles/_reset.scss';
+@import "./styles/_reset.scss";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

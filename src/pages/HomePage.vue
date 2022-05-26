@@ -1,25 +1,38 @@
 <template>
-  <div class="homepage">
+  <div class="homepage container">
     <h1>{{ label }}</h1>
+    <p class="redirect-to-product">
+      Xem danh sách sản phẩm tại
+      <router-link  to="/product"
+        >Product Page</router-link
+      >
+    </p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HomePage',
-  data(){
+  name: "HomePage",
+  data() {
     return {
-      label:"This is Home Page"
-    }
-  }
-}
+      label: "Trang chủ",
+    };
+  },
+};
 </script>
 
 <style scoped lang="scss">
-.homepage{
-  h1{
+.homepage {
+  h1 {
     text-align: center;
-    margin:48px auto
+    margin: 48px auto;
+  }
+
+  .redirect-to-product {
+    text-align: center;
+    font-size: 20px;
+    font-style: italic;
+    font-family: cursive;
   }
 }
 </style>

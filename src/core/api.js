@@ -13,7 +13,8 @@ const axiosClient = axios.create({
 
 })
 axiosClient.interceptors.request.use(function (config) {
-  config.headers.Authorization = 'Bearer ' + 'sGCSOzJJwiKLOxHT5dqJSOEnhh7Cgtrr0aUYircuOm6pQDyoSlDdj7r9g3AD'
+  const { auth } = JSON.parse(localStorage.getItem('token')) || {auth:''}
+  config.headers.Authorization = 'Bearer ' + auth.accessToken
   return config;
 }, function (error) {
   console.log(error);

@@ -2,7 +2,7 @@
   <div class="content">
     <h1>PRODUCT LIST</h1>
     <div class="list-table">
-      <table class="table align-middle">
+      <table class="table align-middle" v-if="this['product/getProductList'].length !=0">
         <thead class="tableHeader text-light">
           <tr>
             <th scope="col">#</th>
@@ -19,7 +19,7 @@
             v-for="(
               { id, title, images, variants, product_type, vendor, ...rest },
               index
-            ) in productModule.productList"
+            ) in this['product/getProductList']"
             :key="id"
             class="tr-detail"
           >
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import imageIconProduct from "@/assets/image/icon-product.png";
 
 export default {
@@ -62,16 +62,18 @@ export default {
         currency: "USD",
       }).format(value);
     },
+    ...mapActions(["product/getDataProduct"]),
   },
 
   created() {
-    this.getListProduct;
+    this.$store.dispatch('product/getDataProduct');
+    // console.log(this['product/getProductList']);
   },
 
   computed: {
-    ...mapActions(["getListProduct"]),
-    ...mapState(["productModule"]),
+    ...mapGetters(["product/getProductList"]),
   },
+
 };
 </script>
 

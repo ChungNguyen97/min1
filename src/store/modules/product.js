@@ -1,22 +1,21 @@
 import axiosClient from "@/core/api";
-
-
-const productModule = {
+const product = {
+  namespaced: true,
   state: {
     productList: [],
-    isLoad: true,
+    isLoading: true,
     params: {
-      limit: 4,
+      limit: 10,
       search: ''
     }
   },
   getters: {
-    getList: state => state.productList,
-    getIsLoad: state => state.isLoad
+    getProductList: state => state.productList,
+    getIsLoading: state => state.isLoading
   },
 
   actions: {
-    async getListProduct({ state,commit }) {
+    async getDataProduct({ state,commit }) {
       const params = state.params
       try {
         const res = await axiosClient.get('/graph', {params});
@@ -25,17 +24,17 @@ const productModule = {
       } catch (error) {
         console.log(error)
       }
-
     }
+    
   },
   mutations: {
     SET_PRODUCT(state, productList) {
       state.productList = productList
-      state.isLoad = false
+      state.isLoading = false
     },
     SET_SEARCH(state){
       state.params.search=''
     }
   },
 }
-export default productModule
+export default product
