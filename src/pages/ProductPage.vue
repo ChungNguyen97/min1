@@ -8,7 +8,8 @@
         <span>{{ this["product/getProductList"].length }}</span>
         kết quả cho từ khóa tìm kiếm <span>{{ search }}</span>
       </p>
-      <product-collection  />
+      <product-collection  v-on:changeSelect='handleChangeSelect'/>
+      <product-pagination v-on:changePagination="handleChangePagination" />
       <table-product-vue />
     </div>
 
@@ -25,25 +26,36 @@ import TableProductVue from "@/components/product/ProductTable.vue";
 import SkeletonLoadingVue from "@/components/product/ProductSkeleton.vue";
 import ProductSearchVue from "@/components/product/ProductSearch.vue";
 import ProductCollection from "@/components/product/ProductCollection";
+import ProductPagination from "@/components/product/ProductPagination";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "ProductPage",
   data: () => ({
     search: "",
-    collecion:""
+    collecion:"",
+    cursor:{}
   }),
   components: {
     TableProductVue,
     SkeletonLoadingVue,
     ProductSearchVue,
-    ProductCollection
+    ProductCollection,
+    ProductPagination
   },
   methods: {
     handleUpdateSearch(searchText) {
       this.search = searchText;
     },
     ...mapActions(["product/getDataProduct"]),
+    handleChangeSelect(payload){
+      console.log('at ProductPage',payload);
+      this.collecion = payload
+    },
+    handleChangePagination(data){
+      console.log('handleChangePagination data',data);
+      this.cursor = data
+    }
   },
   computed: {
     ...mapGetters(["login/getStatusLogin", "product/getProductList"]),
@@ -52,6 +64,14 @@ export default {
     search() {
       this.$store.dispatch("product/getDataProduct", { search: this.search });
     },
+    collecion(){
+      this.$store.dispatch('product/getDataProduct',{collection:this.collecion})
+    },
+    cursor(){
+      console.log('change');
+      this.$store.dispatch('product/getDataProduct',this.cursor)
+
+    }
   },
 };
 </script>

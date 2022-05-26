@@ -25,7 +25,8 @@ export default {
   methods: {
     ...mapActions(['collection/getCollectionData']),
     handleChangeSelect(e){
-      console.log(e.target.value);
+      console.log('at product-collection ',e.target.value);
+      this.$emit('changeSelect',e.target.value)
     }
   },
   computed: {
