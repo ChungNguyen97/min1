@@ -1,29 +1,51 @@
 <template>
   <div class="product container">
     <skeleton-loading-vue />
-    
-    <table-product-vue v-if="this['login/getStatusLogin']"/>
+    <div class="showInformationAll" v-if="this['login/getStatusLogin']">
+      <product-search-vue v-on:updateSearch="handleUpdateSearch" />
+      <p class="subMessager" v-if="search">Có
+        <span>{{this['product/getProductList'].length}}</span> 
+         kết quả cho từ khóa tìm kiếm <span>{{search}}</span></p>
+      <table-product-vue />
+    </div>
 
-    <p v-else class="warn-login">Bạn cần đăng nhập để xem danh sách sản phẩm.
+    <p v-else class="warn-login">
+      Bạn cần đăng nhập để xem danh sách sản phẩm.
       <router-link class="redirect" to="/login">Đăng nhập ngay</router-link>
     </p>
   </div>
 </template>
 
 <script>
-import TableProductVue from '@/components/product/TableProduct.vue';
-import SkeletonLoadingVue from '@/components/product/SkeletonLoading.vue';
-import { mapGetters } from 'vuex';
+import TableProductVue from "@/components/product/ProductTable.vue";
+import SkeletonLoadingVue from "@/components/product/ProductSkeleton.vue";
+import ProductSearchVue from "@/components/product/ProductSearch.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "ProductPage",
+  data: () => ({
+    search: "",
+  }),
   components: {
     TableProductVue,
     SkeletonLoadingVue,
+    ProductSearchVue,
+  },
+  methods: {
+    handleUpdateSearch(searchText) {
+      this.search = searchText;
+    },
+    ...mapActions(["product/getDataProduct"]),
   },
   computed: {
-    ...mapGetters(['login/getStatusLogin'])
-  }
+    ...mapGetters(["login/getStatusLogin",'product/getProductList']),
+  },
+  watch: {
+    search() {
+      this.$store.dispatch("product/getDataProduct", { search: this.search });
+    },
+  },
 };
 </script>
 
@@ -33,15 +55,24 @@ export default {
     color: #d63031;
     text-align: center;
   }
-  .warn-login{
+  .warn-login {
     text-align: center;
     margin: 48px 0 0;
     font-weight: 700;
     font-size: 23px;
     font-family: system-ui;
-    .redirect{
+    .redirect {
       font-style: italic;
     }
+  }
+
+  .subMessager{
+    text-align:center;
+    font-style:italic;
+    span{
+      font-weight:700
+    }
+  
   }
 
   .table {

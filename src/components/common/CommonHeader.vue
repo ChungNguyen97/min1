@@ -2,14 +2,14 @@
   <header class="header">
     <nav class="container nav">
       <div class="general">
-        <router-link exact-active-class="exact-active" to="/">Home</router-link>
-        <router-link exact-active-class="exact-active" to="/product"
+        <router-link exact-active-class="exact-active" :to="{name:'home-page'}">Home</router-link>
+        <router-link exact-active-class="exact-active" :to="{name:'product-page'}"
           >Product</router-link
         >
       </div>
 
       <div class="account">
-        <router-link  exact-active-class="exact-active" to="/login"
+        <router-link  exact-active-class="exact-active" :to="{name:'login-page'}"
           >Login</router-link
         >
       </div>

@@ -115,7 +115,7 @@ export default {
             duration: 2000,
           });
           setTimeout(() => {
-            this.$router.push({ path: "/" });
+            this.$router.push({ name: "home-page" });
           }, 2000);
         } else {
           this.$notify({

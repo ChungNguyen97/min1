@@ -1,5 +1,5 @@
 import axiosClient from "@/core/api";
-const collection = {
+const login = {
   namespaced: true,
   state: {
     isLogin: false,
@@ -13,7 +13,7 @@ const collection = {
     async LoginAction({ commit }, data) {
       try {
         const res = await axiosClient.post('/login', data)
-        this.commit('SET_TOKEN', { token: res.token })
+        this.commit('auth/SET_TOKEN', { token: res.token })
         commit('SET_LOGIN')
       } catch (error) {
         console.log(error);
@@ -29,9 +29,6 @@ const collection = {
       return state.isLogin = payload
     }
   },
-
-
-
 }
 
-export default collection
+export default login
