@@ -2,14 +2,22 @@
   <header class="header">
     <nav class="container nav">
       <div class="general">
-        <router-link exact-active-class="exact-active" :to="{name:'home-page'}">Home</router-link>
-        <router-link exact-active-class="exact-active" :to="{name:'product-page'}"
+        <router-link
+          exact-active-class="exact-active"
+          :to="{ name: 'homePage' }"
+          >Home</router-link
+        >
+        <router-link
+          exact-active-class="exact-active"
+          :to="{ name: 'productPage' }"
           >Product</router-link
         >
       </div>
 
       <div class="account">
-        <router-link  exact-active-class="exact-active" :to="{name:'login-page'}"
+        <router-link
+          exact-active-class="exact-active"
+          :to="{ name: 'loginPage' }"
           >Login</router-link
         >
       </div>
@@ -22,13 +30,13 @@ import { mapMutations } from "vuex";
 export default {
   name: "CommonHeader",
   computed: {
-    ...mapMutations(['SET_LOGIN'])
+    ...mapMutations(["SET_LOGIN"]),
   },
   methods: {
-    handleLogout(){
-      this.$store.commit('SET_LOGIN')
-    } 
-  }
+    handleLogout() {
+      this.$store.commit("SET_LOGIN");
+    },
+  },
 };
 </script>
 
@@ -50,7 +58,6 @@ header.header {
       font-weight: 700;
     }
   }
-  
 }
 
 .exact-active {

@@ -20,7 +20,7 @@ export default {
     ...mapMutations(["login/CHECK_STATUS_BEGIN"]),
   },
   created() {
-    const {auth} = JSON.parse(localStorage.getItem('token')) || {auth:''}
+    const { auth } = JSON.parse(localStorage.getItem("token")) || { auth: "" };
     if (auth.accessToken) {
       this.$store.commit("login/CHECK_STATUS_BEGIN", true);
     } else {
@@ -36,5 +36,8 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+body {
+  background: #ecf0f1;
 }
 </style>

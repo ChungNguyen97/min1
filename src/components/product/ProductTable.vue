@@ -1,8 +1,10 @@
 <template>
   <div class="content">
-    <h1>PRODUCT LIST</h1>
     <div class="list-table">
-      <table class="table align-middle" v-if="this['product/getProductList'].length !=0">
+      <table
+        class="table align-middle"
+        v-if="this['product/getProductList'].length != 0"
+      >
         <thead class="tableHeader text-light">
           <tr>
             <th scope="col">#</th>
@@ -66,14 +68,13 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('product/getDataProduct');
+    this.$store.dispatch("product/getDataProduct");
     // console.log(this['product/getProductList']);
   },
 
   computed: {
     ...mapGetters(["product/getProductList"]),
   },
-
 };
 </script>
 

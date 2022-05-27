@@ -1,10 +1,10 @@
 <template>
-  <div class="collection">
-    <h3>Filter by Collections</h3>
-    <select name="collection" @change="handleChangeSelect">
-      <option value="">---- Select collection ----</option>
+  <div class="vendor">
+    <h3>Filter by Vendor</h3>
+    <select name="vendor" @change="handleChangeSelect">
+      <option value="">---- Select vendor ----</option>
       <option
-        v-for="(option, index) in this['collection/getCollections']"
+        v-for="(option, index) in getVendorList"
         :key="index"
         :value="option.title"
       >
@@ -17,36 +17,38 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "product-collection",
+  name: "ProductVendor",
   data: () => ({
     title: "",
   }),
   methods: {
-    ...mapActions(["collection/getCollectionData"]),
+    ...mapActions(["vendor/getVendorData"]),
     handleChangeSelect(e) {
-      console.log("at product-collection ", e.target.value);
       this.$emit("changeSelect", e.target.value);
     },
   },
   computed: {
-    ...mapGetters(["collection/getCollections"]),
+    ...mapGetters('vendor',['getVendorList']),
   },
   created() {
-    this.$store.dispatch("collection/getCollectionData");
+    this.$store.dispatch("vendor/getVendorData");
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.collection {
+.vendor {
+  margin-bottom:12px;
   h3 {
-    margin: 0;
+    margin:0;
+    text-align:center;
   }
   select {
     padding: 5px 12px;
     width: 250px;
     text-align: center;
-    border-radius: 8px;
+    border-radius:8px
+
   }
   option {
     text-align: left;

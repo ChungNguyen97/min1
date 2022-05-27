@@ -29,12 +29,11 @@ export default {
 
 <style lang="scss">
 .search-feature {
-  margin: 12px auto;
   text-align: center;
   input{
     padding: 5px 12px;
     border-radius: 8px;
-    min-width: 500px;
+    min-width: 390px;
     @media only screen and (max-width:768px){
       max-width: 100%;
     }

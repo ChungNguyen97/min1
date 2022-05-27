@@ -3,7 +3,7 @@
     <h1>{{ label }}</h1>
     <p class="redirect-to-product">
       Xem danh sách sản phẩm tại
-      <router-link  to="/product"
+      <router-link  :to="{name:'homePage'}"
         >Product Page</router-link
       >
     </p>
