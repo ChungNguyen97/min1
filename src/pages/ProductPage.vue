@@ -1,12 +1,11 @@
 <template>
   <div class="product container">
-    <div class="showInformationAll" v-if="this['login/getStatusLogin']">
-      <skeleton-loading-vue />
+    <div class="showInformationAll" v-if="'getStatusLogin'">
+      <product-skeleton />
       <div class="control">
         <h1>PRODUCT LIST</h1>
         <div class="search">
-          <product-search-vue v-on:updateSearch="handleUpdateSearch" />
-          
+          <product-search v-on:updateSearch="handleUpdateSearch" />
         </div>
         <div class="filter">
           <product-vendor v-on:changeSelect="handleChangeVendor" />
@@ -16,7 +15,7 @@
           />
         </div>
       </div>
-      <table-product-vue />
+      <product-table />
       <product-pagination v-on:changePagination="handleChangePagination" />
     </div>
 
@@ -28,13 +27,15 @@
 </template>
 
 <script>
-import TableProductVue from "@/components/product/ProductTable.vue";
-import SkeletonLoadingVue from "@/components/product/ProductSkeleton.vue";
-import ProductSearchVue from "@/components/product/ProductSearch.vue";
-import ProductCollection from "@/components/product/ProductCollection";
-import ProductPagination from "@/components/product/ProductPagination";
-import ProductVendor from "@/components/product/ProductVendor";
 import { mapActions, mapGetters, mapState } from "vuex";
+import ProductSkeleton from '@/components/product/ProductSkeleton.vue'
+import ProductSearch from '@/components/product/ProductSearch.vue'
+import ProductVendor from '@/components/product/ProductVendor.vue'
+import ProductCollection from '@/components/product/ProductCollection.vue'
+import ProductTable from '@/components/product/ProductTable.vue'
+import ProductPagination from '@/components/product/ProductPagination.vue'
+
+
 
 export default {
   name: "ProductPage",
@@ -45,12 +46,12 @@ export default {
     vendor: "",
   }),
   components: {
-    TableProductVue,
-    SkeletonLoadingVue,
-    ProductSearchVue,
-    ProductCollection,
-    ProductPagination,
-    ProductVendor,
+      ProductSkeleton,
+      ProductSearch,
+      ProductVendor,
+      ProductCollection,
+      ProductTable,
+      ProductPagination
   },
   methods: {
     handleUpdateSearch(searchText) {
@@ -68,10 +69,14 @@ export default {
       this.cursor = data;
     },
   },
+
+
   computed: {
-    ...mapGetters(["login/getStatusLogin", "product/getProductList"]),
-    ...mapState("product", ["isLoading"]),
+    ...mapGetters("login",['getStatusLogin']),
+    ...mapState('product',['productList']),
   },
+  
+
   watch: {
     search() {
       this.$store.dispatch("product/getDataProduct", { search: this.search });

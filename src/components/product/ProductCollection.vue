@@ -4,7 +4,7 @@
     <select name="collection" @change="handleChangeSelect">
       <option value="">---- Select collection ----</option>
       <option
-        v-for="(option, index) in this['collection/getCollections']"
+        v-for="(option, index) in getCollections"
         :key="index"
         :value="option.title"
       >
@@ -17,7 +17,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "product-collection",
+  name: "ProductCollection",
   data: () => ({
     title: "",
   }),
@@ -29,7 +29,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["collection/getCollections"]),
+    ...mapGetters('collection',["getCollections"]),
   },
   created() {
     this.$store.dispatch("collection/getCollectionData");

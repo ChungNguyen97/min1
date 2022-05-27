@@ -3,12 +3,12 @@
     <div class="list-table">
       <p class="subMessager" v-if="!isLoading">
             Có
-            <span>{{ this["product/getProductList"].length }}</span>
+            <span>{{ getProductList.length }}</span>
             kết quả cho từ khóa tìm kiếm 
       </p>
       <table
         class="table align-middle"
-        v-if="this['product/getProductList'].length != 0"
+        v-if="getProductList.length != 0"
       >
         <thead class="tableHeader text-light">
           <tr>
@@ -26,7 +26,7 @@
             v-for="(
               { id, title, images, variants, product_type, vendor, ...rest },
               index
-            ) in this['product/getProductList']"
+            ) in getProductList"
             :key="id"
             class="tr-detail"
           >
@@ -55,7 +55,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
 import imageIconProduct from "@/assets/image/icon-product.png";
 
 export default {
-  name: "TableProduct",
+  name: "ProductTable",
   data() {
     return {
       imageIconProduct,
@@ -73,12 +73,11 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("product/getDataProduct");
-    // console.log(this['product/getProductList']);
+    this.$store.dispatch('product/getDataProduct');
   },
 
   computed: {
-    ...mapGetters(["product/getProductList"]),
+    ...mapGetters('product',["getProductList"]),
     ...mapState('product',['isLoading'])
   },
 };

@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  name: "product-search",
+  name: "ProductSearch",
   data() {
     return {
       searchText: "",

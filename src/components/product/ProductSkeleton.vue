@@ -1,5 +1,5 @@
 <template>
-  <div class="loading" v-if="this['product/getIsLoading']">
+  <div class="loading" v-if="getIsLoading">
     <div class="base"></div>
     <div class="information">
       <div class="loadIcon"></div>
@@ -11,8 +11,8 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "SkeletonLoading",
-  computed: mapGetters(["product/getIsLoading"]),
+  name: "ProductSkeleton",
+  computed: mapGetters("product", ["getIsLoading"]),
 };
 </script>
 
