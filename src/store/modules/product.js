@@ -3,9 +3,9 @@ const product = {
   namespaced: true,
   state: {
     productList: [],
-    isLoading: true,
+    isLoading: false,
     page_info: {
-      
+
     }
   },
   getters: {
@@ -14,21 +14,24 @@ const product = {
   },
 
   actions: {
-    async getDataProduct({ commit }, params = '') {
+    async getDataProduct({ state, commit }, params = '') {
+      state.isLoading = true;
       try {
         const res = await axiosClient.get('/graph', { params });
         commit('SET_PRODUCT', res)
+        // console.log(res);
       } catch (error) {
         console.log(error)
       }
+    
     }
 
   },
   mutations: {
-    SET_PRODUCT(state, {products,page_info}) {
+    SET_PRODUCT(state, { products, page_info }) {
       state.productList = products
       state.isLoading = false,
-      state.page_info = page_info
+        state.page_info = page_info
     },
 
   },

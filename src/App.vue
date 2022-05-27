@@ -32,6 +32,7 @@ export default {
 
 <style>
 @import "./styles/_reset.scss";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -40,4 +41,5 @@ export default {
 body {
   background: #ecf0f1;
 }
+
 </style>

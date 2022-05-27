@@ -1,6 +1,11 @@
 <template>
   <div class="content">
     <div class="list-table">
+      <p class="subMessager" v-if="!isLoading">
+            Có
+            <span>{{ this["product/getProductList"].length }}</span>
+            kết quả cho từ khóa tìm kiếm 
+      </p>
       <table
         class="table align-middle"
         v-if="this['product/getProductList'].length != 0"
@@ -46,7 +51,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import imageIconProduct from "@/assets/image/icon-product.png";
 
 export default {
@@ -74,6 +79,7 @@ export default {
 
   computed: {
     ...mapGetters(["product/getProductList"]),
+    ...mapState('product',['isLoading'])
   },
 };
 </script>

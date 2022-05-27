@@ -1,25 +1,21 @@
 <template>
   <div class="product container">
-    <skeleton-loading-vue />
     <div class="showInformationAll" v-if="this['login/getStatusLogin']">
-      <h1>PRODUCT LIST</h1>
-
+      <skeleton-loading-vue />
       <div class="control">
+        <h1>PRODUCT LIST</h1>
         <div class="search">
           <product-search-vue v-on:updateSearch="handleUpdateSearch" />
-          <p class="subMessager" v-if="search">
-            Có
-            <span>{{ this["product/getProductList"].length }}</span>
-            kết quả cho từ khóa tìm kiếm <span>{{ search }}</span>
-          </p>
+          
         </div>
-        <product-vendor v-on:changeSelect="handleChangeVendor" />
-        <product-collection
-          class="product-collect"
-          v-on:changeSelect="handleChangeSelect"
-        />
+        <div class="filter">
+          <product-vendor v-on:changeSelect="handleChangeVendor" />
+          <product-collection
+            class="collect"
+            v-on:changeSelect="handleChangeSelect"
+          />
+        </div>
       </div>
-
       <table-product-vue />
       <product-pagination v-on:changePagination="handleChangePagination" />
     </div>
@@ -38,7 +34,7 @@ import ProductSearchVue from "@/components/product/ProductSearch.vue";
 import ProductCollection from "@/components/product/ProductCollection";
 import ProductPagination from "@/components/product/ProductPagination";
 import ProductVendor from "@/components/product/ProductVendor";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 
 export default {
   name: "ProductPage",
@@ -62,7 +58,6 @@ export default {
     },
     ...mapActions(["product/getDataProduct"]),
     handleChangeSelect(payload) {
-      // console.log("at ProductPage", payload);
       this.collecion = payload;
     },
     handleChangeVendor(payload) {
@@ -75,6 +70,7 @@ export default {
   },
   computed: {
     ...mapGetters(["login/getStatusLogin", "product/getProductList"]),
+    ...mapState("product", ["isLoading"]),
   },
   watch: {
     search() {
@@ -114,26 +110,27 @@ export default {
   }
 
   .subMessager {
-    text-align: center;
+    text-align: left;
     font-style: italic;
+    margin: 4px 0 8px 0;
     span {
       font-weight: 700;
     }
   }
-  .control {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #ecf0f1;
-    margin-bottom: 12px;
-    flex-wrap:wrap;
-    @media (max-width: 768px) {
-      flex-direction: column;
-      gap: 16px 0;
-    }
-    
+  .control{
+    background: aliceblue;
+    padding: 12px;
+    margin-bottom: 6px;
+    margin-top: 6px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 5px #7f8fa6;
   }
-  .product-collect {
+  .filter {
+    display: flex;
+    gap: 0 20px;
+    justify-content: flex-end;
+  }
+  .collect {
     margin-bottom: 12px;
     h3 {
       margin: 0;

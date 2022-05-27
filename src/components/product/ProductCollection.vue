@@ -1,6 +1,6 @@
 <template>
   <div class="collection">
-    <h3>Filter by Collections</h3>
+    <p>Filter by Collections</p>
     <select name="collection" @change="handleChangeSelect">
       <option value="">---- Select collection ----</option>
       <option
@@ -39,8 +39,10 @@ export default {
 
 <style lang="scss" scoped>
 .collection {
-  h3 {
-    margin: 0;
+  p {
+    margin: 3px 0;
+    text-align: center;
+    font-weight: bold;
   }
   select {
     padding: 5px 12px;

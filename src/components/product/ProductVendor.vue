@@ -1,6 +1,6 @@
 <template>
   <div class="vendor">
-    <h3>Filter by Vendor</h3>
+    <p>Filter by Vendor</p>
     <select name="vendor" @change="handleChangeSelect">
       <option value="">---- Select vendor ----</option>
       <option
@@ -39,9 +39,10 @@ export default {
 <style lang="scss" scoped>
 .vendor {
   margin-bottom:12px;
-  h3 {
-    margin:0;
-    text-align:center;
+  p{
+      margin: 3px 0;
+      text-align:center;
+      font-weight: bold;
   }
   select {
     padding: 5px 12px;
