@@ -4,10 +4,6 @@ const product = {
   state: {
     productList: [],
     isLoading: true,
-    params: {
-      limit: 10,
-      search: ''
-    }
   },
   getters: {
     getProductList: state => state.productList,
@@ -15,8 +11,7 @@ const product = {
   },
 
   actions: {
-    async getDataProduct({ state,commit }) {
-      const params = state.params
+    async getDataProduct({ commit },params='') {
       try {
         const res = await axiosClient.get('/graph', {params});
         const productList = await res.products;
@@ -32,9 +27,7 @@ const product = {
       state.productList = productList
       state.isLoading = false
     },
-    SET_SEARCH(state){
-      state.params.search=''
-    }
+  
   },
 }
 export default product
