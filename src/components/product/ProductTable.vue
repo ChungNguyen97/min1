@@ -1,8 +1,15 @@
 <template>
   <div class="content">
-    <h1>PRODUCT LIST</h1>
     <div class="list-table">
-      <table class="table align-middle" v-if="this['product/getProductList'].length !=0">
+      <p class="subMessager" v-if="!isLoading">
+            Có
+            <span>{{ getProductList.length }}</span>
+            kết quả cho từ khóa tìm kiếm 
+      </p>
+      <table
+        class="table align-middle"
+        v-if="getProductList.length != 0"
+      >
         <thead class="tableHeader text-light">
           <tr>
             <th scope="col">#</th>
@@ -19,7 +26,7 @@
             v-for="(
               { id, title, images, variants, product_type, vendor, ...rest },
               index
-            ) in this['product/getProductList']"
+            ) in getProductList"
             :key="id"
             class="tr-detail"
           >
@@ -44,11 +51,11 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import imageIconProduct from "@/assets/image/icon-product.png";
 
 export default {
-  name: "TableProduct",
+  name: "ProductTable",
   data() {
     return {
       imageIconProduct,
@@ -70,9 +77,9 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["product/getProductList"]),
+    ...mapGetters('product',["getProductList"]),
+    ...mapState('product',['isLoading'])
   },
-
 };
 </script>
 
