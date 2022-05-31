@@ -15,15 +15,16 @@ const product = {
 
   actions: {
     async getDataProduct({ state, commit }, params = '') {
-      state.isLoading = true;
       try {
+        state.isLoading = true;
         const res = await axiosClient.get('/graph', { params });
         commit('SET_PRODUCT', res)
-        // console.log(res);
       } catch (error) {
+        state.isLoading = false
+        state.productList = []
         console.log(error)
       }
-    
+
     }
 
   },

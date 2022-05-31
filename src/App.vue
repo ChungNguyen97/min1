@@ -17,11 +17,11 @@ export default {
     CommonHeaderVue,
   },
   methods: {
-    ...mapMutations(["login/CHECK_STATUS_BEGIN"]),
+    ...mapMutations( ["login/CHECK_STATUS_BEGIN"]),
   },
   created() {
-    const { auth } = JSON.parse(localStorage.getItem("token")) || { auth: "" };
-    if (auth.accessToken) {
+    const token = JSON.parse(localStorage.getItem("token")) || "";
+    if (token !='' && token.auth.accessToken) {
       this.$store.commit("login/CHECK_STATUS_BEGIN", true);
     } else {
       this.$store.commit("login/CHECK_STATUS_BEGIN", false);
@@ -41,5 +41,4 @@ export default {
 body {
   background: #ecf0f1;
 }
-
 </style>

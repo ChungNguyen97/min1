@@ -21,8 +21,7 @@ export default new Router({
         if (store.state.login.isLogin) {
           next()
         } else {
-          alert('Bạn cần đăng nhập để vào trang chủ')
-          next({path:'/login',query:{redirect:''}})
+          next({ name: 'loginPage'})
         }
       }
     },
@@ -37,17 +36,16 @@ export default new Router({
       component: LoginPage,
       beforeEnter(to, from, next) {
         if (store.state.login.isLogin) {
-          alert('Bạn đã đăng nhập rồi!')
-          next({path:'/',query:{redirect:'/login'}})
+          next({ path: 'homePage', query: { redirect: '/login' } })
         } else {
           next()
         }
       }
     },
     {
-      path:'*',
-      name:'pageNotFound',
-      component:PageNotFound
+      path: '*',
+      name: 'pageNotFound',
+      component: PageNotFound
     }
 
   ]

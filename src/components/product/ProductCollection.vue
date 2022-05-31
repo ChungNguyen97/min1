@@ -22,17 +22,16 @@ export default {
     title: "",
   }),
   methods: {
-    ...mapActions(["collection/getCollectionData"]),
+    ...mapActions("collection", ["getCollectionData"]),
     handleChangeSelect(e) {
-      console.log("at product-collection ", e.target.value);
       this.$emit("changeSelect", e.target.value);
     },
   },
   computed: {
-    ...mapGetters('collection',["getCollections"]),
+    ...mapGetters("collection", ["getCollections"]),
   },
   created() {
-    this.$store.dispatch("collection/getCollectionData");
+    this.getCollectionData();
   },
 };
 </script>

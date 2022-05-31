@@ -1,75 +1,85 @@
 <template>
   <div class="login">
-    <h2>Đăng nhập</h2>
-    <form action="" class="form">
-      <div class="form__group">
-        <label for="email">Email: </label>
-        <input
-          type="email"
-          placeholder="Nhập email của bạn..."
-          v-model.trim="$v.email.$model"
-          :class="{
-            'is-invalid': $v.email.$error,
-            'is-valid': !$v.email.$invalid,
-          }"
-        />
-      </div>
-      <span class="invalid-feedback">
-        <span v-if="!$v.email.required">Email is required</span>
-        <span v-if="!$v.email.minLength"
-          >Email must have at least
-          {{ $v.email.$params.minLength.min }} letters</span
-        >
-        <span v-if="!$v.email.maxLength"
-          >Emails have a maximum of
-          {{ $v.email.$params.maxLength.max }} letters</span
-        >
-      </span>
+    <div v-if="loadingLogin">
+      <h3 class="loadingLogin">Login in progress</h3>
+      <div class="iconLoading"></div>
+    </div>
+    
+    <div class="login__content" v-else>
+      <h2>LOGIN</h2>
+      <form action="" class="form">
+        <div class="form__group">
+          <label for="email">Email: </label>
+          <input
+            type="email"
+            placeholder="Enter your email..."
+            v-model.trim="$v.email.$model"
+            :class="{
+              'is-invalid': $v.email.$error,
+              'is-valid': !$v.email.$invalid,
+            }"
+          />
+        </div>
+        <span class="invalid-feedback">
+          <span class="is-invalid" v-if="isRequired && !email"
+            >Email is required</span
+          >
+          <span class="is-invalid" v-if="!$v.email.minLength"
+            >Email must have at least
+            {{ $v.email.$params.minLength.min }} letters</span
+          >
+          <span v-if="!$v.email.maxLength"
+            >Emails have a maximum of
+            {{ $v.email.$params.maxLength.max }} letters</span
+          >
+        </span>
 
-      <div class="form__group">
-        <label for="password">Mật khẩu: </label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Nhập mật khẩu của bạn..."
-          v-model.trim="$v.password.$model"
-          :class="{
-            'is-invalid': $v.password.$error,
-            'is-valid': !$v.password.$invalid,
-          }"
-        />
-      </div>
-      <span class="invalid-feedback">
-        <span v-if="!$v.password.required">Password is required</span>
-        <span v-if="!$v.password.minLength"
-          >Password must have at least
-          {{ $v.password.$params.minLength.min }} letters</span
-        >
-        <span v-if="!$v.password.maxLength"
-          >Password have a maximum of
-          {{ $v.password.$params.maxLength.max }} letters</span
-        >
-      </span>
+        <div class="form__group">
+          <label for="password">Password: </label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter your password..."
+            v-model.trim="$v.password.$model"
+            :class="{
+              'is-invalid': $v.password.$error,
+              'is-valid': !$v.password.$invalid,
+            }"
+          />
+        </div>
+        <span class="invalid-feedback">
+          <span class="is-invalid" v-if="isRequired && !password"
+            >Password is required</span
+          >
+          <span class="is-invalid" v-if="!$v.password.minLength"
+            >Password must have at least
+            {{ $v.password.$params.minLength.min }} letters</span
+          >
+          <span v-if="!$v.password.maxLength"
+            >Password have a maximum of
+            {{ $v.password.$params.maxLength.max }} letters</span
+          >
+        </span>
 
-      <input
-        type="submit"
-        value="Đăng nhập"
-        class="submit"
-        @click.prevent="handleSubmit"
-      />
-    </form>
+        <input
+          type="submit"
+          value="LOGIN"
+          class="submit"
+          @click.prevent="handleSubmit"
+        />
+      </form>
+    </div>
     <notifications group="infoLogin" width="50%" position="top center" />
   </div>
 </template>
 
 <script>
 import {
-  required,
   email,
   minLength,
   maxLength,
+  required,
 } from "vuelidate/lib/validators";
-
 import { mapActions, mapState } from "vuex";
 export default {
   name: "FormLogin",
@@ -77,9 +87,12 @@ export default {
     return {
       email: "",
       password: "",
-      submitstatus: null,
+      checkLogin: false,
+      isRequired: false,
+      loadingLogin: false,
     };
   },
+
   validations: {
     email: {
       required,
@@ -98,20 +111,22 @@ export default {
     async handleSubmit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
-        this.submitstatus = "FAIL";
+        this.isRequired = true;
       } else {
-        this.submitstatus = "SUCCESS";
+        this.isRequired = false;
+        this.loadingLogin = true;
         const data = {
           email: this.email,
           password: this.password,
         };
-        await this.$store.dispatch('login/loginAction',data)
+        await this.loginAction(data);
+        this.loadingLogin = false;
 
-        if (this.login.isLogin) {
+        if (this.isLogin) {
           this.$notify({
             group: "infoLogin",
-            title: "Đăng nhập thành công",
-            text: "Bạn sẽ được chuyển đến trang chủ",
+            title: "Sign in successfully",
+            text: "You will be redirected to the homepage",
             duration: 2000,
           });
           setTimeout(() => {
@@ -120,19 +135,22 @@ export default {
         } else {
           this.$notify({
             group: "infoLogin",
-            title: "Đăng nhập thất bại",
-            text: "Kiểm tra email và password sau đó thử đăng nhập lại!",
+            title: "Login failed",
+            text: "Check your email and password then try logging in again!",
             type: "warn",
             duration: 3000,
           });
         }
       }
     },
-    ...mapActions(["login/loginAction"]),
+    ...mapActions("login", ["loginAction"]),
   },
   computed: {
-    ...mapState(['login'])
-  }
+    ...mapState({
+      accessToken: (state) => state.auth.accessToken,
+      isLogin: (state) => state.login.isLogin,
+    }),
+  },
 };
 </script>
 
@@ -149,6 +167,30 @@ export default {
   h2 {
     text-align: center;
     text-transform: uppercase;
+  }
+  .loadingLogin {
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    color: #2980b9;
+  }
+  .iconLoading {
+    width: 35px;
+    height: 35px;
+    border: 5px solid blue;
+    border-radius: 100rem;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    margin: auto;
+    animation: loadtime 1s linear infinite;
+    @keyframes loadtime {
+      from {
+        transform: rotate(0);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
   }
 
   .form {
@@ -189,7 +231,6 @@ export default {
   }
 
   .is-invalid {
-    border: 1px solid red !important;
     color: red;
   }
 

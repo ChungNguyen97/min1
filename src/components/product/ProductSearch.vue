@@ -12,7 +12,7 @@
           @keyup.enter="handleSubmit"
         />
       </div>
-      <div class="search__btns">
+      <div class="search__btns" v-if="searchText">
         <button @click="handleSubmit">Search</button>
         <button class="remove" @click="handleRemove">Clear</button>
       </div>
@@ -46,9 +46,9 @@ export default {
       ],
     };
   },
+
   methods: {
     handleSubmit() {
-      console.log("Send...");
       if (this.searchText) {
         this.$emit("updateSearch", this.searchText);
       } else {
@@ -62,7 +62,7 @@ export default {
       }
     },
     handleRemove() {
-      this.searchText = "";
+      this.searchText =''
       this.$emit("updateSearch");
     },
   },
