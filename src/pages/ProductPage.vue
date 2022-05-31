@@ -67,6 +67,7 @@ export default {
     handleChangePagination(data) {
       this.cursor = data;
     },
+  
   },
 
   computed: {

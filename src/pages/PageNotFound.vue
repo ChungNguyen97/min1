@@ -1,41 +1,50 @@
 <template>
-  <div
-    class="pageNotFound"
-    :style="{ backgroundImage: `url(${imageNotFound})` }"
-  >
+  <div class="pageNotFound">
     <div class="description">
-      <h3>Trang này không tồn tại, xem lại đường dẫn của bạn</h3>
+      <h3>This page does not exist, please review your link</h3>
+      <div class="code-error">
+        <p class="number">404</p>
+        <p class="text">Page not Found</p>
+      </div>
       <p>
-        Quay về
-        <router-link :to="{ name: 'homePage' }"><i>Trang chủ</i></router-link>
+        Return
+        <router-link :to="{ name: 'homePage' }"><i> Home page</i></router-link>
       </p>
     </div>
   </div>
 </template>
 
 <script>
-import imageNotFound from "@/assets/image/image_404error.png";
-
 export default {
   name: "PageNotFound",
   data() {
-    return {
-      imageNotFound,
-    };
+    return {};
   },
 };
 </script>
 
 <style  lang="scss" scoped>
 .pageNotFound {
-  width: 100%;
-  height: 100vh;
-  background-position: center;
   .description {
     text-align: center;
     padding-top: 50px;
     h3 {
       margin: 0;
+    }
+    .code-error {
+      margin: 32px 0;
+
+      .number {
+        font-size: 91px;
+        font-weight: 600;
+        letter-spacing: 16px;
+        margin: 0px;
+      }
+      .text {
+        margin-top: 0;
+        font-weight: 600;
+        letter-spacing: 2px;
+      }
     }
   }
 }

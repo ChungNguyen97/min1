@@ -1,6 +1,7 @@
 import axios from "axios";
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
+import { store } from '@/store'
 
 Vue.use(VueAxios, axios)
 
@@ -13,9 +14,9 @@ const axiosClient = axios.create({
 
 })
 axiosClient.interceptors.request.use(function (config) {
-  const { auth } = JSON.parse(localStorage.getItem('token'))
-  if (auth.accessToken)
-    config.headers.Authorization = 'Bearer ' + auth.accessToken
+  const token = store.state.auth.accessToken;
+  if (token)
+    config.headers.Authorization = 'Bearer ' + token
   return config;
 }, function (error) {
   console.log(error);

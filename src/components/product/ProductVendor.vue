@@ -21,35 +21,35 @@ export default {
   data: () => ({
     title: "",
   }),
+
   methods: {
-    ...mapActions(["vendor/getVendorData"]),
+    ...mapActions("vendor", ["getVendorData"]),
     handleChangeSelect(e) {
       this.$emit("changeSelect", e.target.value);
     },
   },
   computed: {
-    ...mapGetters('vendor',['getVendorList']),
+    ...mapGetters("vendor", ["getVendorList"]),
   },
   created() {
-    this.$store.dispatch("vendor/getVendorData");
+    this.getVendorData();
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .vendor {
-  margin-bottom:12px;
-  p{
-      margin: 3px 0;
-      text-align:center;
-      font-weight: bold;
+  margin-bottom: 12px;
+  p {
+    margin: 3px 0;
+    text-align: center;
+    font-weight: bold;
   }
   select {
     padding: 5px 12px;
     width: 250px;
     text-align: center;
-    border-radius:8px
-
+    border-radius: 8px;
   }
   option {
     text-align: left;
