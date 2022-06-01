@@ -6,9 +6,12 @@
     >
       Prev
     </button>
-    <button @click="handleChangeNext" 
+    <button
+      @click="handleChangeNext"
       :class="{ stop: !page_info.has_next_page }"
-    >Next</button>
+    >
+      Next
+    </button>
   </div>
 </template>
 
@@ -21,14 +24,14 @@ export default {
       const data = {
         after: this.page_info.next_page_cursor,
       };
-      console.log(this.page_info);
       if (this.page_info.has_next_page) this.$emit("changePagination", data);
     },
     handleChangePrev() {
       const data = {
         before: this.page_info.previous_page_cursor,
       };
-      if(this.page_info.has_previous_page) this.$emit("changePagination", data);
+      if (this.page_info.has_previous_page)
+        this.$emit("changePagination", data);
     },
   },
   computed: {

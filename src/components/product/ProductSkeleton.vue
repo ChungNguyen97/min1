@@ -1,6 +1,5 @@
 <template>
-  <div class="loading" v-if="getIsLoading">
-    <div class="base"></div>
+  <div class="skeleton">
     <div class="information">
       <div class="loadIcon"></div>
       <h3>Loading ....</h3>
@@ -9,32 +8,21 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "ProductSkeleton",
-  computed: mapGetters("product", ["getIsLoading"]),
 };
 </script>
 
-<style lang="scss">
-.loading {
-  position: relative;
-  .base {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #333;
-    opacity: 0.4;
-    z-index: 100;
-  }
+<style lang="scss" scoped>
+.skeleton {
+  background: red;
+  text-align: center;
+  padding: 20px 0;
+  background: #333;
+  display: flex;
+  opacity: 0.75;
   .information {
-    position: absolute;
-    z-index: 999;
-    top: 40vh;
-    left: 50%;
-    transform: translateX(-50%);
+    margin: auto;
     .loadIcon {
       width: 77px;
       height: 77px;

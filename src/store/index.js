@@ -13,10 +13,9 @@ const vuexLocal = new VuexPersistence({
   storage: localStorage,
   key: 'token',
   modules: ['auth'],
-  path: ['accessToken']
 })
 export const store = new Vuex.Store({
-  
+
   modules: {
     collection,
     product,

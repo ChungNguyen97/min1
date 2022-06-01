@@ -2,7 +2,7 @@
   <div class="homepage container">
     <h1>{{ label }}</h1>
     <p class="redirect-to-product">
-      Xem danh sách sản phẩm tại
+    See a list of products at: 
       <router-link :to="{ name: 'productPage' }">Product Page</router-link>
     </p>
   </div>
@@ -13,13 +13,13 @@ export default {
   name: "HomePage",
   data() {
     return {
-      label: "Trang chủ",
+      label: "Home page",
     };
   },
 };
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss" scoped>
 .homepage {
   h1 {
     text-align: center;

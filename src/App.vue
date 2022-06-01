@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <common-header-vue />
+    <common-header />
     <main class="main">
       <router-view />
     </main>
@@ -9,19 +9,20 @@
 
 <script>
 import { mapMutations } from "vuex";
-import CommonHeaderVue from "./components/common/CommonHeader.vue";
+import CommonHeader from "./components/common/CommonHeader.vue";
+import { store } from "@/store";
 
 export default {
   name: "App",
   components: {
-    CommonHeaderVue,
+    CommonHeader,
   },
   methods: {
     ...mapMutations(["login/CHECK_STATUS_BEGIN"]),
   },
   created() {
-    const { auth } = JSON.parse(localStorage.getItem("token")) || { auth: "" };
-    if (auth.accessToken) {
+    const token = store.state.auth.accessToken || "";
+    if (token) {
       this.$store.commit("login/CHECK_STATUS_BEGIN", true);
     } else {
       this.$store.commit("login/CHECK_STATUS_BEGIN", false);
@@ -41,5 +42,4 @@ export default {
 body {
   background: #ecf0f1;
 }
-
 </style>

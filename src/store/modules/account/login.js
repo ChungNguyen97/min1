@@ -18,6 +18,17 @@ const login = {
       } catch (error) {
         console.log(error);
       }
+    },
+    async logoutAction({ commit }) {
+      try {
+        const res = await axiosClient.post('logout')
+        if (res.message == 'Logout successfully') {
+          this.commit('auth/SET_TOKEN', { token: '' })
+          commit('SET_LOGIN')
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
 
@@ -27,7 +38,8 @@ const login = {
     },
     CHECK_STATUS_BEGIN(state, payload) {
       return state.isLogin = payload
-    }
+    },
+
   },
 }
 

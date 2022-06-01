@@ -1,21 +1,51 @@
 <template>
   <div class="pageNotFound">
-    <h3>Trang này không tồn tại, xem lại đường dẫn của bạn</h3>
-    <p>Quay về 
-        <router-link to="/"><i>Trang chủ</i></router-link>
-    </p>
+    <div class="description">
+      <h3>This page does not exist, please review your link</h3>
+      <div class="code-error">
+        <p class="number">404</p>
+        <p class="text">Page not Found</p>
+      </div>
+      <p>
+        Return
+        <router-link :to="{ name: 'homePage' }"><i> Home page</i></router-link>
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name:'PageNotFound'
-}
+  name: "PageNotFound",
+  data() {
+    return {};
+  },
+};
 </script>
 
-<style>
-  .pageNotFound{
+<style  lang="scss" scoped>
+.pageNotFound {
+  .description {
     text-align: center;
-    margin:80px auto;
+    padding-top: 50px;
+    h3 {
+      margin: 0;
+    }
+    .code-error {
+      margin: 32px 0;
+
+      .number {
+        font-size: 91px;
+        font-weight: 600;
+        letter-spacing: 16px;
+        margin: 0px;
+      }
+      .text {
+        margin-top: 0;
+        font-weight: 600;
+        letter-spacing: 2px;
+      }
+    }
   }
+}
 </style>

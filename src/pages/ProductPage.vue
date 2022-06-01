@@ -1,7 +1,6 @@
 <template>
   <div class="product container">
-    <div class="showInformationAll" v-if="'getStatusLogin'">
-      <product-skeleton />
+    <div class="showInformationAll" v-if="getStatusLogin">
       <div class="control">
         <h1>PRODUCT LIST</h1>
         <div class="search">
@@ -15,114 +14,123 @@
           />
         </div>
       </div>
-      <product-table />
+      <product-table 
+        :params="{search:search, collection:collection,vendor:vendor}"
+       />
       <product-pagination v-on:changePagination="handleChangePagination" />
     </div>
 
     <p v-else class="warn-login">
       Bạn cần đăng nhập để xem danh sách sản phẩm.
-      <router-link class="redirect" to="/login">Đăng nhập ngay</router-link>
+      <router-link class="redirect" :to="{ name: 'loginPage' }"
+        >Đăng nhập ngay</router-link
+      >
     </p>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import ProductSkeleton from '@/components/product/ProductSkeleton.vue'
-import ProductSearch from '@/components/product/ProductSearch.vue'
-import ProductVendor from '@/components/product/ProductVendor.vue'
-import ProductCollection from '@/components/product/ProductCollection.vue'
-import ProductTable from '@/components/product/ProductTable.vue'
-import ProductPagination from '@/components/product/ProductPagination.vue'
-
-
+import ProductSearch from "@/components/product/ProductSearch.vue";
+import ProductVendor from "@/components/product/ProductVendor.vue";
+import ProductCollection from "@/components/product/ProductCollection.vue";
+import ProductTable from "@/components/product/ProductTable.vue";
+import ProductPagination from "@/components/product/ProductPagination.vue";
 
 export default {
   name: "ProductPage",
+
   data: () => ({
     search: "",
-    collecion: "",
+    collection: "",
     cursor: {},
     vendor: "",
   }),
   components: {
-      ProductSkeleton,
-      ProductSearch,
-      ProductVendor,
-      ProductCollection,
-      ProductTable,
-      ProductPagination
+    ProductSearch,
+    ProductVendor,
+    ProductCollection,
+    ProductTable,
+    ProductPagination,
   },
   methods: {
-    handleUpdateSearch(searchText) {
-      this.search = searchText;
+    ...mapActions("product", ["getDataProduct"]),
+    handleUpdateSearch(data) {
+      this.search = data;
     },
-    ...mapActions(["product/getDataProduct"]),
     handleChangeSelect(payload) {
-      this.collecion = payload;
+      this.collection = payload;
     },
     handleChangeVendor(payload) {
       this.vendor = payload;
     },
     handleChangePagination(data) {
-      console.log("handleChangePagination data", data);
       this.cursor = data;
     },
+  
   },
-
 
   computed: {
-    ...mapGetters("login",['getStatusLogin']),
-    ...mapState('product',['productList']),
+    ...mapGetters({
+      getStatusLogin: "login/getStatusLogin",
+    }),
+    ...mapState("product", ["isLoading"]),
   },
-  
 
   watch: {
     search() {
-      this.$store.dispatch("product/getDataProduct", { search: this.search });
+      const params = {
+        collection: this.collection ? this.collection : null,
+        search: this.search,
+        vendor: this.vendor ? this.vendor : null,
+      };
+      this.getDataProduct(params);
     },
-    collecion() {
-      this.$store.dispatch("product/getDataProduct", {
-        collection: this.collecion,
-      });
-    },
-    cursor() {
-      console.log("change");
-      this.$store.dispatch("product/getDataProduct", this.cursor);
-    },
+
     vendor() {
-      this.$store.dispatch("product/getDataProduct", { vendor: this.vendor });
+      const params = {
+        collection: this.collection ? this.collection : null,
+        search: this.search ? this.search : null,
+        vendor: this.vendor,
+      };
+      this.getDataProduct(params);
+    },
+    collection() {
+      const params = {
+        collection: this.collection,
+        search: this.search ? this.search : null,
+        vendor: this.vendor ? this.vendor : null,
+      };
+      this.getDataProduct(params);
+    },
+
+    cursor() {
+      this.getDataProduct(this.cursor);
     },
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .product {
   h1 {
     color: #d63031;
     text-align: center;
   }
+
   .warn-login {
     text-align: center;
     margin: 48px 0 0;
     font-weight: 700;
     font-size: 23px;
     font-family: system-ui;
+
     .redirect {
       font-style: italic;
     }
   }
 
-  .subMessager {
-    text-align: left;
-    font-style: italic;
-    margin: 4px 0 8px 0;
-    span {
-      font-weight: 700;
-    }
-  }
-  .control{
+  .control {
     background: aliceblue;
     padding: 12px;
     margin-bottom: 6px;
@@ -130,33 +138,15 @@ export default {
     border-radius: 8px;
     box-shadow: 0px 1px 5px #7f8fa6;
   }
+
   .filter {
     display: flex;
     gap: 0 20px;
     justify-content: flex-end;
   }
+
   .collect {
     margin-bottom: 12px;
-    h3 {
-      margin: 0;
-      text-align: center;
-    }
-  }
-  .table {
-    background-color: #fff;
-    .img {
-      max-width: 100px;
-      height: auto;
-    }
-    .tableHeader {
-      background-color: #0984e3;
-    }
-
-    tr.tr-detail {
-      &:hover {
-        background-color: #dfe6e9;
-      }
-    }
   }
 }
 </style>

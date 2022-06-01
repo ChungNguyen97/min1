@@ -21,7 +21,7 @@ const collection = {
         const collecionData = await res.collections
         commit('UPDATE_COLLECTION', collecionData)
       }catch(error){
-        console.log('Error tại: Collection Module',error);
+        console.log(error);
       }
     }
   },
