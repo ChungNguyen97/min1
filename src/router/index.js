@@ -2,6 +2,7 @@ import HomePage from '@/pages/HomePage'
 import LoginPage from '@/pages/LoginPage'
 import ProductPage from '@/pages/ProductPage'
 import PageNotFound from '@/pages/PageNotFound'
+import ProductDetail from '@/components/product/ProductDetail'
 import { store } from '@/store'
 
 import Vue from 'vue'
@@ -21,7 +22,7 @@ export default new Router({
         if (store.state.login.isLogin) {
           next()
         } else {
-          next({ name: 'loginPage'})
+          next({ name: 'loginPage' })
         }
       }
     },
@@ -29,6 +30,11 @@ export default new Router({
       path: '/product',
       name: 'productPage',
       component: ProductPage
+    },
+    {
+      path: '/product/:id',
+      name: 'productDetail',
+      component: ProductDetail
     },
     {
       path: '/login',

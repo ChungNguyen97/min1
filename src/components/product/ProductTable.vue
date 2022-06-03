@@ -15,7 +15,6 @@
         <mark>{{ params.collection }}</mark>
       </p>
 
-
       <table class="table align-middle" v-if="getProductList.length != 0">
         <thead class="tableHeader text-light">
           <tr>
@@ -36,6 +35,7 @@
             ) in getProductList"
             :key="id"
             class="tr-detail"
+            @click="handleShowDetailProduct(id, images.url)"
           >
             <th scope="row">{{ (index += 1) }}</th>
             <td>
@@ -86,6 +86,9 @@ export default {
       }).format(value);
     },
     ...mapActions("product", ["getDataProduct"]),
+    handleShowDetailProduct(id, url) {
+      this.$router.push({ name: "productDetail", params: { id, url } });
+    },
   },
 
   created() {

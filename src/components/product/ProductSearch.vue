@@ -27,6 +27,15 @@
         {{ item }}
       </span>
     </div>
+
+    <!-- test -->
+    <button class="speech-to-txt" @click="startSpeechToTxt">
+      Click to Speak
+    </button>
+    <p>
+      <i>Search for</i>: <strong>{{ transcription_ }}</strong>
+    </p>
+
     <notifications group="warnSearchInput" width="50%" position="top center" />
   </div>
 </template>
@@ -44,9 +53,16 @@ export default {
         "Aqualina Sandal",
         "David Shirt",
       ],
+      runtimeTranscription_: "",
+      transcription_: "",
+      lang_: "es-ES",
     };
   },
-
+  watch: {
+    transcription_() {
+      this.$emit("updateSearch", this.searchText);
+    },
+  },
   methods: {
     handleSubmit() {
       if (this.searchText) {
@@ -62,8 +78,37 @@ export default {
       }
     },
     handleRemove() {
-      this.searchText =''
+      this.searchText = "";
       this.$emit("updateSearch");
+    },
+
+    // test voice search
+    startSpeechToTxt() {
+      // initialisation of voicereco
+
+      window.SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new window.SpeechRecognition();
+      recognition.lang = this.lang_;
+      recognition.interimResults = true;
+
+      // event current voice reco word
+      recognition.addEventListener("result", (event) => {
+        var text = Array.from(event.results)
+          .map((result) => result[0])
+          .map((result) => result.transcript)
+          .join("");
+        this.runtimeTranscription_ = text;
+      });
+      // end of transcription
+      recognition.addEventListener("end", () => {
+        // this.transcription_.push(this.runtimeTranscription_);
+        this.transcription_ = this.runtimeTranscription_;
+        this.searchText = this.runtimeTranscription_;
+        this.runtimeTranscription_ = "";
+        recognition.stop();
+      });
+      recognition.start();
     },
   },
 };
