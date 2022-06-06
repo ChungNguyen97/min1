@@ -2,7 +2,7 @@ import HomePage from '@/pages/HomePage'
 import LoginPage from '@/pages/LoginPage'
 import ProductPage from '@/pages/ProductPage'
 import PageNotFound from '@/pages/PageNotFound'
-import ProductDetail from '@/components/product/ProductDetail'
+import ProductDetail from '@/components/product/productDetail/ProductDetail'
 import { store } from '@/store'
 
 import Vue from 'vue'

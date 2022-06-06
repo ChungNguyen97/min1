@@ -14,16 +14,16 @@
           />
         </div>
       </div>
-      <product-table 
-        :params="{search:search, collection:collection,vendor:vendor}"
-       />
+      <product-table
+        :params="{ search: search, collection: collection, vendor: vendor }"
+      />
       <product-pagination v-on:changePagination="handleChangePagination" />
     </div>
 
     <p v-else class="warn-login">
-      Bạn cần đăng nhập để xem danh sách sản phẩm.
+      You need to login to view product list.
       <router-link class="redirect" :to="{ name: 'loginPage' }"
-        >Đăng nhập ngay</router-link
+        >Log in now</router-link
       >
     </p>
   </div>
@@ -67,7 +67,6 @@ export default {
     handleChangePagination(data) {
       this.cursor = data;
     },
-  
   },
 
   computed: {

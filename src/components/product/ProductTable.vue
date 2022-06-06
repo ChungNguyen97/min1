@@ -87,7 +87,11 @@ export default {
     },
     ...mapActions("product", ["getDataProduct"]),
     handleShowDetailProduct(id, url) {
-      this.$router.push({ name: "productDetail", params: { id, url } });
+      this.$router.push({
+        name: "productDetail",
+        params: { id},
+        query: { url },
+      });
     },
   },
 

@@ -7,7 +7,6 @@ const product = {
     productItem: '',
     page_info: {
     },
-    priceByAmount: ''
   },
   getters: {
     getProductList: state => state.productList,
@@ -26,10 +25,12 @@ const product = {
         console.log(error)
       }
     },
-    async getProductById({ commit }, productId) {
+
+
+    async getProductById({ commit }, payload) {
       try {
-        const res = await axiosClient.get(`/graph/${productId}`)
-        commit('SET_PRODUCT_ITEM', res)
+        const res = await axiosClient.get(`/graph/${payload.id}`)
+        commit('SET_PRODUCT_ITEM', { res })
       } catch (error) {
         console.log(error);
       }
@@ -38,8 +39,8 @@ const product = {
     async updateProductTitle({ commit }, payload) {
       const id = payload.id
       const params = {
-        "productTitle": payload.productTitle,
-        "price": payload.price
+        productTitle: payload.productTitle,
+        price: payload.price
       }
       try {
         const res = await axiosClient.post(`/update/${id}`, params)
@@ -51,9 +52,19 @@ const product = {
     },
 
     async updatePriceByAmount({ commit }, payload) {
-      console.log('payload: ', payload);
+      console.log('payload: updatePriceByAmount ', payload);
       try {
         const res = await axiosClient.post('/price-by-amount', payload)
+        console.log(res);
+        commit('UPDATE_PRICE_BY_AMOUNT', res)
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async updatePriceByPercent({ commit }, payload) {
+      try {
+        const res = await axiosClient.post('/price-by-percent', payload)
         console.log(res);
         commit('UPDATE_PRICE_BY_AMOUNT', res)
       } catch (error) {
@@ -68,8 +79,8 @@ const product = {
       state.isLoading = false,
         state.page_info = page_info
     },
-    SET_PRODUCT_ITEM(state, data) {
-      state.productItem = data
+    SET_PRODUCT_ITEM(state, { res }) {
+      state.productItem = res
     },
     SET_PRODUCT_TITLE(state, { product }) {
       console.log('productItem: ', state.productItem);
@@ -77,7 +88,13 @@ const product = {
       state.productItem.title = product.title
     },
     UPDATE_PRICE_BY_AMOUNT(state, res) {
-      state.priceByAmount = res
+      const variants = state.productItem.variants
+      console.log('variants: ', variants);
+      for (let variant of variants) {
+        if (variant.id === res.id) {
+          variant.price = res.price
+        }
+      }
     }
 
 
