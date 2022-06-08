@@ -2,7 +2,8 @@ const account = {
   namespaced: true,
   state: {
     accessToken: null,
-    user: {}
+    user: {
+    }
   },
   getters: {
     getAccessToken(state) {

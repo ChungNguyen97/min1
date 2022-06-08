@@ -5,11 +5,13 @@
       type="text"
       v-model="productTitle"
       placeholder="Enter your new title..."
+      @keyup.enter="handleUpdateTitle"
     />
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "ProductUpdateTitle",
   data() {
@@ -17,10 +19,29 @@ export default {
       productTitle: "",
     };
   },
+  props: {
+    title: {
+      type: String,
+    },
+  },
   watch: {
+    title() {
+      this.productTitle = this.title;
+    },
     productTitle() {
       this.$emit("changTitle", this.productTitle);
     },
+  },
+  methods: {
+    handleUpdateTitle() {
+      this.$emit("attachUpdate");
+    },
+  },
+  computed: {
+    ...mapState("product", ["productItem"]),
+  },
+  created() {
+    this.productTitle = this.productItem.title;
   },
 };
 </script>
@@ -31,7 +52,7 @@ export default {
     margin: 8px 0 6px 0;
     font-weight: 700;
   }
-  padding: 12px 12px 0 12px;
+  padding: 24px 12px 0 12px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -42,8 +63,15 @@ export default {
     border-radius: 5px;
   }
   input {
-    border: 1px solid;
+    border: 1px solid rgba(41, 128, 185, 0.6);
     flex: 1;
+    color: #2980b9;
+    font-style: italic;
+    &:focus {
+      border: 2px solid;
+      outline: none;
+      background: rgba(236, 240, 241, 0.4);
+    }
   }
   button {
     margin-left: 16px;

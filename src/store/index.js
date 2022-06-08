@@ -5,7 +5,7 @@ import login from './modules/account/login.js';
 import auth from './modules/auth';
 import collection from './modules/collection';
 import product from './modules/product';
-import vendor from './modules/vendor'
+import vendor from './modules/vendor';
 
 Vue.use(Vuex);
 

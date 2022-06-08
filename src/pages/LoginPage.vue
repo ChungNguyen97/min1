@@ -5,14 +5,13 @@
 </template>
 <script>
 import FormLogin from "@/components/login/FormLogin.vue";
-import backgroundLogin from "@/assets/image/background_login.jpg";
+import backgroundLogin from "@/assets/image/background_login4.jpg";
 
 export default {
   name: "LoginPage",
   data() {
     return {
       backgroundLogin,
-  
     };
   },
   components: {
@@ -24,9 +23,9 @@ export default {
 
 <style lang="scss" scoped >
 .content {
-  width: 100%;
   height: 100vh;
   display: flex;
+  background-size:cover;
   .notification-status-login {
     color: #fff;
     position: absolute;

@@ -14,9 +14,8 @@ const axiosClient = axios.create({
 
 })
 axiosClient.interceptors.request.use(function (config) {
-  const token = store.state.auth.accessToken;
-  if (token)
-    config.headers.Authorization = 'Bearer ' + token
+  const token = store.getters["auth/getAccessToken"];
+  if (token) config.headers.Authorization = `Bearer ${token}`
   return config;
 }, function (error) {
   console.log(error);

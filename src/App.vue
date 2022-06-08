@@ -18,14 +18,14 @@ export default {
     CommonHeader,
   },
   methods: {
-    ...mapMutations(["login/CHECK_STATUS_BEGIN"]),
+    ...mapMutations("login", ["CHECK_STATUS_BEGIN"]),
   },
   created() {
     const token = store.state.auth.accessToken || "";
     if (token) {
-      this.$store.commit("login/CHECK_STATUS_BEGIN", true);
+      store.commit("login/CHECK_STATUS_BEGIN", true);
     } else {
-      this.$store.commit("login/CHECK_STATUS_BEGIN", false);
+      store.commit("login/CHECK_STATUS_BEGIN", false);
     }
   },
 };

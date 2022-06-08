@@ -12,13 +12,22 @@
         <router-link
           exact-active-class="exact-active"
           :to="{ name: 'homePage' }"
-          >Home</router-link
+        >
+          <iconsvg
+            name="home-1"
+            color="#fff"
+            width="15"
+            height="15"
+            class="icon-home"
+          />
+          Home</router-link
         >
         <router-link
           exact-active-class="exact-active"
           :to="{ name: 'productPage' }"
           >Product
         </router-link>
+        
       </div>
 
       <div class="account">
@@ -28,7 +37,16 @@
           :to="{ name: 'loginPage' }"
           >Login</router-link
         >
-        <button v-else class="logout" @click="handleLogout">LOGOUT</button>
+        <button v-else class="logout" @click="handleLogout">
+          LOGOUT
+          <iconsvg
+            width="14"
+            height="14"
+            name="logout-1"
+            color="#fff"
+            class="icon-logout"
+          />
+        </button>
       </div>
     </nav>
     <notifications group="infoLogout" width="100%" position="top right" />
@@ -37,6 +55,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import "@/assets/icons";
 export default {
   name: "CommonHeader",
   data() {
@@ -74,7 +93,7 @@ export default {
 <style lang="scss" scoped>
 header.header {
   box-shadow: 0 1px 5px #777;
-  background-color: #333;
+  background-color: #0984e3;
   nav {
     display: flex;
     justify-content: space-between;
@@ -82,11 +101,16 @@ header.header {
     a {
       display: inline-block;
       margin-right: 12px;
-      padding: 10px 12px;
+      padding: 12px 12px;
       text-decoration: none;
       text-transform: uppercase;
       color: #fff;
       font-weight: 700;
+    }
+    .icon-home {
+      position: relative;
+      top: 1px;
+      right: -2px;
     }
   }
   .loadingLogout {
@@ -125,6 +149,7 @@ header.header {
     }
   }
 }
+
 .account {
   .logout {
     background: none;
@@ -136,6 +161,11 @@ header.header {
       background: #fff;
       color: #c0392b;
       cursor: pointer;
+    }
+    .icon-logout {
+      position: relative;
+      top: 1px;
+      left: 2px;
     }
   }
 }

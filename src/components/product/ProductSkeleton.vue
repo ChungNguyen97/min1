@@ -22,10 +22,10 @@ export default {
   display: flex;
   opacity: 0.75;
   .information {
-    margin: auto;
+    margin: 12px auto 0;
     .loadIcon {
-      width: 77px;
-      height: 77px;
+      width: 57px;
+      height: 57px;
       border: 10px solid #fff;
       border-radius: 100rem;
       border-top-color: transparent;

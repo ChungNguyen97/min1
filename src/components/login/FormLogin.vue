@@ -4,12 +4,15 @@
       <h3 class="loadingLogin">Login in progress</h3>
       <div class="iconLoading"></div>
     </div>
-    
+
     <div class="login__content" v-else>
       <h2>LOGIN</h2>
       <form action="" class="form">
         <div class="form__group">
-          <label for="email">Email: </label>
+          <label for="email">
+            <!-- <iconsvg name=""/> -->
+            Email:
+          </label>
           <input
             type="email"
             placeholder="Enter your email..."
@@ -81,6 +84,7 @@ import {
   required,
 } from "vuelidate/lib/validators";
 import { mapActions, mapState } from "vuex";
+// import '@/assets/icons'
 export default {
   name: "FormLogin",
   data() {
@@ -158,11 +162,11 @@ export default {
 .login {
   margin: auto;
   width: 550px;
-  border: 1px solid #ccc;
   border-radius: 10px;
   padding: 24px 32px;
-  box-shadow: 0 1px 5px red;
-  background-color: #ecf0f1;
+  box-shadow: 0 1px 5px #ccc;
+  background-color: #fff;
+  border: none;
 
   h2 {
     text-align: center;
@@ -207,7 +211,7 @@ export default {
 
       input {
         flex: 1;
-        border: 1px solid #be2edd;
+        border: 1px solid #2980b9;
         padding: 5px 12px;
         border-radius: 5px;
 
@@ -220,13 +224,17 @@ export default {
     }
 
     input.submit {
-      margin: 12px auto;
+      margin: 32px auto 12px;
       display: block;
-      padding: 8px 12px;
+      padding: 8px 36px;
       background-color: #4834d4;
       color: #fff;
       border: none;
       border-radius: 5px;
+      &:hover {
+        cursor: pointer;
+        opacity: 0.85;
+      }
     }
   }
 

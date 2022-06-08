@@ -26,7 +26,6 @@ export default {
   data() {
     return {
       noImageAvaiable,
-      imgs: [],
       imageBefore: "",
       indexVariant: 0,
     };
@@ -48,19 +47,20 @@ export default {
   mounted() {
     setTimeout(() => {
       this.$refs.imgs && this.$refs.imgs[0].click();
-    }, 500 || 1000 || 2000 || 4000 || 10000);
+    }, 2000);
   },
 };
 </script>
 
 <style lang="scss" scoped>
+  
 .detail-image {
   .image_default {
     width: 40%;
     display: block;
     margin: 12px auto;
     border-radius: 4px;
-    box-shadow: 0px 1px 5px #dfe6e9;
+    box-shadow: 0px 1px 5px #bbb;
   }
   .variant {
     color: #0984e3;
@@ -76,6 +76,9 @@ export default {
     justify-content: space-evenly;
     img {
       width: 10%;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
   .active {

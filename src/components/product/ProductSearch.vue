@@ -20,21 +20,29 @@
     <div class="search__suggest">
       <span>Suggest: </span>
       <span
+        :class="{ active: index === indexSuggest }"
         v-for="(item, index) in suggestList"
         :key="index"
-        @click="handleSubmit((searchText = item))"
+        @click="handleSuggest(item, index)"
       >
         {{ item }}
       </span>
     </div>
 
     <!-- test -->
-    <button class="speech-to-txt" @click="startSpeechToTxt">
-      Click to Speak
-    </button>
-    <p>
-      <i>Search for</i>: <strong>{{ transcription_ }}</strong>
-    </p>
+    <div class="voiceSearch">
+      <button class="buttonBranch" @click="isVoiceSearch = !isVoiceSearch">
+        Voice search
+      </button>
+      <div class="voice" v-if="isVoiceSearch">
+        <button class="speech-to-txt" @click="startSpeechToTxt">
+          Click to Speak
+        </button>
+        <p>
+          <i>Search for</i>: <strong>{{ transcription_ }}</strong>
+        </p>
+      </div>
+    </div>
 
     <notifications group="warnSearchInput" width="50%" position="top center" />
   </div>
@@ -53,6 +61,8 @@ export default {
         "Aqualina Sandal",
         "David Shirt",
       ],
+      indexSuggest: "",
+      isVoiceSearch: false,
       runtimeTranscription_: "",
       transcription_: "",
       lang_: "es-ES",
@@ -70,12 +80,17 @@ export default {
       } else {
         this.$notify({
           group: "warnSearchInput",
-          title: "Bạn chưa nhập nội dung tìm kiếm!",
-          text: "Hãy nhập nội dung tìm kiếm để thực hiện tìm kiếm",
+          title: "You have not entered the search text!",
+          text: "Please enter the search text to perform the search",
           type: "warn",
           duration: 3000,
         });
       }
+    },
+    handleSuggest(item, index) {
+      this.searchText = item;
+      this.indexSuggest = index;
+      this.handleSubmit();
     },
     handleRemove() {
       this.searchText = "";
@@ -135,12 +150,9 @@ export default {
       padding: 3px 6px;
       color: #e55039;
       font-style: italic;
-      cursor: pointer;
       font-size: 15px;
       &:hover {
-        background: #8c7ae6;
-        color: #fff;
-        border-radius: 5px;
+        cursor: pointer;
       }
     }
   }
@@ -179,6 +191,28 @@ export default {
       opacity: 0.85;
       background: #00a8ff;
     }
+  }
+  .voiceSearch {
+    padding: 12px 0;
+  }
+  .voice {
+    p {
+      margin: 0;
+    }
+    display: flex;
+    gap: 0 20px;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px 0;
+    border-radius: 5px;
+    button {
+      background: #95a5a6;
+    }
+  }
+  .active {
+    background: #8c7ae6;
+    color: #fff !important;
+    border-radius: 5px;
   }
 }
 </style>

@@ -6,7 +6,8 @@
         <strong>Type:</strong> <span class="type">{{ variant.title }}</span>
       </p>
       <p>
-        <strong>Price:</strong><span class="price">{{ variant.price }}</span>
+        <strong>Price:</strong
+        ><span class="price">{{ handlFormatPrice(variant.price) }}</span>
       </p>
     </div>
     <div class="tag">
@@ -20,8 +21,14 @@
 
 <script>
 import { mapState } from "vuex";
+import { handlFormatPrice } from "@/library";
 export default {
   name: "ProductDetailText",
+  data() {
+    return {
+      handlFormatPrice,
+    };
+  },
   props: {
     variant: {
       type: Object,
@@ -30,6 +37,7 @@ export default {
   computed: {
     ...mapState("product", ["productItem"]),
   },
+  methods: {},
 };
 </script>
 
@@ -38,13 +46,13 @@ export default {
   .title {
     font-style: italic;
     font-size: 28px;
-    color: #00b894;
+    color: #2c3e50;
     font-weight: 700;
-    margin: 0 0 18px 0;
+    margin: 10px 0 32px 0;
   }
   .info {
     p {
-      margin: 8px 0;
+      margin: 12px 0;
     }
     span {
       font-style: italic;
@@ -55,14 +63,14 @@ export default {
   }
   .tag {
     p {
-      margin-bottom: 4px;
+      margin: 0 0 8px 0;
     }
     span {
-      padding: 2px 8px;
+      padding: 5px 16px;
       background: #0984e3;
       border-radius: 4px;
       color: #fff;
-      margin: 0 10px 5px 0;
+      margin: 0 8px 6px 0;
       display: inline-block;
     }
   }

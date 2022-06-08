@@ -61,12 +61,14 @@
 import { mapActions, mapGetters, mapState } from "vuex";
 import imageIconProduct from "@/assets/image/icon_product.png";
 import ProductSkeleton from "@/components/product/ProductSkeleton.vue";
+import { handlFormatPrice } from "@/library";
 
 export default {
   name: "ProductTable",
   data() {
     return {
       imageIconProduct,
+      handlFormatPrice,
     };
   },
   props: {
@@ -79,17 +81,17 @@ export default {
   },
 
   methods: {
-    handlFormatPrice(value) {
-      return new Intl.NumberFormat("de-DE", {
-        style: "currency",
-        currency: "USD",
-      }).format(value);
-    },
+    // handlFormatPrice(value) {
+    //   return new Intl.NumberFormat("de-DE", {
+    //     style: "currency",
+    //     currency: "USD",
+    //   }).format(value);
+    // },
     ...mapActions("product", ["getDataProduct"]),
     handleShowDetailProduct(id, url) {
       this.$router.push({
         name: "productDetail",
-        params: { id},
+        params: { id },
         query: { url },
       });
     },
@@ -151,7 +153,8 @@ table.table {
 
   tr.tr-detail {
     &:hover {
-      background-color: #dfe6e9;
+      background-color: rgba(52, 172, 224, 0.2);
+      cursor: pointer;
     }
   }
 

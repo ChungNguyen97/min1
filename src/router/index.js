@@ -4,6 +4,8 @@ import ProductPage from '@/pages/ProductPage'
 import PageNotFound from '@/pages/PageNotFound'
 import ProductDetail from '@/components/product/productDetail/ProductDetail'
 import { store } from '@/store'
+import SupportPage from "@/pages/SupportPage.vue";
+
 
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -52,6 +54,11 @@ export default new Router({
       path: '*',
       name: 'pageNotFound',
       component: PageNotFound
+    },
+    {
+      path: '/support',
+      name: 'supportPage',
+      component: SupportPage
     }
 
   ]
