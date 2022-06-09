@@ -6,7 +6,7 @@ import auth from './modules/auth';
 import collection from './modules/collection';
 import product from './modules/product';
 import vendor from './modules/vendor';
-
+import tags from './modules/tags'
 Vue.use(Vuex);
 
 const vuexLocal = new VuexPersistence({
@@ -21,7 +21,8 @@ export const store = new Vuex.Store({
     product,
     auth,
     login,
-    vendor
+    vendor,
+    tags
   },
   plugins: [vuexLocal.plugin]
 });

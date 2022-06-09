@@ -5,7 +5,7 @@ import PageNotFound from '@/pages/PageNotFound'
 import ProductDetail from '@/components/product/productDetail/ProductDetail'
 import { store } from '@/store'
 import SupportPage from "@/pages/SupportPage.vue";
-
+import TagPage from '@/pages/TagPage.vue'
 
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -32,6 +32,11 @@ export default new Router({
       path: '/product',
       name: 'productPage',
       component: ProductPage
+    },
+    {
+      path: '/tag',
+      name: 'tagPage',
+      component: TagPage
     },
     {
       path: '/product/:id',

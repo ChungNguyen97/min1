@@ -10,7 +10,6 @@
       <form action="" class="form">
         <div class="form__group">
           <label for="email">
-            <!-- <iconsvg name=""/> -->
             Email:
           </label>
           <input

@@ -27,7 +27,10 @@
           :to="{ name: 'productPage' }"
           >Product
         </router-link>
-        
+
+        <router-link exact-active-class="exact-active" :to="{ name: 'tagPage' }"
+          >Tags
+        </router-link>
       </div>
 
       <div class="account">
