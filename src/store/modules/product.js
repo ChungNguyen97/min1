@@ -75,7 +75,8 @@ const product = {
         state.isLoading = false
         console.log(error);
       }
-    }
+    },
+    
 
   },
 
@@ -88,6 +89,10 @@ const product = {
     SET_PRODUCT_ITEM(state, res) {
       state.productItem = res
     },
+    SET_TAG_PRODUCT_ITEM(state, res) {
+      state.productItem.tags = res
+    },
+
     SET_PRODUCT_TITLE(state, { product }) {
       state.productItem.title = product.title
       state.isUpdateSuccess = true

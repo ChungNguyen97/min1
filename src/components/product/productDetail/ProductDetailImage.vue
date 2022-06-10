@@ -5,8 +5,8 @@
       <p class="variant">Variant:</p>
       <div class="variant-img">
         <img
-          :class="{ active: index === indexVariant }"
           v-for="(item, index) in productItem.variants"
+          :class="{ active: index === indexVariant }"
           ref="imgs"
           :key="item.id"
           :src="item.image.url || noImageAvaiable"

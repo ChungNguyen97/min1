@@ -2,7 +2,7 @@
   <div class="update-price">
     <div class="input-info">
       <div class="branch" @click="isShow = !isShow">
-        <p>Update Price:</p>
+        <p>Update Price</p>
         <iconsvg name="down-1" v-if="!isShow" />
         <iconsvg name="angle-up-solid" v-else />
       </div>
@@ -66,6 +66,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import { handlFormatPrice } from "@/library";
+
 import "@/assets/icons";
 
 export default {
@@ -161,11 +162,15 @@ export default {
       align-items: center;
       &:hover {
         cursor: pointer;
-        color: blue !important;
+        color: #2c3e50;
+        background: #ecf0f1;
+        width: fit-content;
+        padding: 0px;
       }
       p {
         margin: 0;
         font-weight: 700;
+        color: #2c3e50;
       }
     }
     .selectVariant {

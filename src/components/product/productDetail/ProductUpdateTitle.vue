@@ -51,6 +51,7 @@ export default {
   span {
     margin: 8px 0 6px 0;
     font-weight: 700;
+    color: #2c3e50;
   }
   padding: 24px 12px 0 12px;
   display: flex;

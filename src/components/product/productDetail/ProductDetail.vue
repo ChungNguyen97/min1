@@ -43,7 +43,8 @@
               v-on:changNumber="handleChangeNumber"
               v-on:transV="handleTransVariant"
             />
-
+            <tag-add v-on:updateTagName="handleUpdateTagName" />
+            <tag-remove v-on:removeTag="handleRemoveTag" />
             <div class="btns">
               <button @click="isUpdate = false" class="close">CLOSE</button>
               <button
@@ -56,7 +57,7 @@
                 @click="handleUpdate"
                 :class="activeBtn ? 'active' : 'default'"
               >
-                UPDATE
+                NEXT
               </button>
             </div>
             <product-update-support />
@@ -80,6 +81,9 @@ import ProductDetailText from "./ProductDetailText.vue";
 import ProductUpdateTitle from "./ProductUpdateTitle.vue";
 import ProductUpdatePrice from "./ProductUpdatePrice.vue";
 import ProductUpdateSupport from "./ProductUpdateSupport.vue";
+import TagAdd from "@/components/tags/TagAdd.vue";
+import TagRemove from "@/components/tags/TagRemove.vue";
+
 import "@/assets/icons";
 
 export default {
@@ -93,6 +97,11 @@ export default {
       percentNumber: "",
       operator: "",
       isShowUpdateLoading: false,
+      tags: "",
+      listTagRemove: [],
+      time: null,
+      timerId: null,
+      tagNameAdd: "",
     };
   },
   components: {
@@ -101,15 +110,19 @@ export default {
     ProductUpdateTitle,
     ProductUpdatePrice,
     ProductUpdateSupport,
+    TagAdd,
+    TagRemove,
   },
 
   methods: {
-    ...mapActions("product", [
-      "getProductById",
-      "updateProductTitle",
-      "updatePriceByAmount",
-      "updatePriceByPercent",
-    ]),
+    ...mapActions({
+      updateProductTitle: "product/updateProductTitle",
+      getProductById: "product/getProductById",
+      updatePriceByAmount: "product/updatePriceByAmount",
+      updatePriceByPercent: "product/updatePriceByPercent",
+      addTag: "tags/addTag",
+      removeTag: "tags/removeTag",
+    }),
     handleCancel() {
       this.isUpdate = false;
     },
@@ -119,6 +132,13 @@ export default {
     },
     handleChangTitle(title) {
       this.productTitle = title;
+    },
+    handleUpdateTagName({ list, tag }) {
+      this.tags = list;
+      this.tagNameAdd = tag;
+    },
+    handleRemoveTag(info) {
+      this.listTagRemove = info;
     },
     handleChangeNumber(data) {
       if (data.numberAmount || data.numberAmount === "") {
@@ -130,11 +150,18 @@ export default {
       }
     },
     async handleUpdate() {
-      if (!(this.productTitle || this.amountNumber || this.percentNumber)) {
+      if (
+        !(
+          this.tags.length !== 0 ||
+          this.listTagRemove.length !== 0 ||
+          this.productTitle ||
+          this.amountNumber ||
+          this.percentNumber
+        )
+      ) {
         alert("Ban can nhap thong tin");
         return;
       }
-      this.isShowUpdateLoading = true;
 
       if (this.productTitle) {
         let price = {};
@@ -174,6 +201,45 @@ export default {
         this.isShowUpdateLoading = false;
       }
 
+      // Update Tags (add)
+      if (this.tags.length !== 0) {
+        const params = {
+          id: this.productItem.id,
+          tag: this.tags,
+        };
+        await this.addTag(params);
+        this.getProductById({ id: this.productItem.id });
+        this.isShowUpdateLoading = false;
+      }
+
+      if (this.listTagRemove !== 0) {
+        const params = {
+          id: this.productItem.id,
+          tag: this.listTagRemove,
+        };
+        // this.showDialog = true;
+
+        // prompt("cotinue", "yes");
+        // let time = 10;
+        // this.timerId = setInterval(() => {
+        //   time -= 1;
+        //   if (time <= 0) {
+        //     this.isConfirm = true;
+        //     this.showDialog = false;
+        //     clearInterval(this.timerId);
+        //   }
+        //   this.time = time;
+        // }, 1000);
+
+        // if (!this.isConfirm) {
+        await this.removeTag(params);
+        this.getProductById({ id: this.productItem.id });
+        this.isShowUpdateLoading = false;
+        this.showDialog = false;
+        this.isConfirm = false;
+        // }
+      }
+
       if (this.isUpdateSuccess && !this.isLoading) {
         this.$notify({
           group: "notifyStatusUpdate",
@@ -181,9 +247,9 @@ export default {
           text: "Update change successfully",
           duration: 1000,
         });
-        // setTimeout(() => {
-        //   this.isUpdate = false;
-        // }, 2000);
+        setTimeout(() => {
+          this.isUpdate = false;
+        }, 2000);
       } else {
         this.$notify({
           group: "notifyStatusUpdate",
@@ -198,12 +264,29 @@ export default {
       (this.amountNumber = ""), (this.percentNumber = "");
       this.operator = "";
     },
+    ca() {
+      clearInterval(this.timerId);
+      this.isConfirm = false;
+    },
+    coti() {
+      // alert(1);
+      clearInterval(this.timerId);
+      this.isConfirm = true;
+      this.showDialog = false;
+    },
   },
 
   computed: {
     ...mapState("product", ["productItem", "isLoading", "isUpdateSuccess"]),
     activeBtn() {
-      if (this.productTitle || this.amountNumber || this.percentNumber) {
+      if (
+        this.tags.length !== 0 ||
+        this.listTagRemove.length !== 0 ||
+        this.productTitle ||
+        this.amountNumber ||
+        this.percentNumber ||
+        this.tagNameAdd
+      ) {
         return true;
       } else {
         return false;
@@ -217,6 +300,9 @@ export default {
       id: productId,
     };
     this.getProductById(payload);
+  },
+  beforeDestroy() {
+    clearInterval(this.timerId);
   },
 };
 </script>
