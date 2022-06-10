@@ -3,8 +3,22 @@
     <div class="input-info">
       <div class="branch" @click="isShow = !isShow">
         <p>Update Price</p>
-        <iconsvg name="down-1" v-if="!isShow" />
-        <iconsvg name="angle-up-solid" v-else />
+
+        <iconsvg
+          class="icon"
+          width="15px"
+          height="15px"
+          name="down-1"
+          v-if="!isShow"
+        />
+        <iconsvg
+          width="15px"
+          height="15px"
+          class="icon"
+          name="angle-up-solid"
+          v-else
+        />
+        <span class="line-through"></span>
       </div>
 
       <div class="content" v-if="isShow">
@@ -153,7 +167,6 @@ export default {
   padding: 10px;
   border-radius: 4px;
   .input-info {
-    border-top: 1px solid rgba(149, 165, 166, 0.7);
     padding-top: 10px;
     .branch {
       display: flex;
@@ -162,15 +175,21 @@ export default {
       align-items: center;
       &:hover {
         cursor: pointer;
-        color: #2c3e50;
-        background: #ecf0f1;
-        width: fit-content;
-        padding: 0px;
+      }
+      .icon {
+        position: relative;
+        top: 1px;
       }
       p {
         margin: 0;
         font-weight: 700;
         color: #2c3e50;
+      }
+      .line-through {
+        color: transparent;
+        flex: 1;
+        border-top: 1px solid #95a5a6;
+        position: relative;
       }
     }
     .selectVariant {

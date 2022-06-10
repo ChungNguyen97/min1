@@ -43,8 +43,14 @@
               v-on:changNumber="handleChangeNumber"
               v-on:transV="handleTransVariant"
             />
-            <tag-add v-on:updateTagName="handleUpdateTagName" />
-            <tag-remove v-on:removeTag="handleRemoveTag" />
+            <tag-add
+              :listTagAdd="listTagAdd"
+              v-on:updateTagName="handleUpdateTagName"
+            />
+            <tag-remove
+              :listTagRemove="listTagRemove"
+              v-on:removeTag="handleRemoveTag"
+            />
             <div class="btns">
               <button @click="isUpdate = false" class="close">CLOSE</button>
               <button
@@ -97,7 +103,7 @@ export default {
       percentNumber: "",
       operator: "",
       isShowUpdateLoading: false,
-      tags: "",
+      listTagAdd: [],
       listTagRemove: [],
       time: null,
       timerId: null,
@@ -134,7 +140,7 @@ export default {
       this.productTitle = title;
     },
     handleUpdateTagName({ list, tag }) {
-      this.tags = list;
+      this.listTagAdd = list;
       this.tagNameAdd = tag;
     },
     handleRemoveTag(info) {
@@ -150,18 +156,18 @@ export default {
       }
     },
     async handleUpdate() {
-      if (
-        !(
-          this.tags.length !== 0 ||
-          this.listTagRemove.length !== 0 ||
-          this.productTitle ||
-          this.amountNumber ||
-          this.percentNumber
-        )
-      ) {
+      const cd =
+        this.listTagAdd.length ||
+        this.listTagRemove.length ||
+        this.productTitle ||
+        this.amountNumber ||
+        this.percentNumber;
+      if (!cd) {
         alert("Ban can nhap thong tin");
         return;
       }
+
+      this.isShowUpdateLoading = true;
 
       if (this.productTitle) {
         let price = {};
@@ -202,10 +208,10 @@ export default {
       }
 
       // Update Tags (add)
-      if (this.tags.length !== 0) {
+      if (this.listTagAdd.length !== 0) {
         const params = {
           id: this.productItem.id,
-          tag: this.tags,
+          tag: this.listTagAdd,
         };
         await this.addTag(params);
         this.getProductById({ id: this.productItem.id });
@@ -217,27 +223,12 @@ export default {
           id: this.productItem.id,
           tag: this.listTagRemove,
         };
-        // this.showDialog = true;
 
-        // prompt("cotinue", "yes");
-        // let time = 10;
-        // this.timerId = setInterval(() => {
-        //   time -= 1;
-        //   if (time <= 0) {
-        //     this.isConfirm = true;
-        //     this.showDialog = false;
-        //     clearInterval(this.timerId);
-        //   }
-        //   this.time = time;
-        // }, 1000);
-
-        // if (!this.isConfirm) {
         await this.removeTag(params);
         this.getProductById({ id: this.productItem.id });
         this.isShowUpdateLoading = false;
         this.showDialog = false;
         this.isConfirm = false;
-        // }
       }
 
       if (this.isUpdateSuccess && !this.isLoading) {
@@ -261,8 +252,10 @@ export default {
     },
     handleClear() {
       this.productTitle = "";
-      (this.amountNumber = ""), (this.percentNumber = "");
-      this.operator = "";
+      this.listTagRemove = [];
+      this.listTagAdd = [];
+      this.amountNumber = "";
+      this.percentNumber = "";
     },
     ca() {
       clearInterval(this.timerId);
@@ -280,7 +273,7 @@ export default {
     ...mapState("product", ["productItem", "isLoading", "isUpdateSuccess"]),
     activeBtn() {
       if (
-        this.tags.length !== 0 ||
+        this.listTagAdd.length !== 0 ||
         this.listTagRemove.length !== 0 ||
         this.productTitle ||
         this.amountNumber ||
@@ -429,7 +422,6 @@ export default {
         display: flex;
         gap: 0 24px;
         justify-content: flex-end;
-        border-top: 1px solid rgba(149, 165, 166, 0.7);
         padding-top: 8px;
         button {
           margin: 0;

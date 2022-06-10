@@ -2,8 +2,21 @@
   <div class="addTag">
     <div class="addTag__control">
       <p class="addTag__title" @click="isShow = !isShow">Add Tag:</p>
-      <iconsvg name="down-1" v-if="!isShow" />
-      <iconsvg name="angle-up-solid" v-else />
+      <iconsvg
+        class="icon"
+        width="15px"
+        height="15px"
+        name="down-1"
+        v-if="!isShow"
+      />
+      <iconsvg
+        width="15px"
+        height="15px"
+        class="icon"
+        name="angle-up-solid"
+        v-else
+      />
+      <span class="line-through"></span>
     </div>
 
     <section class="addTag__showInfo" v-if="isShow">
@@ -38,6 +51,11 @@ export default {
       isShow: false,
     };
   },
+  // props: {
+  //   listTagAdd: {
+  //     type: Array,
+  //   },
+  // },
   methods: {
     handleAddInput() {
       this.tagInput.push(this.tag);
@@ -51,6 +69,11 @@ export default {
     tag() {
       this.$emit("updateTagName", { list: this.tagInput, tag: this.tag });
     },
+    // listTagAdd() {
+    //   if (this.listTagAdd.length === 0) {
+    //     this.tagInput = [];
+    //   }
+    // },
   },
 };
 </script>
@@ -68,6 +91,16 @@ export default {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    .icon {
+      position: relative;
+      top: 1px;
+    }
+    .line-through {
+      color: transparent;
+      flex: 1;
+      border-top: 1px solid #95a5a6;
+      position: relative;
+    }
     &:hover {
       cursor: pointer;
     }

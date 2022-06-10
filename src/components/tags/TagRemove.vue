@@ -2,12 +2,27 @@
   <section class="tagRemove">
     <div class="tagRemove__control">
       <p class="tagRemove__title" @click="isShow = !isShow">Remove tag:</p>
-      <iconsvg name="down-1" v-if="!isShow" />
-      <iconsvg name="angle-up-solid" v-else />
+      <iconsvg
+        class="icon"
+        width="15px"
+        height="15px"
+        name="down-1"
+        v-if="!isShow"
+      />
+      <iconsvg
+        width="15px"
+        height="15px"
+        class="icon"
+        name="angle-up-solid"
+        v-else
+      />
+      <span class="line-through"></span>
     </div>
     <aside class="tagRemove__btn" v-if="isShow">
-      <span @click="handleSelectAll">Select all</span>
-      <span @click="handleResetTag">Reset Select tag</span>
+      <span ref="selectAll" @click="handleSelectAll($event)">Select all</span>
+      <span :class="{ activeBtn: listTags.length }" @click="handleResetTag()"
+        >Reset Select tag</span
+      >
     </aside>
     <div class="tagRemove__list" v-if="isShow">
       <span
@@ -34,17 +49,22 @@ export default {
       isShow: false,
     };
   },
+
+
   computed: {
     ...mapState("product", ["productItem"]),
   },
   methods: {
-    handleSelectAll() {
+    handleSelectAll($event) {
+      $event.target.classList.toggle("activeBtn");
       this.listTags = this.productItem.tags;
       for (let t of this.$refs.tag) {
         t.classList.add("active");
       }
     },
     handleResetTag() {
+      console.log(this.$refs);
+      this.$refs.selectAll.classList.remove("activeBtn");
       this.listTags = [];
       for (let t of this.$refs.tag) {
         t.classList.remove("active");
@@ -66,6 +86,7 @@ export default {
     listTags() {
       this.$emit("removeTag", this.listTags);
     },
+    
   },
 };
 </script>
@@ -79,12 +100,22 @@ export default {
     margin: 6px 0 2px 0;
   }
   &__control {
-    padding-left:10px;
+    padding-left: 10px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     &:hover {
       cursor: pointer;
+    }
+    .icon {
+      position: relative;
+      top: 1px;
+    }
+    .line-through {
+      color: transparent;
+      flex: 1;
+      border-top: 1px solid #95a5a6;
+      position: relative;
     }
   }
   &__btn {
@@ -92,8 +123,8 @@ export default {
     margin-bottom: 14px;
     span {
       margin-left: 12px;
-      color: #fff;
-      background: #ccc;
+      background: rgba(162, 155, 254, 0.4);
+      color: #636e72;
       padding: 4px 12px;
       border-radius: 6px;
       cursor: pointer;
@@ -101,6 +132,10 @@ export default {
         background: #1abc9c;
         color: #fff;
       }
+    }
+    .activeBtn {
+      background: #1abc9c;
+      color: #fff;
     }
   }
   &__list {

@@ -29,7 +29,8 @@ export default {
       this.productTitle = this.title;
     },
     productTitle() {
-      this.$emit("changTitle", this.productTitle);
+      if (this.productTitle !== this.productItem.title)
+        this.$emit("changTitle", this.productTitle);
     },
   },
   methods: {
