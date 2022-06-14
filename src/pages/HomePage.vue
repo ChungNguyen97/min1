@@ -1,5 +1,5 @@
 <template>
-  <div
+  <section
     class="homepage"
     :style="{ backgroundImage: `url(${backgroundHomePage})` }"
   >
@@ -11,7 +11,7 @@
       </p>
       
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

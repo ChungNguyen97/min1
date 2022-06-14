@@ -75,7 +75,8 @@ export default {
       logoutAction: "login/logoutAction",
     }),
     async handleLogout() {
-      (this.loadingLogout = true), await this.logoutAction();
+      this.loadingLogout = true;
+      await this.logoutAction();
       if (!this.isLogin) {
         this.loadingLogout = false;
         this.$notify({

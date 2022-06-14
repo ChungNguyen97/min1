@@ -22,16 +22,48 @@
           />
         </button>
         <div class="content" v-else>
+          <div v-if="isShowMes" class="!showMes">
+            <h3>Ban co chac muon thay doi du lieu</h3>
+            <div class="btns">
+              <button class="cancle" @click="handleCancleShowMes">
+                Cancle
+              </button>
+              <button @click="handleContinueShowMes">OK</button>
+            </div>
+          </div>
+
           <div class="content_loading" v-if="isShowUpdateLoading">
             <div class="iconLoadUpdate"></div>
             <p class="text_loading">Updating changes...</p>
           </div>
+
           <div class="content__form" v-else>
-            <span class="cancel" @click="handleCancel">
-              <iconsvg name="cancel-1" class="svg-icon-cancel" />
+            <span
+              v-if="timeAfter && isShowTime"
+              class="timeRemainDef"
+              ref="timeRemain"
+              >Window will close automatically after
+              <strong>{{ timeRemaining }}</strong> seconds
             </span>
+            <div class="icon-top">
+              <span @click="isShowSetting = !isShowSetting" class="setting"
+                >*</span
+              >
+              <tag-setting
+                v-if="isShowSetting"
+                v-on:attachSetting="hanldeUpdateSetting"
+              />
+
+              <span class="cancel">
+                <iconsvg
+                  @click="handleClose"
+                  name="cancel-1"
+                  class="svg-icon-cancel"
+                />
+              </span>
+            </div>
             <product-update-title
-              :title="productTitle"
+              :productTitle="productTitle"
               v-on:changTitle="handleChangTitle"
               v-on:attachUpdate="handleUpdate"
             />
@@ -52,7 +84,7 @@
               v-on:removeTag="handleRemoveTag"
             />
             <div class="btns">
-              <button @click="isUpdate = false" class="close">CLOSE</button>
+              <button @click="handleClose" class="close">CLOSE</button>
               <button
                 :class="activeBtn ? 'clear' : 'default'"
                 @click="handleClear"
@@ -89,11 +121,12 @@ import ProductUpdatePrice from "./ProductUpdatePrice.vue";
 import ProductUpdateSupport from "./ProductUpdateSupport.vue";
 import TagAdd from "@/components/tags/TagAdd.vue";
 import TagRemove from "@/components/tags/TagRemove.vue";
+import TagSetting from "@/components/tags/TagSetting.vue";
 
 import "@/assets/icons";
-
 export default {
   name: "ProductDetail",
+
   data() {
     return {
       variant: {},
@@ -108,6 +141,15 @@ export default {
       time: null,
       timerId: null,
       tagNameAdd: "",
+      valueSelect: "auto",
+      timeAfter: null,
+      isShowTime: false,
+      isShowSetting: false,
+      showMes: "no-show-mes",
+      isShowMes: false,
+      isContinue: false,
+      timeRemaining: null,
+      timerIdSetIn: null,
     };
   },
   components: {
@@ -118,6 +160,7 @@ export default {
     ProductUpdateSupport,
     TagAdd,
     TagRemove,
+    TagSetting,
   },
 
   methods: {
@@ -129,13 +172,11 @@ export default {
       addTag: "tags/addTag",
       removeTag: "tags/removeTag",
     }),
-    handleCancel() {
-      this.isUpdate = false;
-    },
 
     handleTransVariant(data) {
       this.variant = data;
     },
+
     handleChangTitle(title) {
       this.productTitle = title;
     },
@@ -155,10 +196,26 @@ export default {
         this.operator = data.operator;
       }
     },
+    hanldeUpdateSetting({ valueSelect, time, showMes }) {
+      this.valueSelect = valueSelect;
+      this.timeAfter = time;
+      this.showMes = showMes;
+    },
+
+    handleCancleShowMes() {
+      this.isContinue = false;
+      this.isShowMes = false;
+    },
+    handleContinueShowMes() {
+      this.isContinue = true;
+      this.isShowMes = false;
+    },
+
+    //  ===== UPDATE ====>
     async handleUpdate() {
       const cd =
-        this.listTagAdd.length ||
-        this.listTagRemove.length ||
+        this.listTagAdd.length !== 0 ||
+        this.listTagRemove.length !== 0 ||
         this.productTitle ||
         this.amountNumber ||
         this.percentNumber;
@@ -166,7 +223,6 @@ export default {
         alert("Ban can nhap thong tin");
         return;
       }
-
       this.isShowUpdateLoading = true;
 
       if (this.productTitle) {
@@ -180,7 +236,7 @@ export default {
           price,
         };
         await this.updateProductTitle(payload);
-        this.isShowUpdateLoading = false;
+        this.productTitle = "";
       }
 
       // Update price by Amount
@@ -192,7 +248,6 @@ export default {
           operator: this.operator,
         };
         await this.updatePriceByAmount(payload);
-        this.isShowUpdateLoading = false;
       }
 
       // Update price by Percent
@@ -204,32 +259,30 @@ export default {
           operator: this.operator,
         };
         await this.updatePriceByPercent(payload);
-        this.isShowUpdateLoading = false;
       }
 
-      // Update Tags (add)
+      // Add tag
       if (this.listTagAdd.length !== 0) {
         const params = {
           id: this.productItem.id,
           tag: this.listTagAdd,
         };
         await this.addTag(params);
-        this.getProductById({ id: this.productItem.id });
-        this.isShowUpdateLoading = false;
+        this.listTagAdd = [];
       }
 
-      if (this.listTagRemove !== 0) {
+      if (this.listTagRemove.length !== 0) {
         const params = {
           id: this.productItem.id,
           tag: this.listTagRemove,
         };
-
         await this.removeTag(params);
-        this.getProductById({ id: this.productItem.id });
-        this.isShowUpdateLoading = false;
-        this.showDialog = false;
-        this.isConfirm = false;
+        this.listTagRemove = [];
       }
+
+      this.isShowUpdateLoading = false;
+      this.isShowSetting = false;
+      this.getProductById({ id: this.productItem.id });
 
       if (this.isUpdateSuccess && !this.isLoading) {
         this.$notify({
@@ -238,9 +291,6 @@ export default {
           text: "Update change successfully",
           duration: 1000,
         });
-        setTimeout(() => {
-          this.isUpdate = false;
-        }, 2000);
       } else {
         this.$notify({
           group: "notifyStatusUpdate",
@@ -249,23 +299,62 @@ export default {
           duration: 2000,
         });
       }
+
+      switch (this.valueSelect) {
+        case "auto": {
+          return (this.isUpdate = false);
+        }
+        case "no-auto": {
+          return (this.isUpdate = true);
+        }
+        case "after-t": {
+          this.isShowTime = true;
+          this.timeRemaining = Number(this.timeAfter);
+          const t = parseInt(this.timeAfter) * 1000;
+          setTimeout(() => {
+            return (this.isUpdate = false);
+          }, t);
+
+          this.timerIdSetIn = setInterval(() => {
+            this.timeRemaining -= 1;
+
+            const timeEl = this.$refs.timeRemain;
+            if (this.timeRemaining <= 4) {
+              setInterval(() => {
+                timeEl && timeEl.classList.toggle("timeRemainingEl");
+              }, 300);
+            }
+            timeEl && timeEl.classList.toggle("timeRemainingEl");
+
+            if (this.timeRemaining <= 0) {
+              this.isUpdate = false;
+              clearInterval(this.timerIdSetIn);
+              this.isShowTime = false;
+            }
+          }, 1000);
+        }
+      }
+    },
+
+    handleClose() {
+      this.productTitle = "";
+      this.listTagAdd = [];
+      this.listTagRemove = [];
+      this.tagNameAdd = "";
+      this.amountNumber = null;
+      this.percentNumber = null;
+      this.isUpdate = false;
+      clearInterval(this.timerIdSetIn);
+      this.timeRemaining = 0;
+      this.isShowTime = false;
     },
     handleClear() {
       this.productTitle = "";
-      this.listTagRemove = [];
       this.listTagAdd = [];
-      this.amountNumber = "";
-      this.percentNumber = "";
-    },
-    ca() {
-      clearInterval(this.timerId);
-      this.isConfirm = false;
-    },
-    coti() {
-      // alert(1);
-      clearInterval(this.timerId);
-      this.isConfirm = true;
-      this.showDialog = false;
+      this.listTagRemove = [];
+      this.tagNameAdd = "";
+      this.amountNumber = null;
+      this.percentNumber = null;
     },
   },
 
@@ -293,9 +382,16 @@ export default {
       id: productId,
     };
     this.getProductById(payload);
+    const valueLocal = JSON.parse(localStorage.getItem("vS"));
+    if (valueLocal.valueSelect) {
+      this.valueSelect = valueLocal.valueSelect;
+    }
+    if (valueLocal.time) {
+      this.timeAfter = valueLocal.time;
+    }
   },
   beforeDestroy() {
-    clearInterval(this.timerId);
+    clearInterval(this.timerIdSetIn);
   },
 };
 </script>
@@ -367,19 +463,47 @@ export default {
         &__form {
           min-width: 600px;
         }
-        .cancel {
-          color: #000;
+        .showMes {
+          border: 1px solid;
           position: absolute;
-          font-weight: 600;
-          padding: 4px 10px;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          left: 0;
+          background: #333;
+          z-index: 120;
+          opacity: 0.9;
+          color: #fff;
+          h3 {
+            text-align: center;
+            margin-top: 80px;
+          }
+          .btns {
+            display: flex;
+            justify-content: center;
+          }
+        }
+        .icon-top {
+          position: absolute;
           top: 0;
           right: 0;
-          font-size: 17px;
-          &:hover {
-            cursor: pointer;
-            background: red;
-            .svg-icon-cancel {
-              color: #fff;
+          .setting {
+            font-weight: 600;
+            font-size: 21px;
+            padding: 2px 10px;
+            &:hover {
+              background: #2ecc71;
+              cursor: pointer;
+            }
+          }
+          .cancel {
+            color: #000;
+            font-weight: 600;
+            padding: 4px 10px;
+            font-size: 17px;
+            &:hover {
+              cursor: pointer;
+              background: red;
             }
           }
         }
@@ -448,6 +572,13 @@ export default {
         }
       }
     }
+  }
+  .timeRemainDef {
+    font-style: italic;
+    color: #2980b9;
+  }
+  .timeRemainingEl {
+    color: red !important;
   }
 }
 </style>
