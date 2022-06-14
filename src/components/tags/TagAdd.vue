@@ -51,11 +51,11 @@ export default {
       isShow: false,
     };
   },
-  // props: {
-  //   listTagAdd: {
-  //     type: Array,
-  //   },
-  // },
+  props: {
+    listTagAdd: {
+      type: Array,
+    },
+  },
   methods: {
     handleAddInput() {
       this.tagInput.push(this.tag);
@@ -69,11 +69,11 @@ export default {
     tag() {
       this.$emit("updateTagName", { list: this.tagInput, tag: this.tag });
     },
-    // listTagAdd() {
-    //   if (this.listTagAdd.length === 0) {
-    //     this.tagInput = [];
-    //   }
-    // },
+    listTagAdd() {
+      if (this.listTagAdd.length === 0) {
+        this.tagInput = [];
+      }
+    },
   },
 };
 </script>

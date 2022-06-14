@@ -81,12 +81,6 @@ export default {
   },
 
   methods: {
-    // handlFormatPrice(value) {
-    //   return new Intl.NumberFormat("de-DE", {
-    //     style: "currency",
-    //     currency: "USD",
-    //   }).format(value);
-    // },
     ...mapActions("product", ["getDataProduct"]),
     handleShowDetailProduct(id, url) {
       this.$router.push({

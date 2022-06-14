@@ -3,7 +3,7 @@
     <span>Update title: </span>
     <input
       type="text"
-      v-model="productTitle"
+      v-model="inputText"
       placeholder="Enter your new title..."
       @keyup.enter="handleUpdateTitle"
     />
@@ -16,21 +16,23 @@ export default {
   name: "ProductUpdateTitle",
   data() {
     return {
-      productTitle: "",
+      inputText: "",
     };
   },
   props: {
-    title: {
+    productTitle: {
       type: String,
     },
   },
   watch: {
-    title() {
-      this.productTitle = this.title;
-    },
     productTitle() {
-      if (this.productTitle !== this.productItem.title)
-        this.$emit("changTitle", this.productTitle);
+      if (this.productTitle === "") {
+        this.inputText = this.productTitle;
+      }
+    },
+    inputText() {
+      if (this.inputText !== this.productItem.title)
+        this.$emit("changTitle", this.inputText);
     },
   },
   methods: {
@@ -42,7 +44,7 @@ export default {
     ...mapState("product", ["productItem"]),
   },
   created() {
-    this.productTitle = this.productItem.title;
+    this.inputText = this.productItem.title;
   },
 };
 </script>

@@ -15,7 +15,6 @@ const vuexLocal = new VuexPersistence({
   modules: ['auth'],
 })
 export const store = new Vuex.Store({
-
   modules: {
     collection,
     product,

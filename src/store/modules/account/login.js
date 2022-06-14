@@ -1,4 +1,5 @@
-import axiosClient from "@/core/api";
+import axiosClient from "@/core/api"
+
 const login = {
   namespaced: true,
   state: {
@@ -35,7 +36,7 @@ const login = {
 
   mutations: {
     SET_LOGIN(state, data) {
-      return state.isLogin = data
+      state.isLogin = data
     },
     CHECK_STATUS_BEGIN(state, payload) {
       return state.isLogin = payload

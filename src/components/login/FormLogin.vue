@@ -181,10 +181,10 @@ export default {
     width: 35px;
     height: 35px;
     border: 5px solid blue;
+    margin: auto;
     border-radius: 100rem;
     border-top-color: transparent;
     border-bottom-color: transparent;
-    margin: auto;
     animation: loadtime 1s linear infinite;
     @keyframes loadtime {
       from {

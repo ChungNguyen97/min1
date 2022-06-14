@@ -25,7 +25,7 @@ const product = {
         const res = await axiosClient.get('/graph', { params });
         commit('SET_PRODUCT', res)
       } catch (error) {
-        state.isLoading = false
+        state.isLoadiisShowSettingng = false
         console.log(error)
       }
     },
@@ -76,7 +76,7 @@ const product = {
         console.log(error);
       }
     },
-    
+
 
   },
 
