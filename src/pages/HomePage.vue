@@ -4,12 +4,13 @@
     :style="{ backgroundImage: `url(${backgroundHomePage})` }"
   >
     <div class="content">
-      <h1>{{ label }}</h1>
+      <h1>{{ $t("homePage.title") }}</h1>
       <p class="redirect-to-product">
-        See a list of products at:
-        <router-link :to="{ name: 'productPage' }">Product Page</router-link>
+        {{ $t("homePage.instruction") }}:
+        <router-link :to="{ name: 'productPage' }">{{
+          $t("homePage.to")
+        }}</router-link>
       </p>
-      
     </div>
   </section>
 </template>
@@ -20,7 +21,6 @@ export default {
   name: "HomePage",
   data() {
     return {
-      label: "Home page",
       backgroundHomePage,
     };
   },
@@ -29,7 +29,6 @@ export default {
 
 <style  lang="scss" scoped>
 .homepage {
-  
   background-size: cover;
   height: 100vh;
   .content {

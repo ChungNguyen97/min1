@@ -1,8 +1,17 @@
 <template>
   <div class="vendor">
-    <p>Filter by Vendor</p>
+    <p class="title">
+      <iconsvg
+        class="iconFilter"
+        name="filter-solid"
+        width="15"
+        height="15"
+        color="#000"
+      />
+      {{ $t("productVendor.title") }}
+    </p>
     <select name="vendor" @change="handleChangeSelect">
-      <option value="">---- Select vendor ----</option>
+      <option value="">---- {{ $t("productVendor.select") }} ----</option>
       <option
         v-for="(option, index) in getVendorList"
         :key="index"
@@ -16,6 +25,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import "@/assets/icons";
 export default {
   name: "ProductVendor",
   data: () => ({
@@ -44,6 +54,10 @@ export default {
     margin: 3px 0;
     text-align: center;
     font-weight: bold;
+    .iconFilter {
+      position: relative;
+      top: 2px;
+    }
   }
   select {
     padding: 5px 12px;

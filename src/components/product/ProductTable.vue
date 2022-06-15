@@ -4,26 +4,30 @@
 
     <div class="list-table">
       <p class="subMessager" v-if="isSearchOrFiler && !isLoading">
-        There are
+        {{ $t("productTable.have") }}
         <strong>{{ getProductList.length }}</strong>
-        results for:
-        <strong v-if="params.search">Keyword: </strong>
+        {{ $t("productTable.result") }}:
+        <strong v-if="params.search">{{ $t("productTable.key") }}: </strong>
         <mark>{{ params.search }} </mark>
-        <strong v-if="params.vendor">+ Vendor: </strong>
+        <strong v-if="params.vendor"
+          >+ {{ $t("productTable.vendor") }}:
+        </strong>
         <mark>{{ params.vendor }} </mark>
-        <strong v-if="params.collection">+ Collection: </strong>
+        <strong v-if="params.collection"
+          >+ {{ $t("productTable.co") }}:
+        </strong>
         <mark>{{ params.collection }}</mark>
       </p>
 
       <table class="table align-middle" v-if="getProductList.length != 0">
         <thead class="tableHeader text-light">
           <tr>
-            <th scope="col"># {{ isLoading }}</th>
-            <th scope="col">Image</th>
-            <th scope="col">Title</th>
-            <th scope="col">Price</th>
-            <th scope="col">Product Type</th>
-            <th scope="col">Vendor</th>
+            <th scope="col">#</th>
+            <th scope="col">{{ $t("productTable.th_img") }}</th>
+            <th scope="col">{{ $t("productTable.th_title") }}</th>
+            <th scope="col">{{ $t("productTable.th_price") }}</th>
+            <th scope="col">{{ $t("productTable.th_pro") }}</th>
+            <th scope="col">{{ $t("productTable.th_ven") }}</th>
           </tr>
         </thead>
 

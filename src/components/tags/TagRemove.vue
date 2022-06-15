@@ -1,7 +1,9 @@
 <template>
   <section class="tagRemove">
     <div class="tagRemove__control">
-      <p class="tagRemove__title" @click="isShow = !isShow">Remove tag:</p>
+      <p class="tagRemove__title" @click="isShow = !isShow">
+        {{ $t("removeTag.title") }}:
+      </p>
       <iconsvg
         class="icon"
         width="15px"
@@ -19,10 +21,12 @@
       <span class="line-through"></span>
     </div>
     <aside class="tagRemove__btn" v-if="isShow">
-      <span ref="selectAll" @click="handleSelectAll($event)">Select all</span>
-      <span :class="{ activeBtn: listTags.length }" @click="handleResetTag()"
-        >Reset Select tag</span
-      >
+      <span ref="selectAll" @click="handleSelectAll($event)">{{
+        $t("removeTag.selectAll")
+      }}</span>
+      <span :class="{ activeBtn: listTags.length }" @click="handleResetTag()">{{
+        $t("removeTag.resetAll")
+      }}</span>
     </aside>
     <div class="tagRemove__list" v-if="isShow">
       <span
@@ -49,7 +53,6 @@ export default {
       isShow: false,
     };
   },
-
 
   computed: {
     ...mapState("product", ["productItem"]),
@@ -86,7 +89,6 @@ export default {
     listTags() {
       this.$emit("removeTag", this.listTags);
     },
-    
   },
 };
 </script>

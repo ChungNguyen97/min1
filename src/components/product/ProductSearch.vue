@@ -1,24 +1,55 @@
 <template>
-  <div class="search">
+  <section class="search">
     <div class="search__top">
       <div class="search__form">
-        <label for="search">Enter search text: </label>
+        <label for="search">{{ $t("productSearch.label") }}</label>
         <input
           type="text"
           name="search"
           id="search"
           v-model="searchText"
-          placeholder="Enter the search text, for example: Adania Pant"
+          :placeholder="$t('productSearch.placeholder')"
           @keyup.enter="handleSubmit"
+          @focus="showIconWrite = false"
+          @blur="showIconWrite = true"
+        />
+        <iconsvg
+          v-if="showIconWrite"
+          class="iconWrite"
+          name="pen-solid"
+          width="14"
+          height="14"
+          color="#95a5a6"
         />
       </div>
-      <div class="search__btns" v-if="searchText">
-        <button @click="handleSubmit">Search</button>
-        <button class="remove" @click="handleRemove">Clear</button>
+      <div class="search__btns">
+        <button :class="{ default: !searchText }" @click="handleSubmit">
+          <iconsvg
+            class="iconSearch"
+            name="magnifying-glass-solid"
+            width="15"
+            height="15"
+            color="#fff"
+          />
+          {{ $t("productSearch.search") }}
+        </button>
+        <button
+          :class="searchText ? 'remove' : 'default'"
+          @click="handleRemove"
+        >
+          <iconsvg
+            class="iconClear"
+            name="cancel-1"
+            width="15"
+            height="15"
+            color="#fff"
+          />
+          {{ $t("productSearch.clear") }}
+        </button>
       </div>
     </div>
     <div class="search__suggest">
-      <span>Suggest: </span>
+      <span>{{ $t("productSearch.suggest") }} </span>
       <span
         :class="{ active: index === indexSuggest }"
         v-for="(item, index) in suggestList"
@@ -29,26 +60,26 @@
       </span>
     </div>
 
-    <!-- test -->
     <div class="voiceSearch">
-      <button class="buttonBranch" @click="isVoiceSearch = !isVoiceSearch">
-        Voice search
+      <button class="buttonBranch" @click="startSpeechToTxt">
+        {{ $t("productSearch.speak") }}
+        <iconsvg
+          class="iconMicro"
+          name="microphone-solid"
+          width="15"
+          height="15"
+          color="#fff"
+        />
       </button>
-      <div class="voice" v-if="isVoiceSearch">
-        <button class="speech-to-txt" @click="startSpeechToTxt">
-          Click to Speak
-        </button>
-        <p>
-          <i>Search for</i>: <strong>{{ transcription_ }}</strong>
-        </p>
-      </div>
     </div>
 
     <notifications group="warnSearchInput" width="50%" position="top center" />
-  </div>
+  </section>
 </template>
 
 <script>
+import "@/assets/icons";
+
 export default {
   name: "ProductSearch",
   data() {
@@ -62,10 +93,10 @@ export default {
         "David Shirt",
       ],
       indexSuggest: "",
-      isVoiceSearch: false,
       runtimeTranscription_: "",
       transcription_: "",
       lang_: "es-ES",
+      showIconWrite: true,
     };
   },
   watch: {
@@ -161,6 +192,14 @@ export default {
     .remove {
       background: #e74c3c;
     }
+    .default {
+      background: #ccc;
+      &:hover {
+        cursor: not-allowed;
+        background: #ccc;
+        opacity: unset;
+      }
+    }
   }
   input {
     padding: 5px 12px;
@@ -177,6 +216,22 @@ export default {
       border: 1px solid;
       font-weight: bold;
     }
+  }
+
+  &__form {
+    position: relative;
+  }
+  .iconWrite {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 52%;
+    right: 40px;
+  }
+  .iconSearch,
+  .iconClear {
+    position: relative;
+    top: 2px;
   }
   button {
     background: #487eb0;

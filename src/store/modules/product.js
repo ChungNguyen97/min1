@@ -23,9 +23,11 @@ const product = {
       try {
         state.isLoading = true;
         const res = await axiosClient.get('/graph', { params });
+
         commit('SET_PRODUCT', res)
       } catch (error) {
-        state.isLoadiisShowSettingng = false
+        commit('SET_PRODUCT', { products: [] })
+        state.isLoading = false
         console.log(error)
       }
     },
@@ -57,7 +59,8 @@ const product = {
 
     async updatePriceByAmount({ state, commit }, payload) {
       try {
-        state.isLoading = true
+        state.isLoading = true;
+        state.isUpdateSuccess = false;
         const res = await axiosClient.post('/price-by-amount', payload)
         commit('UPDATE_PRICE_BY_AMOUNT', res)
       } catch (error) {
@@ -76,12 +79,10 @@ const product = {
         console.log(error);
       }
     },
-
-
   },
 
   mutations: {
-    SET_PRODUCT(state, { products, page_info }) {
+    SET_PRODUCT(state, { products, page_info = '' }) {
       state.isLoading = false
       state.productList = products
       state.page_info = page_info
@@ -99,7 +100,8 @@ const product = {
       state.isLoading = false
     },
     UPDATE_PRICE_BY_AMOUNT(state, res) {
-      const variants = state.productItem.variants
+      const variants = state.productItem.variants;
+      state.isUpdateSuccess = true;
       for (let variant of variants) {
         if (variant.id === res.id) {
           variant.price = res.price

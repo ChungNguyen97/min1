@@ -5,7 +5,8 @@ const tags = {
 
   state: {
     listTag: [],
-    isLoad: false
+    isLoad: false,
+    updateTag: false,
   },
 
   getters: {
@@ -34,7 +35,9 @@ const tags = {
     },
 
     async removeTag(context, params) {
+      this.updateTag = false
       await axiosClient.post('/remove-tag', params)
+      this.updateTag = true
     }
   },
 

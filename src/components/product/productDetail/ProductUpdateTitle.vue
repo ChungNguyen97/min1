@@ -1,6 +1,6 @@
 <template>
   <div class="update-title">
-    <span>Update title: </span>
+    <span>{{ $t("updateTitle.title") }} </span>
     <input
       type="text"
       v-model="inputText"

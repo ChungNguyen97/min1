@@ -1,8 +1,17 @@
 <template>
   <div class="collection">
-    <p>Filter by Collections</p>
+    <p>
+      <iconsvg
+        class="iconFilter"
+        name="filter-solid"
+        width="15"
+        height="15"
+        color="#000"
+      />
+      {{ $t("productCollection.title") }}
+    </p>
     <select name="collection" @change="handleChangeSelect">
-      <option value="">---- Select collection ----</option>
+      <option value="">---- {{ $t("productCollection.select") }} ----</option>
       <option
         v-for="(option, index) in getCollections"
         :key="index"
@@ -16,6 +25,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import "@/assets/icons";
 export default {
   name: "ProductCollection",
   data: () => ({
@@ -42,6 +52,10 @@ export default {
     margin: 3px 0;
     text-align: center;
     font-weight: bold;
+    .iconFilter {
+      position: relative;
+      top: 2px;
+    }
   }
   select {
     padding: 5px 12px;

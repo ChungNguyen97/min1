@@ -10,25 +10,20 @@
         @keyup.enter="handleSearchTag"
       />
       <button
-        :class="x ? 'active-search' : 'btn-default'"
-        @click="handleSearchTag"
+        :class="isActive ? 'active-search' : 'btn-default'"
+        @click="handleClear"
       >
         Search
       </button>
 
       <button
-        :class="x ? 'active-clear' : 'btn-default'"
+        :class="isActive ? 'active-clear' : 'btn-default'"
         class="clear"
-        @click="title = ''"
+        @click="handleClear"
       >
         Clear
       </button>
     </div>
-    <!-- <div class="suggest">
-      <span>01/14</span>
-      <span>01/14</span>
-      <span>01/14</span>
-    </div> -->
   </div>
 </template>
 
@@ -44,7 +39,7 @@ export default {
   },
   computed: {
     ...mapState("tags", ["isLoad"]),
-    x() {
+    isActive() {
       if (this.title && !this.isLoad) {
         return true;
       } else {
@@ -56,6 +51,17 @@ export default {
     ...mapActions("tags", ["getListTag"]),
     handleSearchTag() {
       if (!this.isLoad) this.getListTag({ title: this.title });
+    },
+    handleClear() {
+      this.title = "";
+      this.getListTag({ title: "" });
+    },
+  },
+  watch: {
+    title() {
+      if (this.title === "") {
+        this.getListTag({ title: "" });
+      }
     },
   },
 };

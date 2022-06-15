@@ -20,28 +20,49 @@
             height="15"
             class="icon-home"
           />
-          Home</router-link
-        >
+          {{ $t("header.home") }}
+        </router-link>
         <router-link
           exact-active-class="exact-active"
           :to="{ name: 'productPage' }"
-          >Product
+          >{{ $t("header.product") }}
         </router-link>
 
         <router-link exact-active-class="exact-active" :to="{ name: 'tagPage' }"
-          >Tags
+          >{{ $t("header.tag") }}
         </router-link>
       </div>
 
       <div class="account">
+        <div class="settingLang">
+          <iconsvg
+            width="14"
+            height="14"
+            name="gear-solid"
+            color="#fff"
+            class="iconSetting"
+            @click="isShowLang = !isShowLang"
+          />
+          <div class="languages" v-if="isShowLang">
+            <span
+              v-for="(lang, i) in languages"
+              :key="i"
+              @click="handleChangeLanguage(lang.lang, i)"
+              :class="{ activeLang: i === indexLang }"
+            >
+              {{ lang.title }}
+            </span>
+          </div>
+        </div>
         <router-link
-          v-if="!isLogin"
+          v-if="!accessToken"
           exact-active-class="exact-active"
+          class="loginBtn"
           :to="{ name: 'loginPage' }"
-          >Login</router-link
+          >{{ $t("header.login") }}</router-link
         >
         <button v-else class="logout" @click="handleLogout">
-          LOGOUT
+          {{ $t("header.logout") }}
           <iconsvg
             width="14"
             height="14"
@@ -58,17 +79,26 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import i18n from "@/plugins/i18n";
+
 import "@/assets/icons";
 export default {
   name: "CommonHeader",
   data() {
     return {
       loadingLogout: false,
+      isShowLang: false,
+      indexLang: 0,
+      languages: [
+        { lang: "en", title: "English" },
+        { lang: "vi", title: "Tiếng Việt" },
+        { lang: "cn", title: "中国语訳" },
+      ],
     };
   },
 
   computed: {
-    ...mapState("login", ["isLogin"]),
+    ...mapState("auth", ["accessToken"]),
   },
   methods: {
     ...mapActions({
@@ -90,12 +120,56 @@ export default {
         }, 2000);
       }
     },
+    handleChangeLanguage(title, i) {
+      i18n.locale = title;
+      this.isShowLang = false;
+      this.indexLang = i;
+      if (i18n.locale === "cn") {
+        // const main = document.querySelector(".main");
+        // main.style.letterSpacing = "7px";
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 header.header {
+  .iconSetting {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .activeLang {
+    color: #c0392b !important;
+  }
+  .settingLang {
+    position: relative;
+    .languages {
+      background: #ecf0f1;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      right: -80%;
+      width: fit-content;
+      width: 120px;
+      span {
+        color: #333;
+        padding: 6px 20px;
+        &:hover {
+          background: #3498db;
+          color: #fff;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
   box-shadow: 0 1px 5px #777;
   background-color: #0984e3;
   nav {
@@ -155,12 +229,21 @@ header.header {
 }
 
 .account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0 34px;
+
+  .loginBtn {
+    text-transform: uppercase;
+  }
   .logout {
     background: none;
     color: #fff;
     border: none;
     padding: 10px 12px;
     font-weight: 600;
+    text-transform: uppercase;
     &:hover {
       background: #fff;
       color: #c0392b;

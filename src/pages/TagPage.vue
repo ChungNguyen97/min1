@@ -24,6 +24,7 @@ export default {
 
 <style lang="scss" scoped>
 .tag-page {
+  margin-top: 30px;
   background: #fff;
 }
 </style>

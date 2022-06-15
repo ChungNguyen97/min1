@@ -1,7 +1,10 @@
 <template>
-  <div class="content" :style="{ backgroundImage: `url(${backgroundLogin})` }">
+  <section
+    class="content"
+    :style="{ backgroundImage: `url(${backgroundLogin})` }"
+  >
     <form-login />
-  </div>
+  </section>
 </template>
 <script>
 import FormLogin from "@/components/login/FormLogin.vue";
@@ -25,13 +28,6 @@ export default {
 .content {
   height: 100vh;
   display: flex;
-  background-size:cover;
-  .notification-status-login {
-    color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+  background-size: cover;
 }
 </style>
