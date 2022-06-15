@@ -24,19 +24,21 @@ const tags = {
         console.log(error)
       }
     },
-    async addTag({ state }, params) {
+    async addTag({ state, commit }, params) {
       try {
         state.isLoading = true
         await axiosClient.post('/add-tag', params)
+        commit('product/SET_STATUS_UPDATE', { res: true }, { root: true })
         state.isLoading = false
       } catch (error) {
         console.log(error);
       }
     },
 
-    async removeTag(context, params) {
+    async removeTag({ commit }, params) {
       this.updateTag = false
-      await axiosClient.post('/remove-tag', params)
+      await axiosClient.post('/remove-tag', params);
+      commit('product/SET_STATUS_UPDATE', { res: true }, { root: true })
       this.updateTag = true
     }
   },

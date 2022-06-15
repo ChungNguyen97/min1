@@ -35,8 +35,8 @@ const messages = {
       select: 'Select vendor'
     },
     productCollection: {
-      title: 'Filter by Vendor',
-      select: 'Select vendor'
+      title: 'Filter by Collection',
+      select: 'Select collection'
     },
     productTable: {
       have: 'There are',

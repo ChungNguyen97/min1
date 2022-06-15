@@ -32,11 +32,13 @@ const product = {
       }
     },
 
-    async getProductById({ commit }, payload) {
+    async getProductById({ state, commit }, payload) {
       try {
+        state.isLoading = true
         const res = await axiosClient.get(`/graph/${payload.id}`)
         commit('SET_PRODUCT_ITEM', res)
       } catch (error) {
+        state.isLoading = false
         console.log(error);
       }
     },
@@ -88,7 +90,8 @@ const product = {
       state.page_info = page_info
     },
     SET_PRODUCT_ITEM(state, res) {
-      state.productItem = res
+      state.productItem = res;
+      state.isLoading = false;
     },
     SET_TAG_PRODUCT_ITEM(state, res) {
       state.productItem.tags = res
@@ -109,6 +112,9 @@ const product = {
       }
       state.isLoading = false
     },
+    SET_STATUS_UPDATE(state, { res }) {
+      state.isUpdateSuccess = res
+    }
 
   },
 }

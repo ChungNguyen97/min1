@@ -23,7 +23,6 @@ const login = {
     async logoutAction({ commit }) {
       try {
         const res = await axiosClient.post('/logout')
-        console.log('res: ', res);
         if (res.message === 'Logout successfully') {
           this.commit('auth/SET_TOKEN', { token: '' })
           commit('SET_LOGIN', false)

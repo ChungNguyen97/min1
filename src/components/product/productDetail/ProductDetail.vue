@@ -1,5 +1,10 @@
 <template>
   <div class="productDetail container">
+    <loading-page
+      v-if="isLoading && this.isUpdate === false"
+      borderColor="#fff"
+      borderWidth="7"
+    />
     <div class="productDetail__name">{{ $t("productDetail.title") }}</div>
     <div class="productDetail__content">
       <div class="img">
@@ -22,18 +27,6 @@
           />
         </button>
         <div class="content" v-else>
-          <!-- <div v-if="isShowMes" class="showMes">
-            <h3>{{ $t("productDetail.confirmTitle") }}</h3>
-            <div class="btns">
-              <button class="cancle" @click="handleCancleShowMes">
-                {{ $t("productDetail.cancelconfirmTitle") }}
-              </button>
-              <button @click="handleContinueShowMes">
-                {{ $t("productDetail.okcancel") }}
-              </button>
-            </div>
-          </div> -->
-
           <div class="content_loading" v-if="isShowUpdateLoading">
             <div class="iconLoadUpdate"></div>
             <p class="text_loading">{{ $t("productDetail.updating") }}</p>
@@ -126,6 +119,7 @@ import ProductUpdateSupport from "./ProductUpdateSupport.vue";
 import TagAdd from "@/components/tags/TagAdd.vue";
 import TagRemove from "@/components/tags/TagRemove.vue";
 import TagSetting from "@/components/tags/TagSetting.vue";
+import LoadingPage from "@/components/common/LoadingPage.vue";
 
 import "@/assets/icons";
 export default {
@@ -149,11 +143,12 @@ export default {
       timeAfter: null,
       isShowTime: false,
       isShowSetting: false,
-      showMes: "no-show-mes",
+      showMes: "show-mes",
       isShowMes: false,
       isContinue: false,
       timeRemaining: null,
       timerIdSetIn: null,
+      valueConfirm: true,
     };
   },
   components: {
@@ -165,6 +160,7 @@ export default {
     TagAdd,
     TagRemove,
     TagSetting,
+    LoadingPage,
   },
 
   methods: {
@@ -280,10 +276,11 @@ export default {
       if (this.listTagRemove.length !== 0) {
         if (this.showMes === "show-mes") {
           this.isShowUpdateLoading = false;
-          const valueConfirm = confirm(
+          this.valueConfirm = confirm(
             "Are you sure you want to remove the tag"
           );
-          if (valueConfirm) {
+
+          if (this.valueConfirm) {
             this.isShowUpdateLoading = true;
             const params = {
               id: this.productItem.id,
@@ -292,14 +289,6 @@ export default {
             await this.removeTag(params);
             this.listTagRemove = [];
           }
-        } else {
-          this.isShowUpdateLoading = true;
-          const params = {
-            id: this.productItem.id,
-            tag: this.listTagRemove,
-          };
-          await this.removeTag(params);
-          this.listTagRemove = [];
         }
       }
 
@@ -309,7 +298,7 @@ export default {
       this.isShowUpdateLoading = false;
       this.isShowSetting = false;
 
-      if (this.isUpdateSuccess && !this.isLoading) {
+      if (this.isUpdateSuccess && this.valueConfirm) {
         this.$notify({
           group: "notifyStatusUpdate",
           title: "Update notification",
@@ -324,6 +313,7 @@ export default {
           type: "warn",
           duration: 2000,
         });
+        this.valueConfirm = true;
       }
 
       switch (this.valueSelect) {

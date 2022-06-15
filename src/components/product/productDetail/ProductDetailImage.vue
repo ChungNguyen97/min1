@@ -47,7 +47,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.$refs.imgs && this.$refs.imgs[0].click();
-    }, 2000);
+    }, 1000);
   },
 };
 </script>

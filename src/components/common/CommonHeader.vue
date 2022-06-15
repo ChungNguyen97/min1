@@ -1,10 +1,7 @@
 <template>
   <header class="header">
     <div class="loadingLogout" v-if="loadingLogout">
-      <div class="content">
-        <h3>Logout in progress</h3>
-        <div class="iconLoading"></div>
-      </div>
+      <loading-page />
     </div>
 
     <nav class="container nav">
@@ -79,6 +76,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import LoadingPage from "@/components/common/LoadingPage.vue";
 import i18n from "@/plugins/i18n";
 
 import "@/assets/icons";
@@ -96,6 +94,9 @@ export default {
       ],
     };
   },
+  components: {
+    LoadingPage,
+  },
 
   computed: {
     ...mapState("auth", ["accessToken"]),
@@ -106,8 +107,13 @@ export default {
     }),
     async handleLogout() {
       this.loadingLogout = true;
+      console.log("1");
       await this.logoutAction();
-      if (!this.isLogin) {
+      console.log("2");
+
+      if (this.accessToken === "") {
+        console.log("3");
+
         this.loadingLogout = false;
         this.$notify({
           group: "infoLogout",
@@ -115,19 +121,13 @@ export default {
           text: "You will be redirected to the login page",
           duration: 2000,
         });
-        setTimeout(() => {
-          this.$router.push({ name: "loginPage" });
-        }, 2000);
+        this.$router.push({ name: "loginPage" });
       }
     },
     handleChangeLanguage(title, i) {
       i18n.locale = title;
       this.isShowLang = false;
       this.indexLang = i;
-      if (i18n.locale === "cn") {
-        // const main = document.querySelector(".main");
-        // main.style.letterSpacing = "7px";
-      }
     },
   },
 };
@@ -189,41 +189,6 @@ header.header {
       position: relative;
       top: 1px;
       right: -2px;
-    }
-  }
-  .loadingLogout {
-    position: absolute;
-    top: 38px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #333;
-    display: flex;
-    z-index: 99999;
-    opacity: 0.8;
-    h3 {
-      color: #fff;
-    }
-    .content {
-      margin: auto;
-    }
-    .iconLoading {
-      width: 35px;
-      height: 35px;
-      border: 5px solid #fff;
-      border-radius: 100rem;
-      border-top-color: transparent;
-      border-bottom-color: transparent;
-      margin: auto;
-      animation: loadtime 1s linear infinite;
-      @keyframes loadtime {
-        from {
-          transform: rotate(0);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
     }
   }
 }
