@@ -21,7 +21,7 @@ export default new Router({
       name: 'homePage',
       component: HomePage,
       beforeEnter(to, from, next) {
-        if (store.state.login.isLogin) {
+        if (store.state.auth.accessToken) {
           next()
         } else {
           next({ name: 'loginPage' })
@@ -36,7 +36,14 @@ export default new Router({
     {
       path: '/tag',
       name: 'tagPage',
-      component: TagPage
+      component: TagPage,
+      beforeEnter(to, from, next) {
+        if (store.state.auth.accessToken) {
+          next()
+        } else {
+          next({ name: 'loginPage' })
+        }
+      }
     },
     {
       path: '/product/:id',
@@ -48,8 +55,8 @@ export default new Router({
       name: 'loginPage',
       component: LoginPage,
       beforeEnter(to, from, next) {
-        if (store.state.login.isLogin) {
-          next({ path: 'homePage', query: { redirect: '/login' } })
+        if (store.state.auth.accessToken) {
+          next({ name: 'homePage' })
         } else {
           next()
         }

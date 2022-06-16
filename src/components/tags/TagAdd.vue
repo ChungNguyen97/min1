@@ -1,7 +1,9 @@
 <template>
   <div class="addTag">
     <div class="addTag__control">
-      <p class="addTag__title" @click="isShow = !isShow">Add Tag:</p>
+      <p class="addTag__title" @click="isShow = !isShow">
+        {{ $t("addTag.title") }}:
+      </p>
       <iconsvg
         class="icon"
         width="15px"
@@ -31,7 +33,7 @@
           @keyup.enter="handleAddInput"
           type="text"
           id="addTag"
-          placeholder="Enter your tag name..."
+          :placeholder="$t('addTag.placeholder')"
           v-on:blur="tag && tagInput.push(tag)"
           autofocus
         />

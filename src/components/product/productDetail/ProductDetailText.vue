@@ -3,15 +3,18 @@
     <h3 class="title">{{ productItem.title }}</h3>
     <div class="info">
       <p>
-        <strong>Type:</strong> <span class="type">{{ variant.title }}</span>
+        <strong>{{ $t("detailText.type") }}:</strong>
+        <span class="type">{{ variant.title }}</span>
       </p>
       <p>
-        <strong>Price:</strong
+        <strong>{{ $t("detailText.price") }}:</strong
         ><span class="price">{{ handlFormatPrice(variant.price) }}</span>
       </p>
     </div>
     <div class="tag">
-      <p><strong>Tags:</strong></p>
+      <p>
+        <strong>{{ $t("detailText.tag") }}:</strong>
+      </p>
       <span v-for="(tag, index) in productItem.tags" :key="index">
         {{ tag }}
       </span>

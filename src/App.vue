@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <common-header />
+  <div id="app" ref="app">
+    <common-header v-if="accessToken" />
     <main class="main">
       <router-view />
     </main>
@@ -8,30 +8,21 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapState } from "vuex";
 import CommonHeader from "./components/common/CommonHeader.vue";
-import { store } from "@/store";
 
 export default {
   name: "App",
   components: {
     CommonHeader,
   },
-  methods: {
-    ...mapMutations("login", ["CHECK_STATUS_BEGIN"]),
-  },
-  created() {
-    const token = store.state.auth.accessToken || "";
-    if (token) {
-      store.commit("login/CHECK_STATUS_BEGIN", true);
-    } else {
-      store.commit("login/CHECK_STATUS_BEGIN", false);
-    }
+  computed: {
+    ...mapState("auth", ["accessToken"]),
   },
 };
 </script>
 
-<style>
+<style lang="scss">
 @import "./styles/_reset.scss";
 
 #app {

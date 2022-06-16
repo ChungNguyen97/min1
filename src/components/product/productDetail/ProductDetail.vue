@@ -1,6 +1,11 @@
 <template>
   <div class="productDetail container">
-    <div class="productDetail__name">Product detail page</div>
+    <loading-page
+      v-if="isLoading && this.isUpdate === false"
+      borderColor="#fff"
+      borderWidth="7"
+    />
+    <div class="productDetail__name">{{ $t("productDetail.title") }}</div>
     <div class="productDetail__content">
       <div class="img">
         <product-detail-image v-on:transVariant="handleTransVariant" />
@@ -12,7 +17,7 @@
           @click="isUpdate = !isUpdate"
           class="updateInfo"
         >
-          Update Infomation
+          {{ $t("productDetail.update") }}
           <iconsvg
             class="pen"
             name="pen-solid"
@@ -22,19 +27,9 @@
           />
         </button>
         <div class="content" v-else>
-          <div v-if="isShowMes" class="!showMes">
-            <h3>Ban co chac muon thay doi du lieu</h3>
-            <div class="btns">
-              <button class="cancle" @click="handleCancleShowMes">
-                Cancle
-              </button>
-              <button @click="handleContinueShowMes">OK</button>
-            </div>
-          </div>
-
           <div class="content_loading" v-if="isShowUpdateLoading">
             <div class="iconLoadUpdate"></div>
-            <p class="text_loading">Updating changes...</p>
+            <p class="text_loading">{{ $t("productDetail.updating") }}</p>
           </div>
 
           <div class="content__form" v-else>
@@ -42,25 +37,25 @@
               v-if="timeAfter && isShowTime"
               class="timeRemainDef"
               ref="timeRemain"
-              >Window will close automatically after
-              <strong>{{ timeRemaining }}</strong> seconds
+              >{{ $t("productDetail.windown") }}
+              <strong>{{ timeRemaining }}</strong>
+              {{ $t("productDetail.s") }}
             </span>
             <div class="icon-top">
-              <span @click="isShowSetting = !isShowSetting" class="setting"
-                >*</span
-              >
+              <iconsvg
+                @click="isShowSetting = !isShowSetting"
+                name="gear-solid"
+                width="15"
+                height="15"
+                color="#333"
+                class="setting"
+              />
               <tag-setting
                 v-if="isShowSetting"
                 v-on:attachSetting="hanldeUpdateSetting"
               />
 
-              <span class="cancel">
-                <iconsvg
-                  @click="handleClose"
-                  name="cancel-1"
-                  class="svg-icon-cancel"
-                />
-              </span>
+              <span class="cancel" @click="handleClose"> X </span>
             </div>
             <product-update-title
               :productTitle="productTitle"
@@ -84,18 +79,20 @@
               v-on:removeTag="handleRemoveTag"
             />
             <div class="btns">
-              <button @click="handleClose" class="close">CLOSE</button>
+              <button @click="handleClose" class="close">
+                {{ $t("productDetail.close") }}
+              </button>
               <button
                 :class="activeBtn ? 'clear' : 'default'"
                 @click="handleClear"
               >
-                CLEAR
+                {{ $t("productDetail.clear") }}
               </button>
               <button
                 @click="handleUpdate"
                 :class="activeBtn ? 'active' : 'default'"
               >
-                NEXT
+                {{ $t("productDetail.next") }}
               </button>
             </div>
             <product-update-support />
@@ -122,6 +119,7 @@ import ProductUpdateSupport from "./ProductUpdateSupport.vue";
 import TagAdd from "@/components/tags/TagAdd.vue";
 import TagRemove from "@/components/tags/TagRemove.vue";
 import TagSetting from "@/components/tags/TagSetting.vue";
+import LoadingPage from "@/components/common/LoadingPage.vue";
 
 import "@/assets/icons";
 export default {
@@ -145,11 +143,12 @@ export default {
       timeAfter: null,
       isShowTime: false,
       isShowSetting: false,
-      showMes: "no-show-mes",
+      showMes: "show-mes",
       isShowMes: false,
       isContinue: false,
       timeRemaining: null,
       timerIdSetIn: null,
+      valueConfirm: true,
     };
   },
   components: {
@@ -161,6 +160,7 @@ export default {
     TagAdd,
     TagRemove,
     TagSetting,
+    LoadingPage,
   },
 
   methods: {
@@ -223,6 +223,7 @@ export default {
         alert("Ban can nhap thong tin");
         return;
       }
+
       this.isShowUpdateLoading = true;
 
       if (this.productTitle) {
@@ -271,20 +272,33 @@ export default {
         this.listTagAdd = [];
       }
 
+      //Remove tag
       if (this.listTagRemove.length !== 0) {
-        const params = {
-          id: this.productItem.id,
-          tag: this.listTagRemove,
-        };
-        await this.removeTag(params);
-        this.listTagRemove = [];
+        if (this.showMes === "show-mes") {
+          this.isShowUpdateLoading = false;
+          this.valueConfirm = confirm(
+            "Are you sure you want to remove the tag"
+          );
+
+          if (this.valueConfirm) {
+            this.isShowUpdateLoading = true;
+            const params = {
+              id: this.productItem.id,
+              tag: this.listTagRemove,
+            };
+            await this.removeTag(params);
+            this.listTagRemove = [];
+          }
+        }
       }
 
+      if (this.isShowUpdateLoading) {
+        this.getProductById({ id: this.productItem.id });
+      }
       this.isShowUpdateLoading = false;
       this.isShowSetting = false;
-      this.getProductById({ id: this.productItem.id });
 
-      if (this.isUpdateSuccess && !this.isLoading) {
+      if (this.isUpdateSuccess && this.valueConfirm) {
         this.$notify({
           group: "notifyStatusUpdate",
           title: "Update notification",
@@ -296,8 +310,10 @@ export default {
           group: "notifyStatusUpdate",
           title: "Update notification",
           text: "Update change failed",
+          type: "warn",
           duration: 2000,
         });
+        this.valueConfirm = true;
       }
 
       switch (this.valueSelect) {
@@ -374,6 +390,7 @@ export default {
         return false;
       }
     },
+    ...mapState("tags", ["updateTag"]),
   },
 
   created() {
@@ -488,22 +505,20 @@ export default {
           top: 0;
           right: 0;
           .setting {
-            font-weight: 600;
-            font-size: 21px;
-            padding: 2px 10px;
+            position: relative;
+            top: 1px;
             &:hover {
-              background: #2ecc71;
               cursor: pointer;
             }
           }
           .cancel {
             color: #000;
-            font-weight: 600;
+            font-weight: 800;
             padding: 4px 10px;
             font-size: 17px;
             &:hover {
               cursor: pointer;
-              background: red;
+              color: red;
             }
           }
         }

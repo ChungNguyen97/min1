@@ -1,7 +1,7 @@
 <template>
   <div class="updateSupport">
     <p class="updateSupport__title" @click="isShowSupport = !isShowSupport">
-      Instructions for updating information?
+      {{ $t("supportPage.title") }}
     </p>
     <div class="updateSupport__content" v-if="isShowSupport">
       <p class="intro">

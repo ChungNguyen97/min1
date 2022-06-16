@@ -2,7 +2,7 @@
   <div class="detail-image">
     <div>
       <img class="image_default" :src="imageBefore" />
-      <p class="variant">Variant:</p>
+      <p class="variant">{{ $t("detailImage.title") }}:</p>
       <div class="variant-img">
         <img
           v-for="(item, index) in productItem.variants"
@@ -47,13 +47,12 @@ export default {
   mounted() {
     setTimeout(() => {
       this.$refs.imgs && this.$refs.imgs[0].click();
-    }, 2000);
+    }, 1000);
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  
 .detail-image {
   .image_default {
     width: 40%;

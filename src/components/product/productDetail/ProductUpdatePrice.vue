@@ -2,7 +2,7 @@
   <div class="update-price">
     <div class="input-info">
       <div class="branch" @click="isShow = !isShow">
-        <p>Update Price</p>
+        <p>{{ $t("updatePrice.title") }}</p>
 
         <iconsvg
           class="icon"
@@ -22,7 +22,7 @@
       </div>
 
       <div class="content" v-if="isShow">
-        <p class="selectVariant">Chọn Variant you want change price</p>
+        <p class="selectVariant">{{ $t("updatePrice.select") }}</p>
         <div class="variant">
           <div
             v-for="(v, i) in getVariants"
@@ -37,36 +37,36 @@
           </div>
         </div>
         <p class="moreVariant">
-          Current price:
+          {{ $t("updatePrice.cP") }}:
           <span class="price">{{ handlFormatPrice(variant.price) }}</span> -
-          Title Variant:
+          {{ $t("updatePrice.tV") }}:
           <span class="titleVariant">{{ currentTitleVariant }}</span>
         </p>
         <div class="form-group">
-          <label for="amount">Amount: </label>
+          <label for="amount">{{ $t("updatePrice.aM") }}: </label>
           <input
             type="number"
             name="amountNumber"
             id="amount"
             v-model="numberAmount"
-            placeholder="Enter amount number..."
+            :placeholder="$t('updatePrice.placeholderAmount')"
             @click="percentNumber = ''"
           />
         </div>
         <div class="form-group">
-          <label for="percent">Percent: </label>
+          <label for="percent">{{ $t("updatePrice.pC") }}: </label>
           <input
             type="number"
             id="percent"
             name="percentNumber"
             v-model="percentNumber"
-            placeholder="Enter percent number..."
+            :placeholder="$t('updatePrice.placeholderPercent')"
             @click="numberAmount = ''"
           />
         </div>
 
         <div class="operator">
-          <span>Oparator: </span>
+          <span>{{ $t("updatePrice.oP") }}: </span>
           <div>
             <button ref="btnIn" @click="handleIncrement">+</button>
             <button ref="btnDe" @click="handelDecrement">-</button>

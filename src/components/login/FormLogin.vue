@@ -1,17 +1,15 @@
 <template>
-  <div class="login">
+  <section class="login" v-if="!isLogin">
     <div v-if="loadingLogin">
-      <h3 class="loadingLogin">Login in progress</h3>
+      <h3 class="loadingLogin">Login in progress...</h3>
       <div class="iconLoading"></div>
     </div>
 
     <div class="login__content" v-else>
-      <h2>LOGIN</h2>
+      <h2 class="title">LOGIN</h2>
       <form action="" class="form">
         <div class="form__group">
-          <label for="email">
-            Email:
-          </label>
+          <label for="email"> Email: </label>
           <input
             type="email"
             placeholder="Enter your email..."
@@ -72,7 +70,7 @@
       </form>
     </div>
     <notifications group="infoLogin" width="50%" position="top center" />
-  </div>
+  </section>
 </template>
 
 <script>
@@ -167,7 +165,7 @@ export default {
   background-color: #fff;
   border: none;
 
-  h2 {
+  .title {
     text-align: center;
     text-transform: uppercase;
   }

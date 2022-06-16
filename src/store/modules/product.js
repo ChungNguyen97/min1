@@ -23,18 +23,22 @@ const product = {
       try {
         state.isLoading = true;
         const res = await axiosClient.get('/graph', { params });
+
         commit('SET_PRODUCT', res)
       } catch (error) {
-        state.isLoadiisShowSettingng = false
+        commit('SET_PRODUCT', { products: [] })
+        state.isLoading = false
         console.log(error)
       }
     },
 
-    async getProductById({ commit }, payload) {
+    async getProductById({ state, commit }, payload) {
       try {
+        state.isLoading = true
         const res = await axiosClient.get(`/graph/${payload.id}`)
         commit('SET_PRODUCT_ITEM', res)
       } catch (error) {
+        state.isLoading = false
         console.log(error);
       }
     },
@@ -57,7 +61,8 @@ const product = {
 
     async updatePriceByAmount({ state, commit }, payload) {
       try {
-        state.isLoading = true
+        state.isLoading = true;
+        state.isUpdateSuccess = false;
         const res = await axiosClient.post('/price-by-amount', payload)
         commit('UPDATE_PRICE_BY_AMOUNT', res)
       } catch (error) {
@@ -76,18 +81,17 @@ const product = {
         console.log(error);
       }
     },
-
-
   },
 
   mutations: {
-    SET_PRODUCT(state, { products, page_info }) {
+    SET_PRODUCT(state, { products, page_info = '' }) {
       state.isLoading = false
       state.productList = products
       state.page_info = page_info
     },
     SET_PRODUCT_ITEM(state, res) {
-      state.productItem = res
+      state.productItem = res;
+      state.isLoading = false;
     },
     SET_TAG_PRODUCT_ITEM(state, res) {
       state.productItem.tags = res
@@ -99,7 +103,8 @@ const product = {
       state.isLoading = false
     },
     UPDATE_PRICE_BY_AMOUNT(state, res) {
-      const variants = state.productItem.variants
+      const variants = state.productItem.variants;
+      state.isUpdateSuccess = true;
       for (let variant of variants) {
         if (variant.id === res.id) {
           variant.price = res.price
@@ -107,6 +112,9 @@ const product = {
       }
       state.isLoading = false
     },
+    SET_STATUS_UPDATE(state, { res }) {
+      state.isUpdateSuccess = res
+    }
 
   },
 }

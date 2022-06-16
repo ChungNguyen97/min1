@@ -1,8 +1,8 @@
 <template>
   <div class="product container">
-    <div class="showInformationAll" v-if="getStatusLogin">
+    <div class="showInformationAll" v-if="accessToken">
       <div class="control">
-        <h1>PRODUCT LIST</h1>
+        <h1>{{ $t("productPage.title") }}</h1>
         <div class="search">
           <product-search v-on:updateSearch="handleUpdateSearch" />
         </div>
@@ -21,16 +21,16 @@
     </div>
 
     <p v-else class="warn-login">
-      You need to login to view product list.
-      <router-link class="redirect" :to="{ name: 'loginPage' }"
-        >Log in now</router-link
-      >
+      {{ $t("productPage.warnLogin") }}
+      <router-link class="redirect" :to="{ name: 'loginPage' }">{{
+        $t("productPage.need")
+      }}</router-link>
     </p>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import ProductSearch from "@/components/product/ProductSearch.vue";
 import ProductVendor from "@/components/product/ProductVendor.vue";
 import ProductCollection from "@/components/product/ProductCollection.vue";
@@ -70,10 +70,10 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
-      getStatusLogin: "login/getStatusLogin",
+    ...mapState({
+      isLoading: (state) => state.product.isLoading,
+      accessToken: (state) => state.auth.accessToken,
     }),
-    ...mapState("product", ["isLoading"]),
   },
 
   watch: {
@@ -130,10 +130,9 @@ export default {
   }
 
   .control {
-    background: aliceblue;
+    background: #fff;
+    margin: 56px 0 12px 0;
     padding: 12px;
-    margin-bottom: 6px;
-    margin-top: 6px;
     border-radius: 8px;
     box-shadow: 0px 1px 5px #7f8fa6;
   }

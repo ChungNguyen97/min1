@@ -1,6 +1,6 @@
 <template>
   <section class="tagControl" v-if="isShow">
-    <h3>Update window:</h3>
+    <h3>{{ $t("tagSetting.title") }}:</h3>
     <div class="f-group">
       <input
         type="radio"
@@ -9,9 +9,7 @@
         id="auto"
         name="isClose"
       />
-      <label for="auto"
-        >Automatically close the window after the update is done</label
-      >
+      <label for="auto">{{ $t("tagSetting.auto") }}</label>
     </div>
     <div class="f-group">
       <input
@@ -21,7 +19,7 @@
         id="no-auto"
         name="isClose"
       />
-      <label for="no-auto">Do not automatically close the window</label>
+      <label for="no-auto">{{ $t("tagSetting.noAuto") }}</label>
     </div>
 
     <div class="f-group">
@@ -33,15 +31,15 @@
         name="isClose"
       />
       <label for="after-t">
-        Close the window after
+        {{ $t("tagSetting.autoAfter") }}
         <input class="inputTime" type="number" id="after-t" v-model="time" />
-        seconds
+        {{ $t("tagSetting.second") }}
       </label>
     </div>
 
     <!-- reconfirm -->
     <aside class="showMes">
-      <h3 class="title">Notifications:</h3>
+      <h3 class="title">{{ $t("tagSetting.msg") }}:</h3>
       <div class="f-group">
         <input
           type="radio"
@@ -50,9 +48,7 @@
           id="show-mes"
           name="mes"
         />
-        <label for="show-mes"
-          >Show notification every time you add or remove</label
-        >
+        <label for="show-mes">{{ $t("tagSetting.showMsg") }}</label>
       </div>
       <div class="f-group">
         <input
@@ -62,15 +58,17 @@
           id="not-show-mes"
           name="mes"
         />
-        <label for="not-show-mes"
-          >Not showing notification every time add or delete</label
-        >
+        <label for="not-show-mes">{{ $t("tagSetting.noShowMsg") }}</label>
       </div>
     </aside>
 
     <aside>
-      <button class="cancle" @click="handleCancel">Cancel</button>
-      <button class="save" @click="handleSave">Save</button>
+      <button class="cancle" @click="handleCancel">
+        {{ $t("tagSetting.cancle") }}
+      </button>
+      <button class="save" @click="handleSave">
+        {{ $t("tagSetting.save") }}
+      </button>
     </aside>
   </section>
 </template>
@@ -129,7 +127,7 @@ export default {
   background: #fff;
   opacity: 1;
   position: fixed;
-  top: 20px;
+  top: 25px;
   left: 0;
   bottom: 0;
   z-index: 10;
